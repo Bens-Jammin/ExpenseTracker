@@ -1,15 +1,16 @@
 import java.time.LocalDate;
 
 public class User{
+    public static final int INCREMENT = 10;
     Expenses[] expenses;
     int expensesCount;
     Bills[] bills;
     int billsCount;
 
 
-    public User(Expenses expense, Bills bill){
-        this.expenses[expensesCount++] = expense;
-        this.bills[billsCount++] = bill;
+    public User(){
+        this.expenses = new Expenses[10];
+        this.bills = new Bills[10];
     }
 
     public void addExpense(String name, double amount, String category){
@@ -46,6 +47,22 @@ public class User{
         }
         for(int i = emptySpot+1; i<bills.length;i++){
             bills[i-1] = bills[i];
+        }
+    }
+
+
+    public void displayAllExpenses(){
+        for(int i=0; i<expensesCount; i++){
+            expenses[i].displayBill();
+            System.out.print("\n");
+        }
+    }
+
+
+    public void displayAllBills(){
+        for(int i=0; i<billsCount; i++){
+            bills[i].displayBill();
+            System.out.print("\n");
         }
     }
 }
