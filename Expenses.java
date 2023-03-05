@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 
 public class Expenses {
+    private static final String SEPARATOR = "##########";
     private String name;
     private double amount;
     private String category;
@@ -33,4 +34,13 @@ public class Expenses {
 
     public LocalDate getDate(){return day;}
 
+
+    
+    public void displayBill(){
+        System.out.println(SEPARATOR);
+        System.out.println("Product/Service purchased: "+name+ " ("+category+")");
+        System.out.println(" >> Total amount due: $"+amount);
+        System.out.println("This payment was made on "+day.toString());
+        System.out.println(SEPARATOR);
+    }
 }
