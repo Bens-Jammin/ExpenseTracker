@@ -7,10 +7,15 @@ public class User{
     Bills[] bills;
     int billsCount;
 
+    String username;
+    String password;
 
-    public User(){
+
+    public User(String username, String password){
         this.expenses = new Expenses[10];
         this.bills = new Bills[10];
+        this.username = username;
+        this.password = password;
     }
 
     public void addExpense(String name, double amount, String category){
@@ -64,5 +69,9 @@ public class User{
             bills[i].displayBill();
             System.out.print("\n");
         }
+    }
+
+    public boolean AttemptSignin(String username, String password){
+        return this.username == username && this.password == password;
     }
 }

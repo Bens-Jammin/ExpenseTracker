@@ -1,1 +1,1 @@
-SINGUP_TEST&&1200
+ADMIN||test
