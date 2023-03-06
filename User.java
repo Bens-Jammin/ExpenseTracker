@@ -71,7 +71,7 @@ public class User{
         }
     }
 
-    public boolean AttemptSignin(String username, String password){
+    public boolean attemptSignin(String username, String password){
         return this.username == username && this.password == password;
     }
 }
