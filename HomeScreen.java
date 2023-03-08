@@ -5,7 +5,6 @@ public class HomeScreen {
         Scanner scanner = new Scanner(System.in);
         User user = null;
         boolean loggedIn = false;
-        final String FILENAME = "logininfo.txt";
         while (true) {
             if (!loggedIn) {
                 System.out.println("Enter '1' to sign up, '2' to log in, or '3' to exit:");
@@ -22,6 +21,7 @@ public class HomeScreen {
                         loggedIn = true;
                         User newUser = new User(username, password);
                         UserManager.addUser(newUser);
+                        scanner.close();
                         break;
                     case 2:
                         System.out.println("Enter your username:");
@@ -29,15 +29,19 @@ public class HomeScreen {
                         System.out.println("Enter your password:");
                         String loginPassword = scanner.next();
                         
-                        if (user != null && User.attemptSignin(FILENAME, loginUsername, loginPassword)) {
+                        User[]data = UserManager.loadUsers();
+
+                        if (user != null && User.attemptSignin(data, loginUsername, loginPassword)) {
                             System.out.println("Login successful.");
                             loggedIn = true;
                         } else {
                             System.out.println("Invalid username or password.");
                         }
+                        scanner.close();
                         break;
                     case 3:
                         System.out.println("Exiting...");
+                        scanner.close();
                         System.exit(0);
                     default:
                         System.out.println("Invalid input. Try again.");

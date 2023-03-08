@@ -71,8 +71,12 @@ public class User{
         }
     }
 
-    public static boolean attemptSignin(/*Array,List,Something data,*/ String username, String password){
-        // if(!data.contains(username){return false;} 
-        return this.username == username && this.password == password;
+    public static boolean attemptSignin(User[]data, String username, String password){
+        for(int i=0; i<data.length; i++){
+            if(data[i].username.contains(username)){
+                return data[i].password == password;
+            }
+        } 
+        return false;
     }
 }
