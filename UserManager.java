@@ -7,7 +7,24 @@ public class UserManager {
     public UserManager(String filename) {
         this.filename = filename;
     }
-
+    // NOTE:
+    /*
+    Please note, this code is NOT TESTED WHATSOEVER,
+    I made it via chatGPT, it almost certainly doesn't work.
+    To test; 
+    - make several users
+    -add them to the file.
+    - close and open the program
+    - try to login
+    
+    if it doesn't work, do one of two things:
+    1) fix it if you have an idea on how to fix it
+    2) notify me (Ben) in some way (here in this comment block, discord, etc)
+    2.1) tell me what you did to test (ie screenshots)
+    
+    thanky
+    Ben
+    */
     public void saveUser(User user) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
             writer.println(user.username + "," + user.password);
