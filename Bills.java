@@ -16,9 +16,13 @@ public class Bills{
         this.dueDate = dueDate;
     }
 
-    public String getBillName(){
-        return this.name;
-    }
+    public String getBillName(){return this.name;}
+    public double getAmount(){return this.amount;}
+    public String getCategory(){return this.category;}
+    public String getRecipient(){return this.recipient;}
+    public LocalDate getDueDate(){return this.dueDate;}
+
+
 
     public void displayBill(){
         System.out.println(SEPARATOR);

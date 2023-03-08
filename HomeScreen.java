@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-public class HoneScreen {
+public class HomeScreen {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         User user = null;
         boolean loggedIn = false;
-        private static final FILENAME = "logininfo.txt";
+        final String FILENAME = "logininfo.txt";
         while (true) {
             if (!loggedIn) {
                 System.out.println("Enter '1' to sign up, '2' to log in, or '3' to exit:");
