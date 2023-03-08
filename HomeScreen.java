@@ -5,7 +5,7 @@ public class HoneScreen {
         Scanner scanner = new Scanner(System.in);
         User user = null;
         boolean loggedIn = false;
-        
+        private static final FILENAME = "logininfo.txt";
         while (true) {
             if (!loggedIn) {
                 System.out.println("Enter '1' to sign up, '2' to log in, or '3' to exit:");
@@ -20,19 +20,16 @@ public class HoneScreen {
                         user = new User(username, password);
                         System.out.println("Sign up successful.");
                         loggedIn = true;
-                        // add a thing to save class instance info
+                        User newUser = new User(username, password);
+                        UserManager.addUser(newUser);
                         break;
                     case 2:
                         System.out.println("Enter your username:");
                         String loginUsername = scanner.next();
                         System.out.println("Enter your password:");
                         String loginPassword = scanner.next();
-                        /* TODO:
-                        1. make attemptSignin a static class, checks all saved class data if its available
-                        2. if available, user = new User(user, pwd);
-                        3. refactor? this looks like I can refactor it
-                        */
-                        if (user != null && user.attemptSignin(loginUsername, loginPassword)) {
+                        
+                        if (user != null && User.attemptSignin(FILENAME, loginUsername, loginPassword)) {
                             System.out.println("Login successful.");
                             loggedIn = true;
                         } else {
