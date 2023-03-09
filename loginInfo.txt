@@ -1,2 +1,2 @@
-TestLogin,12345
 Test,123
+ADMIN,1

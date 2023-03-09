@@ -71,12 +71,12 @@ public class User{
         }
     }
 
-    public static boolean attemptSignin(User[]data, String username, String password){
-        for(int i=0; i<data.length; i++){
-            if(data[i].username.contains(username)){
-                return data[i].password == password;
+    public static boolean attemptSignin(User[] data, String username, String password){
+        for(int i = 0; i < data.length; i++){
+            if(data[i].username.equals(username)){
+                return data[i].password.equals(password);
             }
-        } 
+        }
         return false;
-    }
+    }    
 }
