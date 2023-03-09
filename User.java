@@ -58,7 +58,7 @@ public class User{
 
     public void displayAllExpenses(){
         for(int i=0; i<expensesCount; i++){
-            expenses[i].displayBill();
+            expenses[i].displayBill(i+1);
             System.out.print("\n");
         }
     }
@@ -66,7 +66,7 @@ public class User{
 
     public void displayAllBills(){
         for(int i=0; i<billsCount; i++){
-            bills[i].displayBill();
+            bills[i].displayBill(i+1);
             System.out.print("\n");
         }
     }

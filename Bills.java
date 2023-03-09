@@ -24,9 +24,9 @@ public class Bills{
 
 
 
-    public void displayBill(){
+    public void displayBill(int i){
         System.out.println(SEPARATOR);
-        System.out.println(name+" payment to "+recipient);
+        System.out.println("("+i+")"+name+" payment to "+recipient);
         System.out.println(" >> Total amount due: $"+amount);
         System.out.println(" >> Due by "+dueDate.toString());
         if(isOverdue){

@@ -26,19 +26,105 @@ public class UserManager {
     
     */
     public static void saveUser(User user) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
-            writer.println(user.username + "," + user.password);
-            for (int i = 0; i < user.expensesCount; i++) {
-                Expenses expense = user.expenses[i];
-                writer.println("expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename));
+             PrintWriter writer = new PrintWriter(new FileWriter(filename + ".tmp"))) {
+    
+            boolean userExists = false;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0 && parts[0].public static synchronized void saveUser(User user) {
+                    String tempFileName = filename + ".tmp";
+                    try (BufferedReader reader = new BufferedReader(new FileReader(filename));
+                         PrintWriter writer = new PrintWriter(new FileWriter(tempFileName))) {
+                
+                        boolean userExists = false;
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            String[] parts = line.split(",");
+                            if (parts.length > 0 && parts[0].equals(user.username)) {
+                                // user already exists, edit the line
+                                writer.print(user.username + "," + user.password);
+                                for (int i = 0; i < user.expensesCount; i++) {
+                                    Expenses expense = user.expenses[i];
+                                    writer.print(",expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
+                                }
+                                for (int i = 0; i < user.billsCount; i++) {
+                                    Bills bill = user.bills[i];
+                                    writer.print(",bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
+                                }
+                                writer.println("");
+                                userExists = true;
+                            } else {
+                                writer.println(line);
+                            }
+                        }
+                
+                        if (!userExists) {
+                            // user does not exist in the file, append it to the end
+                            writer.print(user.username + "," + user.password);
+                            for (int i = 0; i < user.expensesCount; i++) {
+                                Expenses expense = user.expenses[i];
+                                writer.print(",expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
+                            }
+                            for (int i = 0; i < user.billsCount; i++) {
+                                Bills bill = user.bills[i];
+                                writer.print(",bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
+                            }
+                            writer.println("");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error saving user data: " + e.getMessage());
+                        return;
+                    }
+                
+                    // replace the original file with the updated file
+                    try {
+                        Files.move(Paths.get(tempFileName), Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        System.out.println("Error replacing file: " + e.getMessage());
+                    }
+                }
+                equals(user.username)) {
+                    // user already exists, edit the line
+                    writer.print(user.username + "," + user.password);
+                    for (int i = 0; i < user.expensesCount; i++) {
+                        Expenses expense = user.expenses[i];
+                        writer.print(",expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
+                    }
+                    for (int i = 0; i < user.billsCount; i++) {
+                        Bills bill = user.bills[i];
+                        writer.print(",bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
+                    }
+                    writer.println("");
+                    userExists = true;
+                } else {
+                    writer.println(line);
+                }
             }
-            for (int i = 0; i < user.billsCount; i++) {
-                Bills bill = user.bills[i];
-                writer.println("bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
+    
+            if (!userExists) {
+                // user does not exist in the file, append it to the end
+                writer.print(user.username + "," + user.password);
+                for (int i = 0; i < user.expensesCount; i++) {
+                    Expenses expense = user.expenses[i];
+                    writer.print(",expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
+                }
+                for (int i = 0; i < user.billsCount; i++) {
+                    Bills bill = user.bills[i];
+                    writer.print(",bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
+                }
+                writer.println("");
             }
         } catch (IOException e) {
             System.out.println("Error saving user data: " + e.getMessage());
         }
+    
+        // replace the original file with the updated file
+        File originalFile = new File(filename);
+        originalFile.delete();
+        File updatedFile = new File(filename + ".tmp");
+        updatedFile.renameTo(originalFile);
     }
 
     public static User[] loadUsers() {
@@ -71,23 +157,6 @@ public class UserManager {
         } catch (IOException e) {
             System.out.println("Error loading user data: " + e.getMessage());
             return new User[0];
-        }
-    }
-    
-
-    public static void addUser(User newUser) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
-            writer.println(newUser.username + "," + newUser.password);
-            for (int i = 0; i < newUser.expensesCount; i++) {
-                Expenses expense = newUser.expenses[i];
-                writer.println("expense," + expense.getExpenseName() + "," + expense.getAmount() + "," + expense.getCategory());
-            }
-            for (int i = 0; i < newUser.billsCount; i++) {
-                Bills bill = newUser.bills[i];
-                writer.println("bill," + bill.getBillName() + "," + bill.getAmount() + "," + bill.getCategory() + "," + bill.getRecipient() + "," + bill.getDueDate());
-            }
-        } catch (IOException e) {
-            System.out.println("Error saving user data: " + e.getMessage());
         }
     }
 }

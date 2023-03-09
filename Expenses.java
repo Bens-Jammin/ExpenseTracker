@@ -36,9 +36,9 @@ public class Expenses {
 
 
     
-    public void displayBill(){
+    public void displayBill(int i){
         System.out.println(SEPARATOR);
-        System.out.println("Product/Service purchased: "+name+ " ("+category+")");
+        System.out.println("("+i+")Product/Service purchased: "+name+ " ("+category+")");
         System.out.println(" >> Total amount due: $"+amount);
         System.out.println(" >> This payment was made on "+day.toString());
         System.out.println(SEPARATOR);

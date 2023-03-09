@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HomeScreen {
@@ -26,7 +25,7 @@ public class HomeScreen {
                         System.out.println("Sign up successful.");
                         loggedIn = true;
                         user = new User(username, password);
-                        UserManager.addUser(user);
+                        UserManager.saveUser(user);
                         loggedIn = true;
                         break;
                     case 2:
@@ -61,32 +60,38 @@ public class HomeScreen {
                 Scanner scan = new Scanner(System.in);
                 switch (choice){
                     case 1: // add expense
-                    System.out.print("Enter the name of the expense: ");
-                    String expenseName = scan.next();
-                    System.out.print("Enter the amount of the expense: ");
-                    double expenseAmount = scan.nextDouble();
-                    System.out.print("Enter the category of the expense: ");
-                    String expenseCategory = scan.next();
-                    user.addExpense(expenseName,expenseAmount,expenseCategory);
-                    System.out.println("Expense successfully added!");
+                        System.out.print("Enter the name of the expense: ");
+                        String expenseName = scan.next();
+                        System.out.print("Enter the amount of the expense: ");
+                        double expenseAmount = scan.nextDouble();
+                        System.out.print("Enter the category of the expense: ");
+                        String expenseCategory = scan.next();
+                        user.addExpense(expenseName,expenseAmount,expenseCategory);
+                        System.out.println("Expense successfully added!");
+                        UserManager.saveUser(user);
                         break;
                     // need to implement case 2, 3, 4
                     case 2: // remove expense
                         System.out.println("This has not been implemented yet.");
+                        UserManager.saveUser(user);
                         break;
                     case 3: // add bill
                         System.out.println("This has not been implemented yet.");
+                        UserManager.saveUser(user);
                         break;
                     case 4: // remove bill
                         System.out.println("This has not been implemented yet.");
+                        UserManager.saveUser(user);
                         break;
                     // cases above need to be implemented
                     case 5:
-                        System.out.println("Here are all your current expenses:");
+                        System.out.println("Here are all your current expenses:"); // SAVING USER DATA DOES NOT WORK
+                        UserManager.saveUser(user);
                         user.displayAllExpenses();
                         break;
                     case 6:
                         System.out.println("Here are all your current bills:");
+                        UserManager.saveUser(user);
                         user.displayAllBills();
                         break;
                     case 7:
@@ -94,7 +99,7 @@ public class HomeScreen {
                         loggedIn = false;
                         UserManager.saveUser(user);
                         scan.close();
-                        break;
+                        System.exit(0);
                     default:
                         System.out.println("Invalid input. Try again.");
                         break;
