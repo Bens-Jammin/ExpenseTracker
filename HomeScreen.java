@@ -21,7 +21,7 @@ public class HomeScreen {
                         loggedIn = true;
                         User newUser = new User(username, password);
                         UserManager.addUser(newUser);
-                        scanner.close();
+                        loggedIn = true;
                         break;
                     case 2:
                         System.out.println("Enter your username:");
@@ -37,7 +37,6 @@ public class HomeScreen {
                         } else {
                             System.out.println("Invalid username or password.");
                         }
-                        scanner.close();
                         break;
                     case 3:
                         System.out.println("Exiting...");

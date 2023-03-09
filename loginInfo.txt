@@ -1,1 +1,2 @@
-ADMIN||test
+TestLogin,12345
+Test,123
