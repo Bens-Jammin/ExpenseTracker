@@ -54,7 +54,7 @@ public class HomeScreen {
                 }
             } else {
                 // user is logged in, display options here
-                System.out.println("Enter '1' to add an expense, '2' to remove an expense, '3' to add a bill, '4' to remove a bill, '5' to display all expenses, '6' to display all bills, or '7' to log out:");
+                System.out.println("Enter:\n'1' to add an expense\n'2' to remove an expense\n'3' to add a bill\n'4' to remove a bill\n'5' to display all expenses\n'6' to display all bills\n'7' to see statistics\n'8' to log out:");
                 int choice = scanner.nextInt();
 
                 Scanner scan = new Scanner(System.in);
@@ -95,6 +95,8 @@ public class HomeScreen {
                         user.displayAllBills();
                         break;
                     case 7:
+                        Statistics.displayStatistics(user);    
+                    case 8:
                         System.out.println("Logging out...");
                         loggedIn = false;
                         UserManager.saveUser(user);
