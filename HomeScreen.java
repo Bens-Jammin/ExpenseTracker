@@ -25,7 +25,8 @@ public class HomeScreen {
                         System.out.println("Sign up successful.");
                         loggedIn = true;
                         user = new User(username, password);
-                        UserManager.saveUser(user);
+                        data = UserManager.loadData();
+                        UserManager.editFile(username, data);
                         loggedIn = true;
                         break;
                     case 2:
@@ -34,7 +35,8 @@ public class HomeScreen {
                         System.out.println("Enter your password: ");
                         String loginPassword = scanner.next();
                         
-                        User[] data = UserManager.loadUsers();
+                        User user = UserManager.loadUser(loginUsername);
+                        
                         
                         if (loginUsername != null && User.attemptSignin(data, loginUsername, loginPassword)) {
                             System.out.println("Login successful.");
