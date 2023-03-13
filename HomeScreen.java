@@ -1,6 +1,28 @@
 import java.util.Scanner;
 
 public class HomeScreen {
+
+    public static void displayScreen(String c0, String c1, String c2, String c3, String c4, String c5, String c6, String c7, String c8, String c9 ){
+
+        System.out.println("****************************************");
+        System.out.println();       // display username?
+        System.out.println("(0) "+c0);
+        System.out.println("(1) "+c1);
+        System.out.println("(2) "+c2);
+        System.out.println("(3) "+c3);
+        System.out.println("(4) "+c4);
+        System.out.println("(5) "+c5);
+        System.out.println("(6) "+c6);
+        System.out.println("(7) "+c7);
+        System.out.println("(8) "+c8);
+        System.out.println("(9) "+c9);
+        System.out.println();
+        System.out.println("****************************************");
+
+    }
+
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
@@ -10,14 +32,14 @@ public class HomeScreen {
             if (!loggedIn) {
                 int choice = -1;
                 try{
-                    System.out.println("Enter '1' to sign up, '2' to log in, or '3' to exit:");
+                    displayScreen("sign up", "login", "","","","","","","", "exit");
                     choice = scanner.nextInt();
                 }catch(Exception InputMismatchException){
                     System.out.println("You must enter a number.");
                 }
                 
                 switch (choice) {
-                    case 1:
+                    case 0:
                         System.out.println("Enter a username: ");
                         String username = scanner.next();
                         System.out.println("Enter a password: ");
@@ -25,20 +47,18 @@ public class HomeScreen {
                         System.out.println("Sign up successful.");
                         loggedIn = true;
                         user = new User(username, password);
-                        data = UserManager.loadData();
-                        UserManager.editFile(username, data);
                         loggedIn = true;
                         break;
-                    case 2:
+                    case 1:
                         System.out.println("Enter your username: ");
                         String loginUsername = scanner.next();
                         System.out.println("Enter your password: ");
                         String loginPassword = scanner.next();
                         
-                        User user = UserManager.loadUser(loginUsername);
+                        user = UserManager.loadUser(loginUsername);
                         
                         
-                        if (loginUsername != null && User.attemptSignin(data, loginUsername, loginPassword)) {
+                        if (loginUsername != null /* and if you can login : attemptLogin() */) {
                             System.out.println("Login successful.");
                             user = new User(loginUsername, loginPassword);
                             loggedIn = true;
@@ -46,7 +66,7 @@ public class HomeScreen {
                             System.out.println("Invalid username or password.");
                         }
                         break;
-                    case 3:
+                    case 9:
                         System.out.println("Exiting...");
                         scanner.close();
                         System.exit(0);
@@ -56,12 +76,12 @@ public class HomeScreen {
                 }
             } else {
                 // user is logged in, display options here
-                System.out.println("Enter:\n'1' to add an expense\n'2' to remove an expense\n'3' to add a bill\n'4' to remove a bill\n'5' to display all expenses\n'6' to display all bills\n'7' to see statistics\n'8' to log out:");
+                displayScreen("Add an expense", "Remove an Expense","Add a bill","Remove a bill","Display expenses","Display bills","Display statistics","","","Logout");
                 int choice = scanner.nextInt();
 
                 Scanner scan = new Scanner(System.in);
                 switch (choice){
-                    case 1: // add expense
+                    case 0: // add expense
                         System.out.print("Enter the name of the expense: ");
                         String expenseName = scan.next();
                         System.out.print("Enter the amount of the expense: ");
@@ -70,38 +90,31 @@ public class HomeScreen {
                         String expenseCategory = scan.next();
                         user.addExpense(expenseName,expenseAmount,expenseCategory);
                         System.out.println("Expense successfully added!");
-                        UserManager.saveUser(user);
                         break;
                     // need to implement case 2, 3, 4
-                    case 2: // remove expense
+                    case 1: // remove expense
                         System.out.println("This has not been implemented yet.");
-                        UserManager.saveUser(user);
                         break;
-                    case 3: // add bill
+                    case 2: // add bill
                         System.out.println("This has not been implemented yet.");
-                        UserManager.saveUser(user);
                         break;
-                    case 4: // remove bill
+                    case 3: // remove bill
                         System.out.println("This has not been implemented yet.");
-                        UserManager.saveUser(user);
                         break;
                     // cases above need to be implemented
-                    case 5:
+                    case 4:
                         System.out.println("Here are all your current expenses:"); // SAVING USER DATA DOES NOT WORK
-                        UserManager.saveUser(user);
                         user.displayAllExpenses();
                         break;
-                    case 6:
+                    case 5:
                         System.out.println("Here are all your current bills:");
-                        UserManager.saveUser(user);
                         user.displayAllBills();
                         break;
-                    case 7:
+                    case 6:
                         Statistics.displayStatistics(user);    
-                    case 8:
+                    case 9:
                         System.out.println("Logging out...");
                         loggedIn = false;
-                        UserManager.saveUser(user);
                         scan.close();
                         System.exit(0);
                     default:
