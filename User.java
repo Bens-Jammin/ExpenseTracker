@@ -65,8 +65,8 @@ public class User implements Serializable{
     }
 
     public boolean attemptSignin(String username, String password) {
-        boolean usernameIsCorrect = ( this.username == username );
-        boolean passwordIsCorrect = ( this.password == password );
+        boolean usernameIsCorrect = ( this.username.equals(username) );
+        boolean passwordIsCorrect = ( this.password.equals(password) );
         return usernameIsCorrect && passwordIsCorrect;
     }
 }

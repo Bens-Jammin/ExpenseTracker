@@ -92,6 +92,7 @@ public class HomeScreen {
                         System.out.print("Enter the category of the expense: ");
                         String expenseCategory = scan.next();
                         user.addExpense(expenseName,expenseAmount,expenseCategory);
+                        DataManager.saveUser(user);
                         System.out.println("Expense successfully added!");
                         break;
                     // need to implement case 2, 3, 4
@@ -106,7 +107,7 @@ public class HomeScreen {
                         break;
                     // cases above need to be implemented
                     case 4:
-                        System.out.println("Here are all your current expenses:"); // SAVING USER DATA DOES NOT WORK
+                        System.out.println("Here are all your current expenses:"); 
                         user.displayAllExpenses();
                         break;
                     case 5:
@@ -117,6 +118,7 @@ public class HomeScreen {
                         Statistics.displayStatistics(user);    
                     case 9:
                         System.out.println("Logging out...");
+                        DataManager.saveUser(user);
                         loggedIn = false;
                         scan.close();
                         System.exit(0);

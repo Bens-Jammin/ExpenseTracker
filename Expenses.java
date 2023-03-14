@@ -1,14 +1,7 @@
 import java.time.LocalDate;
+import java.io.Serializable;
 
-/* CLASS DESCRIPTION
- * 
- * This class is for general expenses only (ie medical, alcohol, etc)
- * This is to track what you spent, and on what
- * This is also used for INCOME, I dont want to make another class thats the exact same for income
- */
-
-
-public class Expenses {
+public class Expenses implements Serializable{
     private static final String SEPARATOR = "##########";
     private String name;
     private double amount;

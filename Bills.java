@@ -1,6 +1,8 @@
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Bills{
+
+public class Bills implements Serializable{
     private static final String SEPARATOR = "##########";
     String name;
     double amount;
