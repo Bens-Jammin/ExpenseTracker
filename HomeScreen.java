@@ -29,47 +29,15 @@ public class HomeScreen {
 
             Scanner scan = new Scanner(System.in);
             switch (choice){
-                case 0: // add expense
-                    System.out.print("Enter the name of the expense: ");
-                    String expenseName = scan.next();
-                    System.out.print("Enter the amount of the expense: ");
-                    double expenseAmount = scan.nextDouble();
-                    System.out.print("Enter the category of the expense: ");
-                    String expenseCategory = scan.next();
-                    user.addExpense(expenseName,expenseAmount,expenseCategory);
-                    DataManager.saveUser(user);
-                    System.out.println("Expense successfully added!");
-                    break;
-                // need to implement case 2, 3, 4
-                case 1: // remove expense
-                    System.out.println("This has not been implemented yet.");
-                    break;
-                case 2: // add bill
-                    System.out.println("This has not been implemented yet.");
-                    break;
-                case 3: // remove bill
-                    System.out.println("This has not been implemented yet.");
-                    break;
-                // cases above need to be implemented
-                case 4:
-                    System.out.println("Here are all your current expenses:"); 
-                    System.out.println(user.getFirstExpense().toString());
-                    user.displayAllExpenses();
-                    break;
-                case 5:
-                    System.out.println("Here are all your current bills:");
-                    user.displayAllBills();
-                    break;
-                case 6:
-                    Statistics.displayStatistics(user);    
-                case 9:
-                    System.out.println("Logging out...");
-                    DataManager.saveUser(user);
-                    scan.close();
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid input. Try again.");
-                    break;
+                case 0:     Display.addExpense(scan, user);         break;
+                case 1:     Display.removeExpense(scan, user);      break;
+                case 2:     Display.addBill(scan, user);            break;
+                case 3:     Display.removeBill(scan, user);         break;
+                case 4:     Display.displayExpenses(scan, user);    break;
+                case 5:     Display.displayBills(scan, user);       break;
+                case 6:     Display.displayStats(scan, user);       break;    
+                case 9:     Display.Logout(scan, user);             break;
+                default:    Display.Invalid();                      break;
         }
     }
 }
