@@ -6,6 +6,7 @@ import java.util.List;
 public class User implements Serializable{
     
     private static final long serialVersionUID = 8606117422906450152L;
+    
     public static final int INCREMENT = 10;
     
     List<Expenses> expenses;
@@ -20,8 +21,12 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    // getters
     public String getUserName(){return username;}
     public String getPasword(){return password;}
+    public List<Expenses> getExpenses(){return expenses;}
+    public Expenses getFirstExpense(){return expenses.get(0);} // testing purposes only
+    public List<Bills> getBills(){return bills;}
 
 
     public void addExpense(String name, double amount, String category) {
@@ -52,7 +57,7 @@ public class User implements Serializable{
 
     public void displayAllExpenses() {
         for (int i = 0; i < expenses.size(); i++) {
-            expenses.get(i).displayBill(i + 1);
+            expenses.get(i).displayExpense(i + 1);
             System.out.print("\n");
         }
     }

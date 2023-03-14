@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 
 // need to test this
 
@@ -33,13 +32,11 @@ public class DataManager {
             in.close();
             fileIn.close();
             
-            System.out.println("User deserialized from UserData.ser: ");
             
             if (loadedUser.getUserName().equals(username)) {
-                System.out.println("Found user with name " + username);
                 return loadedUser;
             } else {
-                System.out.println("User with name " + username + " not found");
+                System.out.println("ERROR :: User with name " + username + " not found");
                 return null;
             }
         } catch (IOException e) {

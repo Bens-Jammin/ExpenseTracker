@@ -3,7 +3,11 @@ import java.io.Serializable;
 
 
 public class Bills implements Serializable{
+
+    private static final long serialVersionUID = 8606117422906450152L;
+
     private static final String SEPARATOR = "##########";
+
     String name;
     double amount;
     String category;
