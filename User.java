@@ -13,6 +13,7 @@ public class User implements Serializable{
     List<Bills> bills;
     String username;
     String password;
+    String budget;
 
     public User(String username, String password) {
         this.expenses = new ArrayList<>();

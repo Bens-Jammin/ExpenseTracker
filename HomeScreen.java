@@ -3,20 +3,19 @@ import java.util.Scanner;
 
 public class HomeScreen {
 
-    public static void displayScreen(String c0, String c1, String c2, String c3, String c4, String c5, String c6, String c7, String c8, String c9 ){
-
+    public static void displayScreen(String[] options){
         System.out.println("****************************************");
-        System.out.println();       // display username?
-        System.out.println("(0) "+c0);
-        System.out.println("(1) "+c1);
-        System.out.println("(2) "+c2);
-        System.out.println("(3) "+c3);
-        System.out.println("(4) "+c4);
-        System.out.println("(5) "+c5);
-        System.out.println("(6) "+c6);
-        System.out.println("(7) "+c7);
-        System.out.println("(8) "+c8);
-        System.out.println("(9) "+c9);
+        System.out.println("");       // display username?
+        System.out.println("(0) "+options[0]);
+        System.out.println("(1) "+options[1]);
+        System.out.println("(2) "+options[2]);
+        System.out.println("(3) "+options[3]);
+        System.out.println("(4) "+options[4]);
+        System.out.println("(5) "+options[5]);
+        System.out.println("(6) "+options[6]);
+        System.out.println("(7) "+options[7]);
+        System.out.println("(8) "+options[8]);
+        System.out.println("(9) "+options[9]);
         System.out.println();
         System.out.println("****************************************");
 
@@ -24,8 +23,8 @@ public class HomeScreen {
 
     public static void Menu(Scanner scanner, User user){
         while(true){
-            // user is logged in, display options here
-            displayScreen("Add an expense", "Remove an Expense","Add a bill","Remove a bill","Display expenses","Display bills","Display statistics","","","Logout");
+            String[] options = {"Add an expense", "Remove an Expense","Add a bill","Remove a bill","Display expenses","Display bills","Display statistics","","","Logout"};
+            displayScreen(options);
             int choice = scanner.nextInt();
 
             Scanner scan = new Scanner(System.in);
@@ -81,7 +80,8 @@ public class HomeScreen {
         while (true) {
             int choice = -1;
             try{
-                displayScreen("sign up", "login", "","","","","","","", "exit");
+                String[] options = {"sign up", "login", "","","","","","","", "exit"};
+                displayScreen(options);
                 choice = scanner.nextInt();
             }catch(InputMismatchException e){
                 System.out.println("You must enter a number.");
