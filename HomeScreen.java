@@ -22,7 +22,6 @@ public class HomeScreen {
     }
 
 
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
@@ -39,34 +38,38 @@ public class HomeScreen {
                 }
                 
                 switch (choice) {
-                    case 0:
+                    case 0:     // signup
                         System.out.println("Enter a username: ");
                         String username = scanner.next();
                         System.out.println("Enter a password: ");
                         String password = scanner.next();
-                        System.out.println("Sign up successful.");
-                        loggedIn = true;
                         user = new User(username, password);
-                        loggedIn = true;
+                        boolean successfullySaved = DataManager.saveUser(user);
+                        if(successfullySaved){
+                            loggedIn = true;
+                            System.out.println("Sign up successful.");
+                        }else{System.out.println("ERROR: User did not save properly.");}
                         break;
-                    case 1:
+                    case 1:     // login
                         System.out.println("Enter your username: ");
                         String loginUsername = scanner.next();
                         System.out.println("Enter your password: ");
                         String loginPassword = scanner.next();
                         
-                        user = UserManager.loadUser(loginUsername);
+                        user = DataManager.loadUserFromUsername(loginUsername);
+                        boolean loginSuccessful = user.attemptSignin(loginUsername, loginPassword);
                         
                         
-                        if (loginUsername != null /* and if you can login : attemptLogin() */) {
-                            System.out.println("Login successful.");
-                            user = new User(loginUsername, loginPassword);
-                            loggedIn = true;
-                        } else {
-                            System.out.println("Invalid username or password.");
-                        }
-                        break;
-                    case 9:
+                        if (loginSuccessful ) {
+                                System.out.println("Login successful.");
+                                user = new User(loginUsername, loginPassword);
+                                loggedIn = true;
+                                break;
+                            }else{
+                                System.out.println("Invalid username or password.");
+                                break;
+                            }
+                    case 9:     //logout
                         System.out.println("Exiting...");
                         scanner.close();
                         System.exit(0);

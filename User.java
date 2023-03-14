@@ -1,9 +1,13 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable{
+    
+    private static final long serialVersionUID = 8606117422906450152L;
     public static final int INCREMENT = 10;
+    
     List<Expenses> expenses;
     List<Bills> bills;
     String username;
@@ -15,6 +19,10 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    public String getUserName(){return username;}
+    public String getPasword(){return password;}
+
 
     public void addExpense(String name, double amount, String category) {
         this.expenses.add(new Expenses(name, amount, category));
@@ -56,12 +64,9 @@ public class User {
         }
     }
 
-    public static boolean attemptSignin(List<User> data, String username, String password) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).username.equals(username)) {
-                return data.get(i).password.equals(password);
-            }
-        }
-        return false;
+    public boolean attemptSignin(String username, String password) {
+        boolean usernameIsCorrect = ( this.username == username );
+        boolean passwordIsCorrect = ( this.password == password );
+        return usernameIsCorrect && passwordIsCorrect;
     }
 }
