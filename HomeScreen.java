@@ -84,6 +84,8 @@ public class HomeScreen {
                     }
                     System.out.println("Login successful.");
                     Menu(scanner, user);
+                case 6:
+                    DataManager.ViewAllSavedUsers();
                 case 9:     //logout
                     System.out.println("Exiting...");
                     scanner.close();

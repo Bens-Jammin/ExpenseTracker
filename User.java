@@ -75,4 +75,9 @@ public class User implements Serializable{
         boolean passwordIsCorrect = ( this.password.equals(password) );
         return usernameIsCorrect && passwordIsCorrect;
     }
+
+    public String toString(){
+        String toString = username+", "+password+" : "+expenses.size()+" expense(s), "+bills.size()+" bill(s)";
+        return toString;
+    }
 }

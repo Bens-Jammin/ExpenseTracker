@@ -4,9 +4,11 @@ import java.io.*;
 
 public class DataManager {
     
+    private static final String fileName = "UserData.ser";
+
     public static boolean saveUser(User user){
         try{
-            FileOutputStream fileOut = new FileOutputStream("UserData.ser");
+            FileOutputStream fileOut = new FileOutputStream(fileName);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             
             out.writeObject(user);
@@ -24,7 +26,7 @@ public class DataManager {
 
     public static User loadUserFromUsername(String username) {
         try {
-            FileInputStream fileIn = new FileInputStream("UserData.ser");
+            FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             
             User loadedUser = (User) in.readObject();
@@ -40,12 +42,34 @@ public class DataManager {
                 return null;
             }
         } catch (IOException e) {
-            System.out.println("Error reading UserData.ser: " + e.getMessage());
+            System.out.println("Error reading "+fileName+": " + e.getMessage());
             return null;
         } catch (ClassNotFoundException e) {
             System.out.println("Error deserializing User object: " + e.getMessage());
             return null;
         }
     }
+
+    public static void ViewAllSavedUsers(){
+        try {
+            // Open an input stream to the serialized file
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+            // Load the instances from the serialized file
+            User obj;
+            while ((obj = (User) in.readObject()) != null) {
+                // Process the loaded instance
+                System.out.println( obj.toString());
+            }
+
+            // Close the input stream
+            in.close();
+            fileIn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     
 }
