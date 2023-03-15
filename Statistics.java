@@ -16,8 +16,8 @@ public class Statistics{
 
     public static double totalExpensesAmount(User user){
         double total = 0;
-        for(int i=0; i<user.expenses.length;i++){
-            total += user.expenses[i].getAmount();
+        for(int i=0; i<user.expenses.size() ;i++){
+            total += user.expenses.get(i).getAmount();
         }
 
         return total;
@@ -25,10 +25,10 @@ public class Statistics{
 
     public static double averageExpense(User user){
         double total = 0;
-        for(int i=0; i<user.expenses.length;i++){
-            total += user.expenses[i].getAmount();
+        for(int i=0; i<user.expenses.size();i++){
+            total += user.expenses.get(i).getAmount();
         }
-        total = total/user.expenses.length;
+        total = total/user.expenses.size();
 
         return total;
     }
