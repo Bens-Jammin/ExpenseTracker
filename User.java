@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +9,12 @@ public class User implements Serializable{
     public static final int INCREMENT = 10;
     
     List<Expenses> expenses;
-    List<Bills> bills;
     String username;
     String password;
     String budget;
 
     public User(String username, String password) {
         this.expenses = new ArrayList<>();
-        this.bills = new ArrayList<>();
         this.username = username;
         this.password = password;
     }
@@ -26,8 +23,7 @@ public class User implements Serializable{
     public String getUserName(){return username;}
     public String getPasword(){return password;}
     public List<Expenses> getExpenses(){return expenses;}
-    public Expenses getFirstExpense(){return expenses.get(0);} // testing purposes only
-    public List<Bills> getBills(){return bills;}
+    public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
 
 
     public void addExpense(String name, double amount, String category) {
@@ -43,19 +39,6 @@ public class User implements Serializable{
         }
     }
 
-    public void addBill(String name, double amount, String category, String recipient, LocalDate dueDate) {
-        this.bills.add(new Bills(name, amount, category, recipient, dueDate));
-    }
-
-    public void removeBill(String name) {
-        for (int i = 0; i < bills.size(); i++) {
-            if (bills.get(i).getBillName().equals(name)) {
-                bills.remove(i);
-                break;
-            }
-        }
-    }
-
     public void displayAllExpenses() {
         for (int i = 0; i < expenses.size(); i++) {
             expenses.get(i).displayExpense(i + 1);
@@ -63,12 +46,6 @@ public class User implements Serializable{
         }
     }
 
-    public void displayAllBills() {
-        for (int i = 0; i < bills.size(); i++) {
-            bills.get(i).displayBill(i + 1);
-            System.out.print("\n");
-        }
-    }
 
     public boolean attemptSignin(String username, String password) {
         boolean usernameIsCorrect = ( this.username.equals(username) );
@@ -77,7 +54,7 @@ public class User implements Serializable{
     }
 
     public String toString(){
-        String toString = username+", "+password+" : "+expenses.size()+" expense(s), "+bills.size()+" bill(s)";
+        String toString = username+", "+password+" : "+expenses.size()+" expense(s),";
         return toString;
     }
 }

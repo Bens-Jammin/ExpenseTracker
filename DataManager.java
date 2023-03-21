@@ -1,48 +1,78 @@
-public class Database {
+import java.io.*;
+import java.util.List;
 
-    private final String filename;
+public class DataManager {
 
-    public Database(String filename) {
-        this.filename = filename;
-    }
+    public static final String FOLDER_NAME = "UserData/";
 
-    public void saveUser(User user) {
+    public static final String FILE_EXTENSION = ".ser";
 
-        // Create a Gson object with pretty printing
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        try (FileWriter writer = new FileWriter(filename)) {
-
-            // Convert the user object to JSON string
-            String json = gson.toJson(user);
-
-            // Write the JSON string to the file
-            writer.write(json);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static boolean saveUser(User user) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(user);
+            out.close();
+            fileOut.close();
+            System.out.println("User data is saved in " +FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
+            saveExpenses(user.getUserName(),user.getExpenses());
+            return true;
+        } catch (IOException i) {
+            return false;
         }
     }
 
-    public User loadUser(String username) {
 
-        // Create a Gson object
-        Gson gson = new Gson();
+    public static void saveExpenses(String username, List<Expenses> expenses) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_expenses" + FILE_EXTENSION);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(expenses);
+            out.close();
+            fileOut.close();
+            System.out.println("Expenses data is saved in " + FOLDER_NAME + username + "_expenses" + FILE_EXTENSION);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
 
-        try (FileReader reader = new FileReader(filename)) {
 
-            // Read the JSON string from the file
-            User user = gson.fromJson(reader, User.class);
-
-            // Check if the username matches
-            if (user.getUsername().equals(username)) {
-                return user;
+    public static User loadUser(String username) {
+        User user = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + FILE_EXTENSION);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            user = (User) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("User data is loaded from " + FOLDER_NAME + username + FILE_EXTENSION);
+            List<Expenses> loadedExpenses = loadExpenses(username);
+            for(Expenses e : loadedExpenses){
+                String name = e.getExpenseName();
+                double amount = e.getAmount();
+                String category = e.getCategory();
+                user.addExpense(name, amount, category);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
         }
+        return user;
+    }
 
-        return null; // User not found
+    
+    public static List<Expenses> loadExpenses(String username) {
+        List<Expenses> expenses = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + "_expenses" + FILE_EXTENSION);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            expenses = (List<Expenses>) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Expenses data is loaded from " + FOLDER_NAME + username + "_expenses" + FILE_EXTENSION);
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        return expenses;
     }
 }

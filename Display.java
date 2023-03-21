@@ -29,14 +29,10 @@ public class Display{
 
     public static void displayExpenses(Scanner scan, User user) {
         System.out.println("Here are all your current expenses:"); 
-        System.out.println(user.getFirstExpense().toString());
+        System.out.println(user.getOneExpense(0).toString());
         user.displayAllExpenses();
     }
 
-    public static void displayBills(Scanner scan, User user) {
-        System.out.println("Here are all your current bills:");
-        user.displayAllBills();        
-    }
 
     public static void displayStats(Scanner scan, User user) {Statistics.displayStatistics(user);}
 

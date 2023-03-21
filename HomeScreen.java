@@ -34,8 +34,7 @@ public class HomeScreen {
                 case 2:     Display.addBill(scan, user);            break;
                 case 3:     Display.removeBill(scan, user);         break;
                 case 4:     Display.displayExpenses(scan, user);    break;
-                case 5:     Display.displayBills(scan, user);       break;
-                case 6:     Display.displayStats(scan, user);       break;    
+                case 5:     Display.displayStats(scan, user);       break;    
                 case 9:     Display.Logout(scan, user);             break;
                 default:    Display.Invalid();                      break;
         }
@@ -74,7 +73,7 @@ public class HomeScreen {
                     System.out.println("Enter your password: ");
                     String loginPassword = scanner.next();
                     
-                    user = DataManager.loadUserFromUsername(loginUsername);
+                    user = DataManager.loadUser(loginUsername);
                     boolean loginSuccessful = user.attemptSignin(loginUsername, loginPassword);
                     
                     
@@ -84,8 +83,6 @@ public class HomeScreen {
                     }
                     System.out.println("Login successful.");
                     Menu(scanner, user);
-                case 6:
-                    DataManager.ViewAllSavedUsers();
                 case 9:     //logout
                     System.out.println("Exiting...");
                     scanner.close();
