@@ -1,5 +1,3 @@
-import org.python.util.PythonInterpreter;
-
 public class Database {
 
     private final String filename;
