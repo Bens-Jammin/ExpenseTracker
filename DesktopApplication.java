@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class DesktopApplication extends JFrame implements ActionListener {
@@ -52,6 +51,9 @@ public class DesktopApplication extends JFrame implements ActionListener {
             pwdText = new String(passwordField.getPassword());
             if (userText.equalsIgnoreCase("admin") && pwdText.equalsIgnoreCase("admin")) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
+                getContentPane().removeAll();
+                getContentPane().revalidate();
+                getContentPane().repaint();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
