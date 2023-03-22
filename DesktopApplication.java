@@ -49,11 +49,12 @@ public class DesktopApplication extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = new String(passwordField.getPassword());
-            if (userText.equalsIgnoreCase("admin") && pwdText.equalsIgnoreCase("admin")) {
-                JOptionPane.showMessageDialog(this, "Login Successful");
+            User user = DataManager.loadUser(userText);
+            if (user.attemptSignin(userText, pwdText)) {
                 getContentPane().removeAll();
                 getContentPane().revalidate();
                 getContentPane().repaint();
+                JOptionPane.showMessageDialog(this, "Login Successful");
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
@@ -61,8 +62,19 @@ public class DesktopApplication extends JFrame implements ActionListener {
             userTextField.setText("");
             passwordField.setText("");
         } else if (e.getSource() == signUpButton) {
-            JOptionPane.showMessageDialog(this, "Redirecting to Sign Up Page...");
-            // Code to redirect to Sign Up page
+
+            String userText;
+            String pwdText;
+            userText = userTextField.getText();
+            pwdText = new String(passwordField.getPassword());
+            User user = new User(userText, pwdText);
+            boolean successfullySaved = DataManager.saveUser(user);
+            if(successfullySaved){
+                getContentPane().removeAll();
+                getContentPane().revalidate();
+                getContentPane().repaint();
+                JOptionPane.showMessageDialog(this, "Signup successful.");
+            }
         }
     }
 
