@@ -15,15 +15,32 @@ public class MainPage extends JFrame implements ActionListener
     private JButton showAllButton;
     private JButton logoutButton;
     private JTextArea expenseList;
+    private JProgressBar budgetPercentage;
 
     private String[] categories = {"Food", "Entertainment", "Transportation", "Shopping", "Other"};
 
-    public MainPage(String username)
+    public MainPage(User user)
     {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         setTitle("Expense Tracker");
 
         // Set up UI components
-        String welcomeScreen = "Welcome, "+username+"!";
+        String welcomeScreen = "Welcome, "+user.getUserName()+"!";
         welcomeLabel = new JLabel(welcomeScreen, JLabel.CENTER);
         welcomeLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
         amountLabel = new JLabel("Amount:");
@@ -36,6 +53,8 @@ public class MainPage extends JFrame implements ActionListener
         showAllButton = new JButton("Show All Expenses");
         logoutButton = new JButton("Logout");
         expenseList = new JTextArea(10, 30);
+        budgetPercentage = new JProgressBar(0, 100);
+        budgetPercentage.setValue((int) (user.getTotalExpenses() / user.getBudget() * 100));
 
         // Add components to the content pane
         Container c = getContentPane();
@@ -50,6 +69,7 @@ public class MainPage extends JFrame implements ActionListener
         centerPanel.add(categoryLabel);
         centerPanel.add(categoryComboBox);
         centerPanel.add(addButton);
+        centerPanel.add(budgetPercentage);
         c.add(centerPanel, BorderLayout.CENTER);
 
         JPanel westPanel = new JPanel(new GridLayout(5,1,10,10));
@@ -79,7 +99,7 @@ public class MainPage extends JFrame implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == addButton) {
             // Get the amount and category from the UI components

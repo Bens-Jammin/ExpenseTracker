@@ -7,10 +7,23 @@ public class DesktopApplication extends JFrame implements ActionListener {
     JPasswordField passwordField;
     JButton loginButton, resetButton, signUpButton;
 
-    private boolean loggedIn;
-
     public DesktopApplication() {
-        loggedIn = false;
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         setTitle("Login Page");
         userLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
@@ -58,7 +71,7 @@ public class DesktopApplication extends JFrame implements ActionListener {
                 getContentPane().revalidate();
                 getContentPane().repaint();
                 // open main page
-                MainPage mainPage = new MainPage(userText);
+                MainPage mainPage = new MainPage(user);
                 setVisible(false);
                 mainPage.setVisible(true);
             } else {
@@ -85,7 +98,7 @@ public class DesktopApplication extends JFrame implements ActionListener {
                 getContentPane().revalidate();
                 getContentPane().repaint();
                 // open main page
-                MainPage mainPage = new MainPage(userText);
+                MainPage mainPage = new MainPage(user);
                 setVisible(false);
                 mainPage.setVisible(true);
             }        
@@ -93,7 +106,7 @@ public class DesktopApplication extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        DesktopApplication d = new DesktopApplication();
+        new DesktopApplication();
 
     }
 }

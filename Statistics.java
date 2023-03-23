@@ -7,7 +7,7 @@ public class Statistics{
         System.out.println("Statistics for "+user.username);
         System.out.println(SEPERATOR+"\n\n");
         System.out.println(" >> total expenses: $"+totalExpensesAmount(user));
-        System.out.println(" >> total number of expenses: "+user.expenses.length);
+        System.out.println(" >> total number of expenses: "+user.expenses.size());
         System.out.println(" >> average expense cost: $"+averageExpense(user));
         System.out.println(" >> total left to spend this month: "+compareToBudget(user));
         // add more ?? maybe?
