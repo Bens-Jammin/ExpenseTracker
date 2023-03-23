@@ -7,7 +7,10 @@ public class DesktopApplication extends JFrame implements ActionListener {
     JPasswordField passwordField;
     JButton loginButton, resetButton, signUpButton;
 
+    private boolean loggedIn;
+
     public DesktopApplication() {
+        loggedIn = false;
         setTitle("Login Page");
         userLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
@@ -54,7 +57,10 @@ public class DesktopApplication extends JFrame implements ActionListener {
                 getContentPane().removeAll();
                 getContentPane().revalidate();
                 getContentPane().repaint();
-                JOptionPane.showMessageDialog(this, "Login Successful");
+                // open main page
+                MainPage mainPage = new MainPage(userText);
+                setVisible(false);
+                mainPage.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
@@ -78,12 +84,16 @@ public class DesktopApplication extends JFrame implements ActionListener {
                 getContentPane().removeAll();
                 getContentPane().revalidate();
                 getContentPane().repaint();
-                JOptionPane.showMessageDialog(this, "Signup successful.");
-            }
+                // open main page
+                MainPage mainPage = new MainPage(userText);
+                setVisible(false);
+                mainPage.setVisible(true);
+            }        
         }
     }
 
     public static void main(String[] args) {
-        new DesktopApplication();
+        DesktopApplication d = new DesktopApplication();
+
     }
 }
