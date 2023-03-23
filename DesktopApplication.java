@@ -67,6 +67,11 @@ public class DesktopApplication extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = new String(passwordField.getPassword());
+            if(!DataManager.isUserNameAvailable(userText)){
+                JOptionPane.showMessageDialog(this, "ERROR: Username is not available.");
+                return;
+            }
+            
             User user = new User(userText, pwdText);
             boolean successfullySaved = DataManager.saveUser(user);
             if(successfullySaved){

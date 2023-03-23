@@ -7,6 +7,21 @@ public class DataManager {
 
     public static final String FILE_EXTENSION = ".ser";
 
+
+    public static boolean isUserNameAvailable(String username)
+    {
+        // this code stolen from:
+        // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+        File dir = new File(FOLDER_NAME);
+        File[] directoryListing = dir.listFiles();
+        for (File child : directoryListing) {
+            if(child.getName().split(".ser")[0].equals(username)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean saveUser(User user) {
         try {
             FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
