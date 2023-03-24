@@ -7,7 +7,7 @@ public class DataManager {
 
     public static final String FILE_EXTENSION = ".ser";
 
-
+    
     public static boolean isUserNameAvailable(String username)
     {
         // this code stolen from:
@@ -69,8 +69,10 @@ public class DataManager {
                 user.addExpense(name, amount, category);
             }
 
-        } catch (IOException | ClassNotFoundException i) {
+        } catch (IOException i) {
             i.printStackTrace();
+        } catch(ClassNotFoundException i){
+            return null;
         }
         return user;
     }

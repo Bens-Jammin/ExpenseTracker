@@ -18,7 +18,8 @@ public class User implements Serializable{
         this.expenses = new ArrayList<>();
         this.username = username;
         this.password = password;
-        this.totalExpenses = 0;
+        this.totalExpenses = 50;
+        budget = 100;
     }
 
     // getters

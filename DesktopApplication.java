@@ -10,17 +10,7 @@ public class DesktopApplication extends JFrame implements ActionListener {
     public DesktopApplication() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -65,7 +55,16 @@ public class DesktopApplication extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = new String(passwordField.getPassword());
+            if(userText.length() == 0 || pwdText.length() == 0){
+                JOptionPane.showMessageDialog(this, "Username and password must have at least one character.");
+                return;
+            }
             User user = DataManager.loadUser(userText);
+            if(user == null){
+                JOptionPane.showMessageDialog(this, "Incorrect Username.");
+                return;
+            }
+
             if (user.attemptSignin(userText, pwdText)) {
                 getContentPane().removeAll();
                 getContentPane().revalidate();
@@ -86,6 +85,10 @@ public class DesktopApplication extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = new String(passwordField.getPassword());
+            if(userText.length() == 0 || pwdText.length() == 0){
+                JOptionPane.showMessageDialog(this, "Username and password must have at least one character.");
+                return;
+            }
             if(!DataManager.isUserNameAvailable(userText)){
                 JOptionPane.showMessageDialog(this, "ERROR: Username is not available.");
                 return;
