@@ -58,7 +58,7 @@ public class DesktopApplication extends JFrame implements ActionListener {
             if(userText.length() == 0 || pwdText.length() == 0){
                 JOptionPane.showMessageDialog(this, "Username and password must have at least one character.");
                 return;
-            }
+            }       
             User user = DataManager.loadUser(userText);
             if(user == null){
                 JOptionPane.showMessageDialog(this, "Incorrect Username.");

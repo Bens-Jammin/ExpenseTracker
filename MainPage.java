@@ -1,116 +1,69 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.List;
 
-public class MainPage extends JFrame implements ActionListener 
-{
-    private JLabel welcomeLabel;
-    private JLabel amountLabel;
-    private JTextField amountField;
-    private JLabel categoryLabel;
-    private JComboBox<String> categoryComboBox;
-    private JButton addButton;
-    private JButton editButton;
-    private JButton removeButton;
-    private JButton showAllButton;
-    private JButton logoutButton;
-    private JTextArea expenseList;
-    private JProgressBar budgetPercentage;
+public class MainPage extends JFrame {
 
-    private String[] categories = {"Food", "Entertainment", "Transportation", "Shopping", "Other"};
-
-    public MainPage(User user)
-    {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public MainPage(User user) {
+        // Set the title of the main page
         setTitle("Expense Tracker");
-
-        // Set up UI components
-        String welcomeScreen = "Welcome, "+user.getUserName()+"!";
-        welcomeLabel = new JLabel(welcomeScreen, JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
-        amountLabel = new JLabel("Amount:");
-        amountField = new JTextField(10);
-        categoryLabel = new JLabel("Category:");
-        categoryComboBox = new JComboBox<String>(categories);
-        addButton = new JButton("Add Expense");
-        editButton = new JButton("Edit Expense");
-        removeButton = new JButton("Remove Expense");
-        showAllButton = new JButton("Show All Expenses");
-        logoutButton = new JButton("Logout");
-        expenseList = new JTextArea(10, 30);
-        budgetPercentage = new JProgressBar(0, 100);
-        budgetPercentage.setValue((int) (user.getTotalExpenses() / user.getBudget() * 100));
-
-        // Add components to the content pane
-        Container c = getContentPane();
-        c.setLayout(new BorderLayout());
-        JPanel northPanel = new JPanel(new GridLayout(1,1));
-        northPanel.add(welcomeLabel);
-        c.add(northPanel, BorderLayout.NORTH);
-
-        JPanel centerPanel = new JPanel(new FlowLayout());
-        centerPanel.add(amountLabel);
-        centerPanel.add(amountField);
-        centerPanel.add(categoryLabel);
-        centerPanel.add(categoryComboBox);
-        centerPanel.add(addButton);
-        centerPanel.add(budgetPercentage);
-        c.add(centerPanel, BorderLayout.CENTER);
-
-        JPanel westPanel = new JPanel(new GridLayout(5,1,10,10));
-        westPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        westPanel.add(editButton);
-        westPanel.add(removeButton);
-        westPanel.add(showAllButton);
-        westPanel.add(logoutButton);
-        c.add(westPanel, BorderLayout.WEST);
-
-        JPanel southPanel = new JPanel(new GridLayout(1,1));
-        southPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
-        JScrollPane scrollPane = new JScrollPane(expenseList);
-        southPanel.add(scrollPane);
-        c.add(southPanel, BorderLayout.SOUTH);
-
-        // Add action listeners to buttons
-        addButton.addActionListener(this);
-        editButton.addActionListener(this);
-        removeButton.addActionListener(this);
-        showAllButton.addActionListener(this);
-        logoutButton.addActionListener(this);
-
-        pack();
+        // Set the size of the main page
+        setSize(500, 500);
+        // Center the main page on the screen
+        setLocationRelativeTo(null);
+        // Make the main page visible
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+        // Set the layout of the main page to BorderLayout
+        setLayout(new BorderLayout());
 
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == addButton) {
-            // Get the amount and category from the UI components
-            String amountString = amountField.getText();
-            double amount = Double.parseDouble(amountString);
-            String category = (String) categoryComboBox.getSelectedItem();
+        // Create a label to display the welcome message
+        JLabel welcomeLabel = new JLabel("Welcome, " + user.getUserName() + "!");
+        // Set the font size of the welcome label to 24
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        // Set the alignment of the welcome label to center
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-            // Add the expense to the expense list
-            String expense = String.format("%s: $%.2f\n", category, amount);
-            expenseList.append(expense);
+        // Create a container to hold the progress bar
+        JPanel progressBarContainer = new JPanel();
+        // Set the layout of the container to FlowLayout
+        progressBarContainer.setLayout(new FlowLayout());
+        // Set the preferred size of the container to 50% of the screen width and 10px tall
+        progressBarContainer.setPreferredSize(new Dimension(250, 20));
 
-            // Clear the amount field
-            amountField.setText("");
-        }
-        else if (e.getSource() == editButton) {
-            // TODO: Implement editing of expenses
-            JOptionPane.showMessageDialog(this, "Editing of expenses is not yet implemented.");
-        }
-        else if (e.getSource() == removeButton) {
-            // TODO: Implement removal of expenses
-            JOptionPane.showMessageDialog(this, "Removal of expenses is not yet implemented.");
-        }
+        // Create a progress bar to show the expenses vs budget progress
+        JProgressBar progressBar = new JProgressBar(0, (int) user.getBudget());
+        // Set the value of the progress bar to the total expenses of the user
+        progressBar.setValue((int) user.getTotalExpenses());
+        // Set the orientation of the progress bar to horizontal
+        progressBar.setOrientation(SwingConstants.HORIZONTAL);
+        // Set the size of the progress bar to fill the container
+        progressBar.setPreferredSize(progressBarContainer.getPreferredSize());
+
+        // Add the progress bar to the container
+        progressBarContainer.add(progressBar);
+
+        // Add the welcome label and container with progress bar to the main page
+        add(welcomeLabel, BorderLayout.NORTH);
+        add(progressBarContainer, BorderLayout.CENTER);
+
+        // Create a container to hold the buttons
+        JPanel buttonContainer = new JPanel();
+        // Set the layout of the container to GridLayout with 4 rows and 1 column
+        buttonContainer.setLayout(new GridLayout(4, 1));
+
+        // Create buttons for the different options
+        JButton viewAllExpensesButton = new JButton("View All Expenses");
+        JButton viewAllBillsButton = new JButton("View All Bills");
+        JButton showAdditionalInfoButton = new JButton("Show Additional Information");
+        JButton settingsButton = new JButton("Settings");
+
+        // Add the buttons to the button container
+        buttonContainer.add(viewAllExpensesButton);
+        buttonContainer.add(viewAllBillsButton);
+        buttonContainer.add(showAdditionalInfoButton);
+        buttonContainer.add(settingsButton);
+
+        // Add the button container to the left side of the main page
+        add(buttonContainer, BorderLayout.WEST);
     }
 }
