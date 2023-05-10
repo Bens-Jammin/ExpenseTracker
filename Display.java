@@ -47,11 +47,12 @@ public class Display{
             // check if password matches saved data
             user = DataManager.loadUser(username);
             if( user.attemptSignin(username, password) ){
+                clearSCreen();
                 System.out.println("Welcome back " + username + "!");
                 break;
             }else{
-                System.out.println("Incorrect credential provided!");
                 clearSCreen();
+                System.out.println("Incorrect credential provided!");
             }
         }
 
@@ -62,6 +63,7 @@ public class Display{
         boolean acceptableCredentials = false;
         String username = null;
         String password = null;
+        User user = null;
 
         while(!acceptableCredentials){
             System.out.print("Enter a username: ");
@@ -72,13 +74,17 @@ public class Display{
             acceptableCredentials = DataManager.isUserNameAvailable(username);
 
             if(acceptableCredentials){
+                user = new User(username, password);
+                DataManager.saveUser(user);
+                clearSCreen();
                 System.out.print("Account successfully created!");
             }else{
+                clearSCreen();
                 System.out.println("username is already in use!");
             }
         }
 
-        return new User(username, password);
+        return user;
 
     }
 
