@@ -28,12 +28,27 @@ class TerminalDisplay extends Display{
 
     }
 
-    // tbh idk what to call this method, its gonna show editing expenses, etc
+    // tbh idk what to call this method, its gonna allow showing/editing expenses, etc
     public static void MainUserPage(User user){
+        Scanner scan = new Scanner(System.in);
+
         System.out.println(SEPARATOR + "  logged in as : " + user.getUserName() +"  " +  SEPARATOR + "\n\n");
 
-        System.out.println("this is a test");
+        System.out.println("To add an expense, enter '1'");
+        System.out.println("To edit an existing expense, enter '2'");
+        System.out.println("To remove an expense, enter '3'");
+        System.out.println("To view all expenses, enter '4'");
+        System.out.println("To see spending statistics, enter '5'");
 
+        int choice = scan.nextInt();
+
+        switch (choice){
+            case 1: System.out.println("this is a test"); break;
+            case 2: System.out.println("this is a test"); break;
+            case 3: System.out.println("this is a test"); break;
+            case 4: System.out.println("this is a test"); break;
+            case 5: System.out.println("this is a test"); break;
+        }
     }
 
     public static void main(String[] args) {
