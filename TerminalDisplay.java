@@ -39,15 +39,30 @@ class TerminalDisplay extends Display{
         System.out.println("To remove an expense, enter '3'");
         System.out.println("To view all expenses, enter '4'");
         System.out.println("To see spending statistics, enter '5'");
+        System.out.println("To logout, enter '9'");
 
         int choice = scan.nextInt();
 
         switch (choice){
-            case 1: System.out.println("this is a test"); break;
-            case 2: System.out.println("this is a test"); break;
-            case 3: System.out.println("this is a test"); break;
-            case 4: System.out.println("this is a test"); break;
-            case 5: System.out.println("this is a test"); break;
+            case 1: 
+                System.out.println("Enter the name of the expense: ");
+                String expenseName = scan.nextLine();
+                System.out.println("Enter the amount paid for the expense: ");
+                double expenseAmount = scan.nextDouble();
+                System.out.println("Enter the category of the expense (medical, transport, groceries, etc): ");
+                String expenseCategory = scan.nextLine();
+                user.addExpense(expenseName, expenseAmount, expenseCategory);
+                break;
+            case 2: System.out.println("this hasnt been implemented yet!!!"); break;
+            case 3: 
+                System.out.println("enter the name of the expense you want to remove: "); 
+                String removedExpense = scan.nextLine();
+                user.removeExpense(removedExpense);
+                break;
+            case 4: user.displayAllExpenses(); break;
+            case 5: Statistics.displayStatistics(user); break;
+            case 9: 
+                Display.Logout(scan, user);
         }
     }
 

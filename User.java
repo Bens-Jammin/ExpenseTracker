@@ -50,9 +50,10 @@ public class User implements Serializable{
             if (expenses.get(i).getExpenseName().equals(name)) {
                 this.totalExpenses -= expenses.get(i).getAmount();
                 expenses.remove(i);
-                break;
+                return;
             }
         }
+        System.out.println("This expense doesn't exist!");
     }
 
     public void displayAllExpenses() {
