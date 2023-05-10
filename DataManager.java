@@ -1,3 +1,23 @@
+/* ===== CLASS DESCRIPTION =====
+ * 
+ * This class is used for saving/storing/fetching userdata.
+ * if a username is available (checked via isUserNameAvailable() method ), it can be saved
+ * into two different .ser files to store the instance data.
+ * The files are saved into the UserData file, and are labeled using as follows:
+ * General user information = "{username}.ser"
+ * user expense information = "{username}_expenses.ser"
+ * 
+ * TODO: 
+ * 1. add a bill saving and loading (need to be implemented in the user class first!)
+ * 2. add a delete user feature
+ * 3. change username and passwords? 
+ * 4. password overhaul (suggest passwords, ensure passwords are strong, etc)
+ * 
+ * Last updated: 10.05.2023
+ * 
+ */
+
+
 import java.io.*;
 import java.util.List;
 
@@ -50,6 +70,8 @@ public class DataManager {
             i.printStackTrace();
         }
     }
+
+    
 
 
     public static User loadUser(String username) {

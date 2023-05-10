@@ -33,6 +33,57 @@ public class Display{
         user.displayAllExpenses();
     }
 
+//          ===== LOGIN / SIGNUP METHODS =====
+
+    public static User login(Scanner scan){
+        User user = null;
+
+        while(true){
+            System.out.print("Enter a username: ");
+            String username = scan.next();
+            System.out.print("Enter a password: ");
+            String password = scan.next();
+            
+            // check if password matches saved data
+            user = DataManager.loadUser(username);
+            if( user.attemptSignin(username, password) ){
+                System.out.println("Welcome back " + username + "!");
+                break;
+            }else{
+                System.out.println("Incorrect credential provided!");
+                clearSCreen();
+            }
+        }
+
+        return user;
+    }
+
+    public static User createAccount(Scanner scan){
+        boolean acceptableCredentials = false;
+        String username = null;
+        String password = null;
+
+        while(!acceptableCredentials){
+            System.out.print("Enter a username: ");
+            username = scan.next();
+            System.out.print("Enter a password: ");
+            password = scan.next();
+
+            acceptableCredentials = DataManager.isUserNameAvailable(username);
+
+            if(acceptableCredentials){
+                System.out.print("Account successfully created!");
+            }else{
+                System.out.println("username is already in use!");
+            }
+        }
+
+        return new User(username, password);
+
+    }
+
+    public static void clearSCreen(){System.out.print("\033c");}
+
 
     public static void displayStats(Scanner scan, User user) {Statistics.displayStatistics(user);}
 

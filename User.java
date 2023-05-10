@@ -1,3 +1,12 @@
+/* ===== CLASS DESCRIPTION =====
+ * 
+ * this class is the general manager for a users information.
+ * Currently, it stores a username, password, total expenses, and expenses.
+ * 
+ * Last updated: 10.05.2023
+ */
+
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +28,6 @@ public class User implements Serializable{
         this.username = username;
         this.password = password;
         this.totalExpenses = 5;
-        budget = 100;
     }
 
     // getters
@@ -64,7 +72,7 @@ public class User implements Serializable{
     }
 
     public String toString(){
-        String toString = username+", "+password+" : "+expenses.size()+" expense(s),";
+        String toString = username+" has "+expenses.size()+" expense(s),";
         return toString;
     }
 }
