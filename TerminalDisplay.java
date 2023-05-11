@@ -46,9 +46,7 @@ class TerminalDisplay extends Display{
 
             /* TODO:
              * 
-             * 1. remove expense i/o doesn't work
-             * 2. clear screen before breaking in switch
-             * 3. expenses aren't properly saving
+             * 1. clear screen before breaking in switch
              */
 
             switch (choice) {
@@ -63,14 +61,17 @@ class TerminalDisplay extends Display{
                     System.out.print("Enter the category of the expense (medical, transport, groceries, etc): ");
                     String expenseCategory = scan.nextLine();
                     user.addExpense(expenseName, expenseAmount, expenseCategory);
+                    DataManager.saveUser(user);
                     break;
                 case 2: 
                     System.out.println("This hasn't been implemented yet!!!"); 
                     break;
                 case 3: 
                     System.out.print("Enter the name of the expense you want to remove: "); 
+                    scan.nextLine(); // consumes a newline character that's NOT FUCKING THERE I HATE JAVA
                     String removedExpense = scan.nextLine();
                     user.removeExpense(removedExpense);
+                    DataManager.saveUser(user);
                     break;
                 case 4: 
                     user.displayAllExpenses(); 
