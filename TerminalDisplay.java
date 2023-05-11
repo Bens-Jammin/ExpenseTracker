@@ -32,39 +32,57 @@ class TerminalDisplay extends Display{
     public static void MainUserPage(User user){
         Scanner scan = new Scanner(System.in);
 
-        System.out.println(SEPARATOR + "  logged in as : " + user.getUserName() +"  " +  SEPARATOR + "\n\n");
+        while(true){
+            System.out.println(SEPARATOR + "  logged in as : " + user.getUserName() +"  " +  SEPARATOR + "\n\n");
 
-        System.out.println("To add an expense, enter '1'");
-        System.out.println("To edit an existing expense, enter '2'");
-        System.out.println("To remove an expense, enter '3'");
-        System.out.println("To view all expenses, enter '4'");
-        System.out.println("To see spending statistics, enter '5'");
-        System.out.println("To logout, enter '9'");
+            System.out.println("To add an expense, enter '1'");
+            System.out.println("To edit an existing expense, enter '2'");
+            System.out.println("To remove an expense, enter '3'");
+            System.out.println("To view all expenses, enter '4'");
+            System.out.println("To see spending statistics, enter '5'");
+            System.out.println("To logout, enter '9'");
 
-        int choice = scan.nextInt();
+            int choice = scan.nextInt();
 
-        switch (choice){
-            case 1: 
-                System.out.println("Enter the name of the expense: ");
-                String expenseName = scan.nextLine();
-                System.out.println("Enter the amount paid for the expense: ");
-                double expenseAmount = scan.nextDouble();
-                System.out.println("Enter the category of the expense (medical, transport, groceries, etc): ");
-                String expenseCategory = scan.nextLine();
-                user.addExpense(expenseName, expenseAmount, expenseCategory);
-                break;
-            case 2: System.out.println("this hasnt been implemented yet!!!"); break;
-            case 3: 
-                System.out.println("enter the name of the expense you want to remove: "); 
-                String removedExpense = scan.nextLine();
-                user.removeExpense(removedExpense);
-                break;
-            case 4: user.displayAllExpenses(); break;
-            case 5: Statistics.displayStatistics(user); break;
-            case 9: 
-                Display.Logout(scan, user);
+            /* TODO:
+             * 
+             * 1. remove expense i/o doesn't work
+             * 2. clear screen before breaking in switch
+             * 3. expenses aren't properly saving
+             */
+
+            switch (choice) {
+                case 1: 
+                    System.out.print("Enter the name of the expense: ");
+                    // idfk why I have to add it, chatGPT says I need it and it doesn't work without it
+                    scan.nextLine(); // consumes a newline character that's NOT FUCKING THERE
+                    String expenseName = scan.nextLine();
+                    System.out.print("Enter the amount paid for the expense: ");
+                    double expenseAmount = scan.nextDouble();
+                    scan.nextLine(); // consume the leftover newline character
+                    System.out.print("Enter the category of the expense (medical, transport, groceries, etc): ");
+                    String expenseCategory = scan.nextLine();
+                    user.addExpense(expenseName, expenseAmount, expenseCategory);
+                    break;
+                case 2: 
+                    System.out.println("This hasn't been implemented yet!!!"); 
+                    break;
+                case 3: 
+                    System.out.print("Enter the name of the expense you want to remove: "); 
+                    String removedExpense = scan.nextLine();
+                    user.removeExpense(removedExpense);
+                    break;
+                case 4: 
+                    user.displayAllExpenses(); 
+                    break;
+                case 5: 
+                    Statistics.displayStatistics(user); 
+                    break;
+                case 9: 
+                    Display.Logout(scan, user);
+            }
         }
-    }
+    }        
 
     public static void main(String[] args) {
         MainUserPage( HomeScreen() );
