@@ -39,9 +39,9 @@ public class Display{
         User user = null;
 
         while(true){
-            System.out.print("Enter a username: ");
+            System.out.print("Enter username: ");
             String username = scan.next();
-            System.out.print("Enter a password: ");
+            System.out.print("Enter password: ");
             String password = scan.next();
             
             // check if password matches saved data

@@ -29,8 +29,4 @@ public class Expenses implements Serializable {
         System.out.println(" >> Total amount due: $"+amount);
         System.out.println(SEPARATOR);
     }
-
-    public String toString(){
-        return "("+category+") "+name+" : $"+amount;
-    }
 }
