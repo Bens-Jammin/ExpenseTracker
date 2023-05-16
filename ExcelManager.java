@@ -19,5 +19,6 @@ public class ExcelManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        workbook.close();
     }
 }
