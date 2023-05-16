@@ -90,7 +90,7 @@ public class Display{
     }
 
 
-    public void displayCurrentExpenseCategories(User user){
+    public static void displayCurrentExpenseCategories(User user){
         System.out.println("\nHere are your current expense categories, to select one to use again, please enter the number beside the category:");
 
         Set<String> expenseCategories = user.getExpenseCategories();
