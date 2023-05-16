@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Set;
 
 public class Display{
 
@@ -87,6 +88,20 @@ public class Display{
         return user;
 
     }
+
+
+    public void displayCurrentExpenseCategories(User user){
+        System.out.println("\nHere are your current expense categories, to select one to use again, please enter the number beside the category:");
+
+        Set<String> expenseCategories = user.getExpenseCategories();
+
+        int categoryNumber = 1;
+        for(String category : expenseCategories){
+            System.out.println(" >> ("+categoryNumber+") : "+category);
+        }
+
+    }
+
 
     public static void clearSCreen(){System.out.print("\033c");}
 

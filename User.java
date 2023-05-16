@@ -9,18 +9,17 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class User implements Serializable{
     
     private static final long serialVersionUID = 8606117422906450152L;
-    
-    public static final int INCREMENT = 10;
-    
+        
     List<Expenses> expenses;
     String username;
     String password;
-    double budget;
     double totalExpenses;
 
     public User(String username, String password) {
@@ -35,15 +34,14 @@ public class User implements Serializable{
     public String getPasword(){return password;}
     public List<Expenses> getExpenses(){return expenses;}
     public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
-    public double getBudget(){return budget;}
     public double getTotalExpenses(){return totalExpenses;}
 
-    public void setBudget(double budget){this.budget = budget;}
 
     public void addExpense(String name, double amount, String category) {
         this.expenses.add(new Expenses(name, amount, category));
         this.totalExpenses += amount;
     }
+
 
     public void removeExpense(String name) {
         for (int i = 0; i < expenses.size(); i++) {
@@ -56,6 +54,7 @@ public class User implements Serializable{
         System.out.println("This expense doesn't exist!");
     }
 
+
     public void displayAllExpenses() {
         for (int i = 0; i < expenses.size(); i++) {
             expenses.get(i).displayExpense(i + 1);
@@ -64,6 +63,19 @@ public class User implements Serializable{
     }
 
 
+    public Set<String> getExpenseCategories(){
+        Set<Expenses> uniqueExpenses = new HashSet<Expenses> ();
+
+        for(int i=0; i< expenses.size(); i++){
+            String currentCategory = expenses[i];
+
+            if ( !uniqueExpenses.contains(currentCategory) ){
+                uniqueExpenses.add(currentCategory);
+            }
+        }
+
+        return uniqueExpenses;
+    }
 
 
     public boolean attemptSignin(String username, String password) {
@@ -71,6 +83,7 @@ public class User implements Serializable{
         boolean passwordIsCorrect = ( this.password.equals(password) );
         return usernameIsCorrect && passwordIsCorrect;
     }
+
 
     public String toString(){
         String toString = username+" has "+expenses.size()+" expense(s),";

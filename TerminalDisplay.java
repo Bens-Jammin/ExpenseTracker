@@ -58,7 +58,9 @@ class TerminalDisplay extends Display{
                     System.out.print("Enter the amount paid for the expense: ");
                     double expenseAmount = scan.nextDouble();
                     scan.nextLine(); // consume the leftover newline character
-                    System.out.print("Enter the category of the expense (medical, transport, groceries, etc): ");
+                    System.out.print("Enter the category of the expense (medical, transport, groceries, etc) ");
+                    // FIXME: This is untested
+                    Display.displayCurrentExpenseCategories();
                     String expenseCategory = scan.nextLine();
                     user.addExpense(expenseName, expenseAmount, expenseCategory);
                     DataManager.saveUser(user);
