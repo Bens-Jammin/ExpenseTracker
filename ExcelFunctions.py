@@ -1,8 +1,11 @@
+import os
+import pandas as pd
+
 def CreateExcelFile():
 
     file_name = "data.xlsx"
-    folder_path = "D:\Python stuff\Projects\FinanceManager" # TODO: Change file path
-                                                            # also how do i dynamically do this
+    folder_path = "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker" # TODO: how do i dynamically do this
+                                                            
     file_path = os.path.join(folder_path, file_name)
 
     # Check if the file exists
