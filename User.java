@@ -64,10 +64,10 @@ public class User implements Serializable{
 
 
     public Set<String> getExpenseCategories(){
-        Set<Expenses> uniqueExpenses = new HashSet<Expenses> ();
+        Set<String> uniqueExpenses = new HashSet<String> ();
 
         for(int i=0; i< expenses.size(); i++){
-            String currentCategory = expenses[i];
+            String currentCategory = expenses.get(i).getCategory();
 
             if ( !uniqueExpenses.contains(currentCategory) ){
                 uniqueExpenses.add(currentCategory);
