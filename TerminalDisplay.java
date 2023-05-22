@@ -40,6 +40,7 @@ class TerminalDisplay extends Display{
             System.out.println("To remove an expense, enter '3'");
             System.out.println("To view all expenses, enter '4'");
             System.out.println("To see spending statistics, enter '5'");
+            System.out.println("To create an Excel File of all your expenses, enter '6'");
             System.out.println("To logout, enter '9'");
 
             int choice = scan.nextInt();
@@ -59,7 +60,6 @@ class TerminalDisplay extends Display{
                     double expenseAmount = scan.nextDouble();
                     scan.nextLine(); // consume the leftover newline character
                     System.out.print("Enter the category of the expense (medical, transport, groceries, etc) ");
-                    // FIXME: This is untested
                     Display.displayCurrentExpenseCategories(user);
                     String expenseCategory = scan.nextLine();
                     user.addExpense(expenseName, expenseAmount, expenseCategory);
@@ -81,6 +81,8 @@ class TerminalDisplay extends Display{
                 case 5: 
                     Statistics.displayStatistics(user); 
                     break;
+                case 6:
+                    ExcelManager.CSVToXLConverter(user, "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker");
                 case 9: 
                     Display.Logout(scan, user);
             }

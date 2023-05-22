@@ -1,26 +1,21 @@
 import os
 import pandas as pd
 
-def CreateExcelFile():
+def CreateExcelFile(csv_file_path, excel_file_path):
+    # Read the CSV file
+    df = pd.read_csv(csv_file_path)
 
-    file_name = "data.xlsx"
-    folder_path = "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker" # TODO: how do i dynamically do this
-                                                            
-    file_path = os.path.join(folder_path, file_name)
+    # Create Excel writer using pandas
+    writer = pd.ExcelWriter(excel_file_path, engine='xlsxwriter')
 
-    # Check if the file exists
-    if os.path.exists(file_path):
-        try:
-            os.remove(file_path)
-            print(f"File '{file_path}' has been deleted successfully.")
-        except FileNotFoundError:
-            print(f"File '{file_path}' does not exist.")
-        except PermissionError:
-            print(f"You do not have permission to delete the file '{file_path}'.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+    # Write the DataFrame to the Excel file
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
 
-    df = pd.read_csv('data.csv')
+    # Close the Pandas Excel writer and output the Excel file
+    writer.save()
+    print(f"Excel file '{excel_file_path}' created successfully.")
+
+    df = pd.read_csv('Data.csv')
 
     # Create a writer object to save the DataFrame to an Excel file
     writer = pd.ExcelWriter(file_path)
