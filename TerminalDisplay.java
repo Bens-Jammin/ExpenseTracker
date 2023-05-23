@@ -8,6 +8,8 @@
 
  import java.util.Scanner;
 
+import javax.swing.text.AbstractDocument.BranchElement;
+
 class TerminalDisplay extends Display{
 
     private static final String SEPARATOR = "=====";
@@ -82,7 +84,8 @@ class TerminalDisplay extends Display{
                     Statistics.displayStatistics(user); 
                     break;
                 case 6:
-                    ExcelManager.CSVToXLConverter(user, "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker");
+                    ExcelManager.UpdateAllFiles(user);
+                    break;
                 case 9: 
                     Display.Logout(scan, user);
             }

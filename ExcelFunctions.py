@@ -1,29 +1,20 @@
 import os
 import pandas as pd
 
-def CreateExcelFile(csv_file_path, excel_file_path):
-    # Read the CSV file
+def create_excel_from_csv(csv_file_path):
+    # Read the CSV file into a pandas DataFrame
     df = pd.read_csv(csv_file_path)
 
-    # Create Excel writer using pandas
-    writer = pd.ExcelWriter(excel_file_path, engine='xlsxwriter')
+    # Extract the folder path and file name from the CSV file path
+    folder_path, file_name = os.path.split(csv_file_path)
 
-    # Write the DataFrame to the Excel file
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    # Remove the file extension from the file name
+    file_name_without_extension = os.path.splitext(file_name)[0]
 
-    # Close the Pandas Excel writer and output the Excel file
-    writer.save()
-    print(f"Excel file '{excel_file_path}' created successfully.")
+    # Create the Excel file path
+    excel_file_path = os.path.join(folder_path, file_name_without_extension + '.xlsx')
 
-    df = pd.read_csv('Data.csv')
+    # Write the DataFrame to an Excel file
+    df.to_excel(excel_file_path, index=False)
 
-    # Create a writer object to save the DataFrame to an Excel file
-    writer = pd.ExcelWriter(file_path)
-
-    # Convert the DataFrame to an Excel sheet named 'Sheet1'
-    df.to_excel(writer, sheet_name='Sheet1', index=False)
-
-    # Save the Excel file
-    writer.save()
-
-    print("Excel file created successfully.")
+    print(f"Excel file created successfully at {excel_file_path}")
