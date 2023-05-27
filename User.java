@@ -54,7 +54,7 @@ public class User implements Serializable{
 
     public void removeExpense(String name) {
         for (int i = 0; i < expenses.size(); i++) {
-            if (expenses.get(i).getExpenseName().equals(name)) {
+            if (expenses.get(i).getName().equals(name)) {
                 this.totalExpenses -= expenses.get(i).getAmount();
                 expenses.remove(i);
                 return;
@@ -97,7 +97,7 @@ public class User implements Serializable{
 
     public void removeIncome(String name) {
         for (int i = 0; i < allIncome.size(); i++) {
-            if (allIncome.get(i).getExpenseName().equals(name)) {
+            if (allIncome.get(i).getName().equals(name)) {
                 this.totalIncome -= allIncome.get(i).getAmount();
                 allIncome.remove(i);
                 return;

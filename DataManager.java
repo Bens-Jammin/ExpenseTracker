@@ -49,8 +49,9 @@ public class DataManager {
             out.writeObject(user);
             out.close();
             fileOut.close();
-            System.out.println("User data is saved in " +FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
             saveExpenses(user.getUserName(),user.getExpenses());
+            saveIncome(user.getUserName(),user.getAllIncome());
+            System.out.println("User data is saved in " +FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
             return true;
         } catch (IOException i) {
             return false;
@@ -72,7 +73,26 @@ public class DataManager {
     }
 
     
+    public static void saveIncome(String username, List<Income> income) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(income);
+            out.close();
+            fileOut.close();
+            System.out.println("Incomes data is saved in " + FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
 
+    /* 
+     *      ################################
+     * 
+     *              LOADING USER DATA
+     * 
+     *      ################################
+     */
 
     public static User loadUser(String username) {
         User user = null;
@@ -82,14 +102,24 @@ public class DataManager {
             user = (User) in.readObject();
             in.close();
             fileIn.close();
-            System.out.println("User data is loaded from " + FOLDER_NAME + username + FILE_EXTENSION);
             List<Expenses> loadedExpenses = loadExpenses(username);
             for(Expenses e : loadedExpenses){
-                String name = e.getExpenseName();
+                String name = e.getName();
                 double amount = e.getAmount();
                 String category = e.getCategory();
                 user.addExpense(name, amount, category);
             }
+            
+            List<Income> loadedIncome = loadIncome(username);
+            for(Income i : loadedIncome){
+                String name = i.getName();
+                double amount = i.getAmount();
+                String category = i.getCategory();
+                user.addIncome(name, amount, category);
+            }
+            
+            
+            System.out.println("User data is loaded from " + FOLDER_NAME + username + FILE_EXTENSION);
 
         } catch (IOException i) {
             i.printStackTrace();
@@ -113,5 +143,21 @@ public class DataManager {
             i.printStackTrace();
         }
         return expenses;
+    }
+
+
+    public static List<Income> loadIncome(String username) {
+        List<Income> income = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            income = (List<Income>) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Income data is loaded from " + FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        return income;
     }
 }

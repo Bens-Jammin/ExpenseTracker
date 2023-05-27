@@ -14,8 +14,8 @@ public abstract class Transaction implements Serializable {
     }
 
     // Getters & Setters
-    public String getExpenseName() {return name;}
-    public void setExpenseName(String name) {this.name = name;}
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
 
     public double getAmount(){return amount;}
     public void setAmount(Double amount){this.amount = amount;}

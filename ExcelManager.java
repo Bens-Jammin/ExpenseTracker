@@ -47,7 +47,7 @@ public class ExcelManager {
             FileWriter csvWriter = new FileWriter(CSV_FILE_PATH, true);
 
             for(Expenses expense : user.getExpenses()){
-                String row = expense.getCategory() + "," + expense.getExpenseName() + "," + String.valueOf(expense.getAmount());
+                String row = expense.getCategory() + "," + expense.getName() + "," + String.valueOf(expense.getAmount());
                 csvWriter.append(row);
                 csvWriter.append("\n");
             }
