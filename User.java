@@ -57,7 +57,7 @@ public class User implements Serializable{
 
     public void displayAllExpenses() {
         for (int i = 0; i < expenses.size(); i++) {
-            expenses.get(i).displayExpense(i + 1);
+            expenses.get(i).displayTransation(i + 1);
             System.out.print("\n");
         }
     }
