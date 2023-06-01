@@ -1,6 +1,9 @@
 import javax.swing.*;
+import java.util.Scanner;
 
 public class GUIDisplayManager extends JFrame {
+
+    private User user = null;
 
     private JButton loginButton;
     private JButton signupButton;
@@ -46,25 +49,32 @@ public class GUIDisplayManager extends JFrame {
         setVisible(true);
     }
 
+
     private void handleLogin() {
+        Scanner scan = new Scanner(System.in);
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        // Add your login validation logic here
-        if (username.equals("admin") && password.equals("password")) {
-            JOptionPane.showMessageDialog(this, "Login successful");
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid username or password");
+        user = Display.login(scan, username, password);
+
+        if(user != null){
+            JOptionPane.showMessageDialog(this, "Welcome back " + user.getUserName() + "!"); 
+            scan.close();  
         }
     }
 
     private void handleSignup() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
+        Scanner scan = new Scanner(System.in);
 
-        // Add your signup logic here
+        user = Display.createAccount(scan, username, password);        
 
-        JOptionPane.showMessageDialog(this, "Signup successful");
+        
+        if(user != null){
+            JOptionPane.showMessageDialog(this,  "Welcome " + user.getUserName() + "!"); 
+            scan.close();  
+        }
     }
 
     public static void main(String[] args) {

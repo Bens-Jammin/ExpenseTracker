@@ -103,20 +103,29 @@ public class DataManager {
             in.close();
             fileIn.close();
             List<Expenses> loadedExpenses = loadExpenses(username);
-            for(Expenses e : loadedExpenses){
-                String name = e.getName();
-                double amount = e.getAmount();
-                String category = e.getCategory();
-                user.addExpense(name, amount, category);
+            if(loadedExpenses != null){
+                for(Expenses e : loadedExpenses){
+                    if(e != null){
+                        String name = e.getName();
+                        double amount = e.getAmount();
+                        String category = e.getCategory();
+                        user.addExpense(name, amount, category);
+                    }
+                }
             }
             
             List<Income> loadedIncome = loadIncome(username);
-            for(Income i : loadedIncome){
-                String name = i.getName();
-                double amount = i.getAmount();
-                String category = i.getCategory();
-                user.addIncome(name, amount, category);
+            if (loadedIncome != null) {
+                for (Income i : loadedIncome) {
+                    if (i != null) {
+                        String name = i.getName();
+                        double amount = i.getAmount();
+                        String category = i.getCategory();
+                        user.addIncome(name, amount, category);
+                    }
+                }
             }
+
             
             
             System.out.println("User data is loaded from " + FOLDER_NAME + username + FILE_EXTENSION);

@@ -47,7 +47,7 @@ public class Display{
             
             // check if password matches saved data
             user = DataManager.loadUser(username);
-            if( user.attemptSignin(username, password) ){
+            if( user.attemptSignin(password) ){
                 clearSCreen();
                 System.out.println("Welcome back " + username + "!");
                 break;
@@ -59,6 +59,26 @@ public class Display{
 
         return user;
     }
+
+
+    public static User login(Scanner scan, String username, String password){
+        User user = null;
+
+        while(true){
+            // check if password matches saved data
+            user = DataManager.loadUser(username);  // grabs a user saved
+            if(user != null && user.attemptSignin(password) ){   // checks if the password is correct AND user exists
+                System.out.println("Welcome back " + username + "!");
+                break;
+            }else{
+                clearSCreen();
+                System.out.println("Incorrect credential provided!");
+            }
+        }
+
+        return user;
+    }
+
 
     public static User createAccount(Scanner scan){
         boolean acceptableCredentials = false;
@@ -89,6 +109,29 @@ public class Display{
 
     }
 
+
+    public static User createAccount(Scanner scan, String username, String password){
+        boolean acceptableCredentials = false;
+        User user = null;
+
+        while(!acceptableCredentials){
+
+            acceptableCredentials = DataManager.isUserNameAvailable(username);
+
+            if(acceptableCredentials){
+                user = new User(username, password);
+                DataManager.saveUser(user);
+                clearSCreen();
+                System.out.print("Account successfully created!");
+            }else{
+                clearSCreen();
+                System.out.println("username is already in use!");
+            }
+        }
+
+        return user;
+
+    }
 
     public static void displayCurrentExpenseCategories(User user){
         System.out.println("\nHere are your current expense categories, to select one to use again, please enter the number beside the category:");

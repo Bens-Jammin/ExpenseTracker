@@ -130,10 +130,8 @@ public class User implements Serializable{
     }
 
 
-    public boolean attemptSignin(String username, String password) {
-        boolean usernameIsCorrect = ( this.username.equals(username) );
-        boolean passwordIsCorrect = ( this.password.equals(password) );
-        return usernameIsCorrect && passwordIsCorrect;
+    public boolean attemptSignin(String password) {
+        return password.equals(password);
     }
 
 
