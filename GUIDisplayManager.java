@@ -49,7 +49,7 @@ public class GUIDisplayManager extends JFrame {
         setVisible(true);
     }
 
-
+    // TODO: main menu to popup after joptionpane closes
     private void handleLogin() {
         Scanner scan = new Scanner(System.in);
         String username = usernameField.getText();
