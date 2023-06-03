@@ -61,7 +61,7 @@ public class Display{
     }
 
 
-    public static User login(Scanner scan, String username, String password){
+    public static User login(String username, String password){
         User user = null;
 
         while(true){
@@ -110,7 +110,7 @@ public class Display{
     }
 
 
-    public static User createAccount(Scanner scan, String username, String password){
+    public static User createAccount(String username, String password){
         boolean acceptableCredentials = false;
         User user = null;
 

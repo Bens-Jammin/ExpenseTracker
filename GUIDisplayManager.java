@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
 public class GUIDisplayManager extends JFrame {
@@ -49,32 +51,37 @@ public class GUIDisplayManager extends JFrame {
         setVisible(true);
     }
 
-    // TODO: main menu to popup after joptionpane closes
     private void handleLogin() {
-        Scanner scan = new Scanner(System.in);
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        user = Display.login(scan, username, password);
+        user = Display.login(username, password);
 
-        if(user != null){
-            JOptionPane.showMessageDialog(this, "Welcome back " + user.getUserName() + "!"); 
-            scan.close();  
+        if (user != null) {
+            JOptionPane.showMessageDialog(this, "Welcome back " + user.getUserName() + "!");
+            openMainPage();
         }
     }
 
     private void handleSignup() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-        Scanner scan = new Scanner(System.in);
 
-        user = Display.createAccount(scan, username, password);        
+        user = Display.createAccount(username, password);
 
-        
-        if(user != null){
-            JOptionPane.showMessageDialog(this,  "Welcome " + user.getUserName() + "!"); 
-            scan.close();  
+        if (user != null) {
+            JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
+            openMainPage();
         }
+    }
+
+    private void openMainPage() {
+        // Close the current GUI window
+        dispose();
+
+        // Open the main page
+        MainGUIPage mainPage = new MainGUIPage();
+        mainPage.setVisible(true);
     }
 
     public static void main(String[] args) {
