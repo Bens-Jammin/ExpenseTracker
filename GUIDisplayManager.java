@@ -59,7 +59,7 @@ public class GUIDisplayManager extends JFrame {
 
         if (user != null) {
             JOptionPane.showMessageDialog(this, "Welcome back " + user.getUserName() + "!");
-            openMainPage();
+            openMainPage(user);
         }
     }
 
@@ -71,17 +71,16 @@ public class GUIDisplayManager extends JFrame {
 
         if (user != null) {
             JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
-            openMainPage();
+            openMainPage(user);
         }
     }
 
-    private void openMainPage() {
+    private void openMainPage(User user) {
         // Close the current GUI window
         dispose();
 
         // Open the main page
-        MainGUIPage mainPage = new MainGUIPage();
-        mainPage.setVisible(true);
+        new MainGUIPage(user);
     }
 
     public static void main(String[] args) {
