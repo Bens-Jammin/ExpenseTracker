@@ -34,7 +34,11 @@ public class MainGUIPage {
         button1.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         button2.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         button3.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        sidebarPanel.add(button1);
+        ImageIcon buttonImage = new ImageIcon("buttn.png");
+        button1.setIcon(buttonImage);
+        button2.setIcon(buttonImage);
+        button3.setIcon(buttonImage);
+        sidebarPanel.add(button1, BorderLayout.CENTER);
         sidebarPanel.add(button2);
         sidebarPanel.add(button3);
 
@@ -42,8 +46,11 @@ public class MainGUIPage {
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.decode("#232323"));
         JLabel contentLabel = new JLabel("Content Area");
-        contentLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        contentPanel.add(contentLabel, BorderLayout.CENTER);
+        Font textFont = new Font("Roboto",0 ,24);
+        contentLabel.setFont(textFont);
+        contentLabel.setForeground(Color.WHITE);
+        contentLabel.setHorizontalAlignment(SwingConstants.CENTER); // TODO: put this a couple dozen pixels down
+        contentPanel.add(contentLabel, BorderLayout.NORTH);
 
         // Set the preferred sizes
         sidebarPanel.setPreferredSize(new Dimension(frame.getWidth() / 5, frame.getHeight()));
