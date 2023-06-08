@@ -50,6 +50,7 @@ public class MainGUIPage {
         contentLabel.setFont(textFont);
         contentLabel.setForeground(Color.WHITE);
         contentLabel.setHorizontalAlignment(SwingConstants.CENTER); // TODO: put this a couple dozen pixels down
+        contentLabel.setBorder(BorderFactory.createEmptyBorder(48, 0, 0, 0));
         contentPanel.add(contentLabel, BorderLayout.NORTH);
 
         // Set the preferred sizes
