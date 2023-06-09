@@ -8,7 +8,10 @@
 
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,13 +38,18 @@ public class User implements Serializable{
     public String getUserName(){return username;}
     public String getPasword(){return password;}
     
-    public List<Expenses> getExpenses(){return expenses;}
+    public List<Expenses> getExpenses(){return (expenses != null) ? expenses : Collections.emptyList();}
     public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
     public double getTotalExpenses(){return totalExpenses;}
 
-    public List<Income> getAllIncome(){return allIncome;}
+    public List<Income> getAllIncome(){return (allIncome != null) ? allIncome : Collections.emptyList();}
     public Income getOneIncome(int i){return allIncome.get(i);} // maybe testing ? idk i have this just in case 
     public double getTotalIncome(){return totalIncome;}
+
+    public double getNetValue(){
+        // returns the users profit rounded to 2 decimal places
+        return Double.parseDouble(new DecimalFormat("#.##").format(getTotalIncome() - getTotalExpenses()));
+    }
 
 
     // ********** ALL INCOME ALTERING METHODS ***********
