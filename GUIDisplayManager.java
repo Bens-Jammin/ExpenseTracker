@@ -55,7 +55,6 @@ public class GUIDisplayManager extends JFrame {
         user = Display.login(username, password);
 
         if (user != null) {
-            JOptionPane.showMessageDialog(this, "Welcome back " + user.getUserName() + "!");
             openMainPage(user);
         }
     }

@@ -36,7 +36,7 @@ public class AddTransactionPage extends JFrame {
         mainPanel.add(typeComboBox);
 
         JLabel categoryLabel = new JLabel("Category:");
-        categoryComboBox = new JTextField();
+        categoryComboBox = new JComboBox<>();
         mainPanel.add(categoryLabel);
         mainPanel.add(categoryComboBox);
 
