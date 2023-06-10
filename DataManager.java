@@ -49,8 +49,11 @@ public class DataManager {
             out.writeObject(user);
             out.close();
             fileOut.close();
+            
+            // save expenses & income
             saveExpenses(user.getUserName(),user.getExpenses());
             saveIncome(user.getUserName(),user.getAllIncome());
+
             System.out.println("User data is saved in " +FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
             return true;
         } catch (IOException i) {

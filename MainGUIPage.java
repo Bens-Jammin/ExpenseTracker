@@ -80,8 +80,7 @@ public class MainGUIPage {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logic for button1 (View All Transactions)
-                contentLabel.setText("View All Transactions button clicked");
+                new AddTransactionPage(user);
             }
         });
 
@@ -110,47 +109,47 @@ public class MainGUIPage {
 
     private JTable createLatestTransactionsTable(User user){
 
-    List<Expenses> expenses = user.getExpenses();
-    int size = expenses.size();
+        List<Expenses> expenses = user.getExpenses();
+        int size = expenses.size();
 
-    Transaction t1 = null;
-    Transaction t2 = null;
-    Transaction t3 = null;
+        Transaction t1 = null;
+        Transaction t2 = null;
+        Transaction t3 = null;
 
-    Object[][] data;
-    if (size >= 3) {
-        t1 = expenses.get(2);
-        t2 = expenses.get(1);
-        t3 = expenses.get(0);
+        Object[][] data;
+        if (size >= 3) {
+            t1 = expenses.get(2);
+            t2 = expenses.get(1);
+            t3 = expenses.get(0);
 
-        data = new Object[][]{
-            {t1.getCategory(), t1.getName(), t1.getAmount()},
-            {t2.getCategory(), t2.getName(), t2.getAmount()},
-            {t3.getCategory(), t3.getName(), t3.getAmount()}
-        };
+            data = new Object[][]{
+                {t1.getCategory(), t1.getName(), t1.getAmount()},
+                {t2.getCategory(), t2.getName(), t2.getAmount()},
+                {t3.getCategory(), t3.getName(), t3.getAmount()}
+            };
 
-        // Use t1, t2, t3 as needed
-    } else if (size == 2) {
-        t1 = expenses.get(1);
-        t2 = expenses.get(0);
+            // Use t1, t2, t3 as needed
+        } else if (size == 2) {
+            t1 = expenses.get(1);
+            t2 = expenses.get(0);
 
-        data = new Object[][]{
-            {t1.getCategory(), t1.getName(), t1.getAmount()},
-            {t2.getCategory(), t2.getName(), t2.getAmount()},
-            {null, null, null}
-        };
-    } else if (size == 1) {
-        t1 = expenses.get(0);
+            data = new Object[][]{
+                {t1.getCategory(), t1.getName(), t1.getAmount()},
+                {t2.getCategory(), t2.getName(), t2.getAmount()},
+                {null, null, null}
+            };
+        } else if (size == 1) {
+            t1 = expenses.get(0);
+            
+            data = new Object[][]{
+                {t1.getCategory(), t1.getName(), t1.getAmount()},
+                {null, null, null},
+                {null, null, null}
+            };
+        } else{
+            data = new Object[][]{{null, null, null},{null, null, null},{null, null, null}};
+        }
         
-        data = new Object[][]{
-            {t1.getCategory(), t1.getName(), t1.getAmount()},
-            {null, null, null},
-            {null, null, null}
-        };
-    } else{
-        data = new Object[][]{{null, null, null},{null, null, null},{null, null, null}};
-    }
-    
         // Create column names
         String[] columnNames = {"Name", "Age", "Country"};
 
