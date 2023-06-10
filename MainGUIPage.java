@@ -81,6 +81,7 @@ public class MainGUIPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddTransactionPage(user);
+                frame.repaint();
             }
         });
 

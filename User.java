@@ -27,10 +27,12 @@ public class User implements Serializable{
     double totalIncome;
 
     public User(String username, String password) {
-        this.expenses = new ArrayList<>();
+        this.expenses = new ArrayList<Expenses>();
+        this.allIncome = new ArrayList<Income>();
         this.username = username;
         this.password = password;
-        this.totalExpenses = 5;
+        this.totalExpenses = 0;
+        this.totalIncome = 0;
     }
 
     // getters

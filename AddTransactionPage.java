@@ -2,27 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.text.NumberFormatter;
 
 public class AddTransactionPage extends JFrame {
 
     private JComboBox<String> typeComboBox;
-    private JComboBox<String> categoryComboBox;
+    private JTextField categoryField;       // TODO: eventually set up so you can select previously created categories
     private JTextField nameTextField;
     private JFormattedTextField amountField;
 
-    private List<String> categories;
-
     public AddTransactionPage(User user) {
-        // Initialize categories list
-        categories = new ArrayList<>();
 
         // Set up the frame
         setTitle("Transaction Creation Page");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(400, 200));
 
         // Create the main panel
@@ -36,18 +31,19 @@ public class AddTransactionPage extends JFrame {
         mainPanel.add(typeComboBox);
 
         JLabel categoryLabel = new JLabel("Category:");
-        categoryComboBox = new JComboBox<>();
+        categoryField = new JTextField();
         mainPanel.add(categoryLabel);
-        mainPanel.add(categoryComboBox);
+        mainPanel.add(categoryField);
 
         JLabel nameLabel = new JLabel("Name:");
         nameTextField = new JTextField();
         mainPanel.add(nameLabel);
         mainPanel.add(nameTextField);
 
+        // FIXME:
         JLabel amountLabel = new JLabel("Amount:");
-        NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        NumberFormatter formatter = new NumberFormatter(numberFormat);
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        NumberFormatter formatter = new NumberFormatter(decimalFormat);
         formatter.setValueClass(Double.class);
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
@@ -82,28 +78,6 @@ public class AddTransactionPage extends JFrame {
             }
         });
 
-        categoryComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ("Create New Category".equals(categoryComboBox.getSelectedItem())) {
-                    categoryCreationDialog.setVisible(true);
-                }
-            }
-        });
-
-        createCategoryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newCategory = newCategoryTextField.getText().trim();
-                if (!newCategory.isEmpty() && !categories.contains(newCategory)) {
-                    categories.add(newCategory);
-                    categoryComboBox.addItem(newCategory);
-                    categoryComboBox.setSelectedItem(newCategory);
-                    categoryCreationDialog.dispose();
-                }
-            }
-        });
-
         // Pack and display the frame
         pack();
         setLocationRelativeTo(null);
@@ -112,7 +86,7 @@ public class AddTransactionPage extends JFrame {
 
     private void createTransaction(User user) {
         String type = typeComboBox.getSelectedItem().toString();
-        String category = categoryComboBox.getSelectedItem().toString();
+        String category = categoryField.getText().toString();
         String name = nameTextField.getText().trim();
         String amountText = amountField.getText().trim();
 
@@ -126,6 +100,7 @@ public class AddTransactionPage extends JFrame {
         double amount;
         try {
             amount = Double.parseDouble(amountText);
+            System.out.println(amount);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid amount for the transaction.",
                     "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -139,24 +114,23 @@ public class AddTransactionPage extends JFrame {
         }
 
         // Create the transaction using the collected information
-        if ("Income".equals(type)) {
+        if ("Income" == type) {
             user.addIncome(name, amount, category);
         } else {
             user.addExpense(name, amount, category);
         }
-        DataManager.saveUser(user);
+        DataManager.saveUser(user); // FIXME: saves twice, and also you start at -5 for some reason?
 
         // Show a success message
         JOptionPane.showMessageDialog(this, "Transaction created successfully.",
                 "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        // Reset the form
-        resetForm();
+        dispose();
     }
 
     private void resetForm() {
         typeComboBox.setSelectedIndex(0);
-        categoryComboBox.setSelectedIndex(0);
+        categoryField.setText("");
         nameTextField.setText("");
         amountField.setText("");
     }
