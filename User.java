@@ -52,6 +52,28 @@ public class User implements Serializable{
         return Double.parseDouble(new DecimalFormat("#.##").format(getTotalIncome() - getTotalExpenses()));
     }
 
+    // setters
+    public void setExpenses(List<Expenses> e){
+        this.expenses = e;
+                
+        totalIncome = 0;
+        if(e.size() == 0){return;}
+
+        for (Expenses expense : e) {
+            totalExpenses += expense.getAmount();
+        }
+    }
+    public void setIncome(List<Income> i){
+        this.allIncome = i;
+        
+        totalIncome = 0;
+        if(i.size() == 0){return;}
+
+        for (Income income : i) {
+            totalIncome += income.getAmount();
+        }
+    }
+
 
     // ********** ALL INCOME ALTERING METHODS ***********
 

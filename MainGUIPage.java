@@ -238,23 +238,23 @@ public class MainGUIPage {
 
         } else {
             // Apply light mode styles
-            toggleColourScheme.setText("Light Mode");
+            toggleColourScheme.setText("Babygirl Mode");
             toggleColourScheme.setSelected(true);
 
             // Change colours
-            mainBackroundColour = Color.decode("#ABCDEF");
-            sidePanelColour = Color.decode("#ABCDEF");
-            buttonColour = Color.decode("#ABCDEF");
-            textColour = Color.decode("000000");
+            mainBackroundColour = Color.decode("#E11299");
+            sidePanelColour = Color.decode("#F5C6EC");
+            buttonColour = Color.decode("#9A208C");
+            textColour = Color.decode("#FFEAEA");
 
         }
 
         contentPanel.setBackground(mainBackroundColour);
         table.setBackground(mainBackroundColour);
         sidebarPanel.setBackground(sidePanelColour);
-        addTransactionButton.setBackground(buttonColour);
-        viewTransactionButton.setBackground(buttonColour);
-        removeTransactionButton.setBackground(buttonColour);
+        addTransactionButton.setForeground(buttonColour);
+        viewTransactionButton.setForeground(buttonColour);
+        removeTransactionButton.setForeground(buttonColour);
         netProfitLabel.setForeground(textColour);
     }
 }
