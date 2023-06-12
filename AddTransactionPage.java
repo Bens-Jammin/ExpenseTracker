@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
 
 public class AddTransactionPage extends JFrame {
@@ -126,12 +125,5 @@ public class AddTransactionPage extends JFrame {
                 "Success", JOptionPane.INFORMATION_MESSAGE);
 
         dispose();
-    }
-
-    private void resetForm() {
-        typeComboBox.setSelectedIndex(0);
-        categoryField.setText("");
-        nameTextField.setText("");
-        amountField.setText("");
     }
 }

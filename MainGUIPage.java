@@ -88,8 +88,8 @@ public class MainGUIPage {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logic for button2 (Create CSV)
-                contentLabel.setText("Create CSV button clicked");
+                new ViewAllTransactionsPage(user);
+                frame.repaint();
             }
         });
 
@@ -171,6 +171,7 @@ public class MainGUIPage {
         table.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));  //FIXME: 
         table.setBackground(Color.decode("#232323"));
         table.setForeground(Color.WHITE);
+        table.setEnabled(false);
 
         // Create and return a JTable with the model
         return table;
