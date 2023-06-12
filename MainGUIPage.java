@@ -8,14 +8,36 @@ import java.awt.event.ActionListener;
 
 public class MainGUIPage {
 
+    // colour scheme variables
+    private boolean isDarkMode = true;
+    JToggleButton toggleColourScheme;
+
+    // default colours 
+    Color mainBackroundColour = Color.decode("#232323");
+    Color sidePanelColour = Color.decode("#3f3f3f");
+    Color buttonColour = Color.decode("#777B7E");
+    Color textColour = Color.decode("#FFFFFF");
+
+    // buttons, pages, frames, etc
+    JFrame frame;
+    JPanel mainPanel;
+    JPanel sidebarPanel;
+    JButton addTransactionButton;
+    JButton viewTransactionButton;
+    JButton removeTransactionButton;
+    JPanel contentPanel;
+    JLabel netProfitLabel;
+    JTable table;
+
+
     public MainGUIPage(User user) {
 
         String title = user.getUserName() + " Transaction Account";
-        JFrame frame = new JFrame(title);
+        frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
 
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
         try {
@@ -25,48 +47,45 @@ public class MainGUIPage {
         }
 
         // Create sidebar panel
-        JPanel sidebarPanel = new JPanel();
-        sidebarPanel.setBackground(Color.decode("#3f3f3f"));
+        sidebarPanel = new JPanel();
+        sidebarPanel.setBackground(sidePanelColour);
 
         // Add sidebar buttons or components
-        JButton button1 = new JButton("View Transactions");
-        JButton button2 = new JButton("Create CSV");
-        JButton button3 = new JButton("Logout");
+        addTransactionButton= new JButton("View Transactions");
+        viewTransactionButton = new JButton("Create CSV");
+        removeTransactionButton = new JButton("Logout");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
-        button1.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        button2.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        button3.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        button1.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0)); // FIXME: why does this do nothing ??
-        ImageIcon buttonImage = new ImageIcon("buttn.png");
-        button1.setIcon(buttonImage);
-        button2.setIcon(buttonImage);
-        button3.setIcon(buttonImage);
-        sidebarPanel.add(button1, BorderLayout.CENTER);
-        sidebarPanel.add(button2);
-        sidebarPanel.add(button3);
+        addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        viewTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        addTransactionButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0)); // FIXME: why does this do nothing ??
+        addTransactionButton.setBackground(buttonColour);
+        viewTransactionButton.setBackground(buttonColour);
+        removeTransactionButton.setBackground(buttonColour);
+        sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
+        sidebarPanel.add(viewTransactionButton);
+        sidebarPanel.add(removeTransactionButton);
+
+        // Toggle between pink/dark mode
+        toggleColourScheme = new JToggleButton();
+        sidebarPanel.add(toggleColourScheme);
 
         // Create the content panel
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setBackground(Color.decode("#232323"));
-        
-        String bigLabel;
-        if(user.getNetValue() < 0){
-            bigLabel = "Net Profit : -$"+Math.abs(user.getNetValue());
-        }else{
-            bigLabel = "Net Profit : $"+user.getNetValue();
-        }
+        contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBackground(mainBackroundColour);
 
-        JTable table = createLatestTransactionsTable(user);
+        table = createLatestTransactionsTable(user);
         contentPanel.add(table, BorderLayout.CENTER);
 
-        JLabel contentLabel = new JLabel(bigLabel);
+
         Font textFont = new Font("Roboto",0 ,24);
-        contentLabel.setFont(textFont);
-        contentLabel.setForeground(Color.WHITE);
-        contentLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        contentLabel.setBorder(BorderFactory.createEmptyBorder(48, 0, 0, 0));
-        contentPanel.add(contentLabel, BorderLayout.NORTH);
+        netProfitLabel = new JLabel(updateProfit(user));
+        netProfitLabel.setFont(textFont);
+        netProfitLabel.setForeground(textColour);
+        netProfitLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        netProfitLabel.setBorder(BorderFactory.createEmptyBorder(48, 0, 0, 0));
+        contentPanel.add(netProfitLabel, BorderLayout.NORTH);
 
         // Set the preferred sizes
         sidebarPanel.setPreferredSize(new Dimension(frame.getWidth() / 5, frame.getHeight()));
@@ -77,15 +96,16 @@ public class MainGUIPage {
         mainPanel.add(sidebarPanel, BorderLayout.WEST);
 
         // Button logic
-        button1.addActionListener(new ActionListener() {
+        addTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddTransactionPage(user);
+                netProfitLabel.setText(updateProfit(user)); // Update the netProfitLabel
                 frame.repaint();
             }
         });
 
-        button2.addActionListener(new ActionListener() {
+        viewTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ViewAllTransactionsPage(user);
@@ -93,13 +113,24 @@ public class MainGUIPage {
             }
         });
 
-        button3.addActionListener(new ActionListener() {
+        removeTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RemoveTransactionsPage(user);
+                netProfitLabel.setText(updateProfit(user)); // Update the netProfitLabel
+                System.out.println(netProfitLabel.getText());
                 frame.repaint();
             }
         });
+
+        toggleColourScheme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                toggleMode();
+                frame.repaint();
+            }
+        });
+
 
         // loading the app
         frame.getContentPane().add(mainPanel);
@@ -175,5 +206,55 @@ public class MainGUIPage {
 
         // Create and return a JTable with the model
         return table;
+    }
+
+
+    private String updateProfit(User user){
+
+        String bigLabel;
+        if(user.getNetValue() < 0){
+            bigLabel = "Net Profit : -$"+Math.abs(user.getNetValue());
+        }else{
+            bigLabel = "Net Profit : $"+user.getNetValue();
+        }
+
+        return bigLabel;
+    }
+    
+
+    private void toggleMode() {
+        isDarkMode = !isDarkMode;
+        
+        if (isDarkMode) {
+            // Apply dark mode styles
+            toggleColourScheme.setText("Dark Mode");
+            toggleColourScheme.setSelected(false);
+
+            // Change colours
+            mainBackroundColour = Color.decode("#232323");
+            sidePanelColour = Color.decode("#3f3f3f");
+            buttonColour = Color.decode("#777B7E");
+            textColour = Color.decode("#FFFFFF");
+
+        } else {
+            // Apply light mode styles
+            toggleColourScheme.setText("Light Mode");
+            toggleColourScheme.setSelected(true);
+
+            // Change colours
+            mainBackroundColour = Color.decode("#ABCDEF");
+            sidePanelColour = Color.decode("#ABCDEF");
+            buttonColour = Color.decode("#ABCDEF");
+            textColour = Color.decode("000000");
+
+        }
+
+        contentPanel.setBackground(mainBackroundColour);
+        table.setBackground(mainBackroundColour);
+        sidebarPanel.setBackground(sidePanelColour);
+        addTransactionButton.setBackground(buttonColour);
+        viewTransactionButton.setBackground(buttonColour);
+        removeTransactionButton.setBackground(buttonColour);
+        netProfitLabel.setForeground(textColour);
     }
 }
