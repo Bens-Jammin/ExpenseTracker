@@ -96,8 +96,8 @@ public class MainGUIPage {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logic for button3 (Logout)
-                contentLabel.setText("Logout button clicked");
+                new RemoveTransactionsPage(user);
+                frame.repaint();
             }
         });
 

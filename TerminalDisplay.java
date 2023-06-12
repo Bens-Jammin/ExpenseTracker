@@ -64,7 +64,7 @@ class TerminalDisplay extends Display{
                     Display.displayCurrentExpenseCategories(user);
                     String expenseCategory = scan.nextLine();
                     user.addExpense(expenseName, expenseAmount, expenseCategory);
-                    DataManager.saveUser(user);
+                    //DataManager.saveUser(user);
                     break;
                 case 2: 
                     System.out.println("This hasn't been implemented yet!!!"); 
@@ -74,7 +74,7 @@ class TerminalDisplay extends Display{
                     scan.nextLine(); // consumes a newline character that's NOT FUCKING THERE I HATE JAVA
                     String removedExpense = scan.nextLine();
                     user.removeExpense(removedExpense);
-                    DataManager.saveUser(user);
+                    //DataManager.saveUser(user);
                     break;
                 case 4: 
                     user.displayAllExpenses(); 

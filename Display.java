@@ -11,7 +11,7 @@ public class Display{
         System.out.print("Enter the category of the expense: ");
         String expenseCategory = scan.next();
         user.addExpense(expenseName,expenseAmount,expenseCategory);
-        DataManager.saveUser(user);
+        //DataManager.saveUser(user);
         System.out.println("Expense successfully added!");
     }
 
@@ -96,7 +96,7 @@ public class Display{
 
             if(acceptableCredentials){
                 user = new User(username, password);
-                DataManager.saveUser(user);
+                //DataManager.saveUser(user);
                 clearSCreen();
                 System.out.print("Account successfully created!");
             }else{
@@ -120,7 +120,7 @@ public class Display{
 
             if(acceptableCredentials){
                 user = new User(username, password);
-                DataManager.saveUser(user);
+                //DataManager.saveUser(user);
                 clearSCreen();
                 System.out.print("Account successfully created!");
             }else{
@@ -155,7 +155,7 @@ public class Display{
 
     public static void Logout(Scanner scan, User user){
         System.out.println("Logging out...");
-        DataManager.saveUser(user);
+        //DataManager.saveUser(user);
         scan.close();
         System.exit(0);
     }
