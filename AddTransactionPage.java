@@ -12,7 +12,9 @@ public class AddTransactionPage extends JFrame {
     private JTextField nameTextField;
     private JFormattedTextField amountField;
 
-    public AddTransactionPage(User user) {
+    private JPanel mainPanel;
+
+    public AddTransactionPage(User user, JLabel netProfitLabel) {
 
         // Set up the frame
         setTitle("Transaction Creation Page");
@@ -20,7 +22,7 @@ public class AddTransactionPage extends JFrame {
         setPreferredSize(new Dimension(400, 200));
 
         // Create the main panel
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(5, 2, 10, 10));
 
         // Create and add components to the main panel
@@ -74,6 +76,8 @@ public class AddTransactionPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createTransaction(user);
+
+                netProfitLabel.setText(MainGUIPage.updateProfit(user));
             }
         });
 

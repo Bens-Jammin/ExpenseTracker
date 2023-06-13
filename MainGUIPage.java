@@ -99,8 +99,7 @@ public class MainGUIPage {
         addTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTransactionPage(user);
-                netProfitLabel.setText(updateProfit(user)); // Update the netProfitLabel
+                new AddTransactionPage(user, netProfitLabel);
                 frame.repaint();
             }
         });
@@ -116,9 +115,7 @@ public class MainGUIPage {
         removeTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RemoveTransactionsPage(user);
-                netProfitLabel.setText(updateProfit(user)); // Update the netProfitLabel
-                System.out.println(netProfitLabel.getText());
+                new RemoveTransactionsPage(user, netProfitLabel);
                 frame.repaint();
             }
         });
@@ -209,7 +206,7 @@ public class MainGUIPage {
     }
 
 
-    private String updateProfit(User user){
+    public static String updateProfit(User user){
 
         String bigLabel;
         if(user.getNetValue() < 0){
