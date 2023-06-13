@@ -9,6 +9,8 @@ public class GUIDisplayManager extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
+    private static final String NERD_EMOJI = "\uD83E\uDD13";
+
     public GUIDisplayManager() {
         setTitle("Login or Signup");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -52,22 +54,32 @@ public class GUIDisplayManager extends JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        user = Display.login(username, password);
+        if(username == "" || password == ""){
+            user = Display.login(username, password);
+        }else{
+            JOptionPane.showMessageDialog(this, "You need to enter a username and password!!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         if (user != null) {
             openMainPage(user);
+        }else{
+            JOptionPane.showMessageDialog(this, "You entered your username or password wrong!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     }
 
     private void handleSignup() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-
-        user = Display.createAccount(username, password);
-
-        if (user != null) {
-            JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
-            openMainPage(user);
+        try{
+            user = Display.createAccount(username, password);
+    
+            if (user != null) {
+                JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
+                openMainPage(user);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "There was an error in your credentials, try again!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
