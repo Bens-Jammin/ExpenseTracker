@@ -16,6 +16,7 @@ public class MainGUIPage {
     Color mainBackroundColour = Color.decode("#232323");
     Color sidePanelColour = Color.decode("#3f3f3f");
     Color buttonColour = Color.decode("#777B7E");
+    ImageIcon buttonImage = new ImageIcon("buttn_grey.png");
     Color textColour = Color.decode("#FFFFFF");
 
     // buttons, pages, frames, etc
@@ -231,6 +232,7 @@ public class MainGUIPage {
             mainBackroundColour = Color.decode("#232323");
             sidePanelColour = Color.decode("#3f3f3f");
             buttonColour = Color.decode("#777B7E");
+            buttonImage = new ImageIcon("buttn_grey.png");
             textColour = Color.decode("#FFFFFF");
 
         } else {
@@ -242,6 +244,7 @@ public class MainGUIPage {
             mainBackroundColour = Color.decode("#E11299");
             sidePanelColour = Color.decode("#F5C6EC");
             buttonColour = Color.decode("#9A208C");
+            buttonImage = new ImageIcon("buttn_pink.png");
             textColour = Color.decode("#FFEAEA");
 
         }
@@ -249,6 +252,9 @@ public class MainGUIPage {
         contentPanel.setBackground(mainBackroundColour);
         table.setBackground(mainBackroundColour);
         sidebarPanel.setBackground(sidePanelColour);
+        addTransactionButton.setIcon(buttonImage);
+        viewTransactionButton.setIcon(buttonImage);
+        removeTransactionButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonColour);
         viewTransactionButton.setForeground(buttonColour);
         removeTransactionButton.setForeground(buttonColour);
