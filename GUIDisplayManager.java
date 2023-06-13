@@ -71,15 +71,19 @@ public class GUIDisplayManager extends JFrame {
     private void handleSignup() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-        try{
+        
+        if(username == "" || password == ""){
             user = Display.createAccount(username, password);
+        }else{
+            JOptionPane.showMessageDialog(this, "You need to enter a username and password!!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     
-            if (user != null) {
-                JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
-                openMainPage(user);
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "There was an error in your credentials, try again!", "Error", JOptionPane.ERROR_MESSAGE);
+    
+        if (user != null) {
+            JOptionPane.showMessageDialog(this, "Welcome " + user.getUserName() + "!");
+            openMainPage(user);
+        }else{
+            JOptionPane.showMessageDialog(this, "You entered your username or password wrong!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
