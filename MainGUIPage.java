@@ -16,7 +16,7 @@ public class MainGUIPage {
     Color mainBackroundColour = Color.decode("#232323");
     Color sidePanelColour = Color.decode("#3f3f3f");
     Color buttonColour = Color.decode("#777B7E");
-    ImageIcon buttonImage = new ImageIcon("buttn_grey.png");
+    ImageIcon buttonImage = new ImageIcon("button_grey.png");
     Color textColour = Color.decode("#FFFFFF");
 
     // buttons, pages, frames, etc
@@ -52,18 +52,30 @@ public class MainGUIPage {
         sidebarPanel.setBackground(sidePanelColour);
 
         // Add sidebar buttons or components
-        addTransactionButton= new JButton("View Transactions");
-        viewTransactionButton = new JButton("Create CSV");
-        removeTransactionButton = new JButton("Logout");
+        addTransactionButton= new JButton("Add Transaction");
+        viewTransactionButton = new JButton("View All Transactions");
+        removeTransactionButton = new JButton("Remove Transactions");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         viewTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        addTransactionButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0)); // FIXME: why does this do nothing ??
+        // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
+        //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
+        addTransactionButton.setIcon(buttonImage);
+        viewTransactionButton.setIcon(buttonImage);
+        removeTransactionButton.setIcon(buttonImage);
         addTransactionButton.setBackground(buttonColour);
         viewTransactionButton.setBackground(buttonColour);
         removeTransactionButton.setBackground(buttonColour);
+        // chatGPT says i have to do this for the text to appear on the buttons :(
+        addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        viewTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        viewTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
         sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
         sidebarPanel.add(viewTransactionButton);
         sidebarPanel.add(removeTransactionButton);
@@ -201,7 +213,7 @@ public class MainGUIPage {
         table.setBackground(Color.decode("#232323"));
         table.setForeground(Color.WHITE);
         table.setEnabled(false);
-
+        table.setBorder(BorderFactory.createEmptyBorder(100, 0, 100, 0)); // Adjust the padding as needed        
         // Create and return a JTable with the model
         return table;
     }
@@ -231,8 +243,8 @@ public class MainGUIPage {
             // Change colours
             mainBackroundColour = Color.decode("#232323");
             sidePanelColour = Color.decode("#3f3f3f");
-            buttonColour = Color.decode("#777B7E");
-            buttonImage = new ImageIcon("buttn_grey.png");
+            buttonColour = Color.decode("#FFFFFF");
+            buttonImage = new ImageIcon("button_grey.png");
             textColour = Color.decode("#FFFFFF");
 
         } else {
@@ -244,11 +256,11 @@ public class MainGUIPage {
             mainBackroundColour = Color.decode("#E11299");
             sidePanelColour = Color.decode("#F5C6EC");
             buttonColour = Color.decode("#9A208C");
-            buttonImage = new ImageIcon("buttn_pink.png");
+            buttonImage = new ImageIcon("button_pink.png");
             textColour = Color.decode("#FFEAEA");
 
         }
-
+        // update everything
         contentPanel.setBackground(mainBackroundColour);
         table.setBackground(mainBackroundColour);
         sidebarPanel.setBackground(sidePanelColour);
@@ -259,5 +271,13 @@ public class MainGUIPage {
         viewTransactionButton.setForeground(buttonColour);
         removeTransactionButton.setForeground(buttonColour);
         netProfitLabel.setForeground(textColour);
+
+        // chatGPT says i have to do this for the text to appear on the buttons :(
+        addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        viewTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        viewTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
+        removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
     }
 }
