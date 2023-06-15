@@ -1,3 +1,5 @@
+package structures;
+
 public class Expenses extends Transaction{
 
     public Expenses(String name, double amount, String category) {

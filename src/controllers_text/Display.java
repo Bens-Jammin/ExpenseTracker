@@ -2,6 +2,8 @@ package src.controllers_text;
 import java.util.Scanner;
 import java.util.Set;
 
+import handlers.DataManager;
+import structures.*;
 
 public class Display{
 
@@ -147,9 +149,6 @@ public class Display{
 
 
     public static void clearSCreen(){System.out.print("\033c");}
-
-
-    public static void displayStats(Scanner scan, User user) {Statistics.displayStatistics(user);}
 
     public static void Invalid() {System.out.println("Invalid input, try again.");}
 

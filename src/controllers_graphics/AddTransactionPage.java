@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import javax.swing.text.NumberFormatter;
 
-import src.structures.User;
-import src.handlers.DataManager;
+import structures.*;
+import handlers.DataManager;
 
 
 public class AddTransactionPage extends JFrame {

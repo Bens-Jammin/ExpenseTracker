@@ -1,3 +1,4 @@
+package handlers;
 /* ===== CLASS DESCRIPTION =====
  * 
  * This class is used for saving/storing/fetching userdata.
@@ -20,6 +21,9 @@
 
 import java.io.*;
 import java.util.List;
+
+import structures.*;
+
 
 public class DataManager {
 

@@ -1,3 +1,5 @@
+package structures;
+
 /* ===== CLASS DESCRIPTION =====
  * 
  * this class is the general manager for a users information.

@@ -1,8 +1,9 @@
+package handlers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import src.structures.User;
+import structures.*;
 
 
 public class ExcelManager {

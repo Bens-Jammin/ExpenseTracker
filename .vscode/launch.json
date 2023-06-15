@@ -31,5 +31,8 @@
             "mainClass": "TerminalDisplay",
             "projectName": "ExpenseTracker_ec15fe05"
         }
-    ]
+    ],
+    "java.project.referencedLibraries": [
+        "src"
+      ]
 }

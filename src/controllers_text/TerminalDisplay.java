@@ -1,3 +1,5 @@
+package src.controllers_text;
+
 /* ===== CLASS DESCRIPTION =====
  * 
  * This class will be what is displayed on the terminal.
@@ -8,6 +10,8 @@
 
  import java.util.Scanner;
 
+import handlers.ExcelManager;
+import structures.*;
 
 class TerminalDisplay extends Display{
 
@@ -80,7 +84,6 @@ class TerminalDisplay extends Display{
                     user.displayAllExpenses(); 
                     break;
                 case 5: 
-                    Statistics.displayStatistics(user); 
                     break;
                 case 6:
                     ExcelManager.UpdateAllFiles(user);

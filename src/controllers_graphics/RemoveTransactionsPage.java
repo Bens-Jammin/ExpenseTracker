@@ -1,5 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import handlers.DataManager;
+import structures.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

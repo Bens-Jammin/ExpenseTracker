@@ -1,6 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import structures.*;
+
 import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;

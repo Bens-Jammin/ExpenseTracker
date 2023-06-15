@@ -1,3 +1,5 @@
+package structures;
+
 public class Income extends Transaction{
 
     public Income(String name, double amount, String category) {

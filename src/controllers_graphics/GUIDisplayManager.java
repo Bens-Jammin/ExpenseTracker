@@ -1,8 +1,7 @@
-import java.text.BreakIterator;
-
 import javax.swing.*;
 
 import src.controllers_text.Display;
+import structures.User;
 
 public class GUIDisplayManager extends JFrame {
 
@@ -62,6 +61,8 @@ public class GUIDisplayManager extends JFrame {
             JOptionPane.showMessageDialog(this, "You need to enter a username and password!!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        System.out.println(username + " " +  password);
 
         user = Display.login(username, password);
 

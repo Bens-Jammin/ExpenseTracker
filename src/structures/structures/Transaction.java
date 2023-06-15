@@ -1,3 +1,5 @@
+package structures;
+
 import java.io.Serializable;
 
 public abstract class Transaction implements Serializable {
