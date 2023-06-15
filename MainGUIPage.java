@@ -33,7 +33,7 @@ public class MainGUIPage {
 
     public MainGUIPage(User user) {
 
-        String title = user.getUserName() + " Transaction Account";
+        String title = user.getUserName() + " Transaction Account     [ ALPHA BUILD ] ";
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
@@ -209,7 +209,7 @@ public class MainGUIPage {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
-        table.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));  //FIXME: 
+        table.setBorder(BorderFactory.createEmptyBorder(100, 0, 100, 0));  //FIXME: 
         table.setBackground(Color.decode("#232323"));
         table.setForeground(Color.WHITE);
         table.setEnabled(false);
