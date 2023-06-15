@@ -91,7 +91,7 @@ public class AddTransactionPage extends JFrame {
         String type = typeComboBox.getSelectedItem().toString();
         String category = categoryField.getText().toString();
         String name = nameTextField.getText().trim();
-        String amountText = amountField.getText().trim();
+        String amountText = amountField.getText().trim().replaceAll(",", "");;
 
         // Validate the inputs
         if (name.isEmpty() || amountText.isEmpty()) {
@@ -117,7 +117,7 @@ public class AddTransactionPage extends JFrame {
         }
 
         // Create the transaction using the collected information
-        if ("Income" == type) {
+        if ("Income".equals("type") ){
             user.addIncome(name, amount, category);
         } else {
             user.addExpense(name, amount, category);

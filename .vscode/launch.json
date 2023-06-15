@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GUIDisplayManager",
+            "request": "launch",
+            "mainClass": "GUIDisplayManager",
+            "projectName": "ExpenseTracker_224b1689"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
