@@ -2,6 +2,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import src.structures.User;
+
+
 public class ExcelManager {
     private static final String CSV_FILE_PATH = "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker/FormattedDataFiles/Data.csv";
     private static final String EXCEL_FILE_PATH = "C:/Users/benem/OneDrive/Documents/GitHub/ExpenseTracker/FormattedDataFiles/Data.xlsx";

@@ -2,6 +2,8 @@ import java.text.BreakIterator;
 
 import javax.swing.*;
 
+import src.controllers_text.Display;
+
 public class GUIDisplayManager extends JFrame {
 
     private User user = null;
