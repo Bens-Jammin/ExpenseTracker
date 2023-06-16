@@ -1,9 +1,8 @@
-package src.controllers_text;
+package handlers;
 import java.util.Scanner;
 import java.util.Set;
 
-import handlers.DataManager;
-import structures.*;
+import structures.User;
 
 public class Display{
 
@@ -70,11 +69,9 @@ public class Display{
         User user = null;
 
         // check if password matches saved data
-        user = DataManager.loadUser(username);  // grabs a user saved
+        user = handlers.DataManager.loadUser(username);  // grabs a user saved
         if(user != null && user.attemptSignin(password) ){   // checks if the password is correct AND user exists
             System.out.println("Welcome back " + username + "!");
-        }else{
-            return null;
         }
         
         return user;

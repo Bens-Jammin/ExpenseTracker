@@ -1,45 +1,29 @@
 package handlers;
-/* ===== CLASS DESCRIPTION =====
- * 
- * This class is used for saving/storing/fetching userdata.
- * if a username is available (checked via isUserNameAvailable() method ), it can be saved
- * into two different .ser files to store the instance data.
- * The files are saved into the UserData file, and are labeled using as follows:
- * General user information = "{username}.ser"
- * user expense information = "{username}_expenses.ser"
- * 
- * TODO: 
- * 1. add a bill saving and loading (need to be implemented in the user class first!)
- * 2. add a delete user feature
- * 3. change username and passwords? 
- * 4. password overhaul (suggest passwords, ensure passwords are strong, etc)
- * 
- * Last updated: 10.05.2023
- * 
- */
-
 
 import java.io.*;
 import java.util.List;
 
-import structures.*;
-
+import structures.User;
+import structures.Expenses;
+import structures.Income;
 
 public class DataManager {
 
     public static final String FOLDER_NAME = "UserData/";
-
     public static final String FILE_EXTENSION = ".ser";
 
-    
-    public static boolean isUserNameAvailable(String username)
-    {
-        // this code stolen from:
-        // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    static {
+        File folder = new File(FOLDER_NAME);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+    }
+
+    public static boolean isUserNameAvailable(String username) {
         File dir = new File(FOLDER_NAME);
         File[] directoryListing = dir.listFiles();
         for (File child : directoryListing) {
-            if(child.getName().split(".ser")[0].equals(username)){
+            if (child.getName().split("\\.ser")[0].equals(username)) {
                 return false;
             }
         }
@@ -53,18 +37,17 @@ public class DataManager {
             out.writeObject(user);
             out.close();
             fileOut.close();
-            
-            // save expenses & income
-            saveExpenses(user.getUserName(),user.getExpenses());
-            saveIncome(user.getUserName(),user.getAllIncome());
 
-            System.out.println("User data is saved in " +FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
+            saveExpenses(user.getUserName(), user.getExpenses());
+            saveIncome(user.getUserName(), user.getAllIncome());
+
+            System.out.println("User data is saved in " + FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
             return true;
         } catch (IOException i) {
+            i.printStackTrace();
             return false;
         }
     }
-
 
     public static void saveExpenses(String username, List<Expenses> expenses) {
         try {
@@ -79,7 +62,6 @@ public class DataManager {
         }
     }
 
-    
     public static void saveIncome(String username, List<Income> income) {
         try {
             FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
@@ -93,20 +75,12 @@ public class DataManager {
         }
     }
 
-    /* 
-     *      ################################
-     * 
-     *              LOADING USER DATA
-     * 
-     *      ################################
-     */
-
     public static User loadUser(String username) {
         User user = null;
         try {
             FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + FILE_EXTENSION);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            user = (User) in.readObject();
+            user = (User) in.readObject();      //TODO: god this line is fucking EVERYTHING UP 
             in.close();
             fileIn.close();
 
@@ -125,10 +99,8 @@ public class DataManager {
             i.printStackTrace();
         }
         return user;
-        }
+    }
 
-
-    
     public static List<Expenses> loadExpenses(String username) {
         List<Expenses> expenses = null;
         try {
@@ -143,7 +115,6 @@ public class DataManager {
         }
         return expenses;
     }
-
 
     public static List<Income> loadIncome(String username) {
         List<Income> income = null;

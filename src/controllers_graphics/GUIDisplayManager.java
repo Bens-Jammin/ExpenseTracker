@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-import src.controllers_text.Display;
+import handlers.Display;
 import structures.User;
 
 public class GUIDisplayManager extends JFrame {
@@ -64,7 +64,7 @@ public class GUIDisplayManager extends JFrame {
 
         System.out.println(username + " " +  password);
 
-        user = Display.login(username, password);
+        user = handlers.Display.login(username, password);
 
         if (user == null) {
             JOptionPane.showMessageDialog(this, "You entered your username or password wrong!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
