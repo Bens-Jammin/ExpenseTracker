@@ -1,6 +1,7 @@
 package structures;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class Transaction implements Serializable, Comparable<Transaction> {
@@ -9,13 +10,13 @@ public abstract class Transaction implements Serializable, Comparable<Transactio
     protected String name;
     protected double amount;
     protected String category;
-    protected LocalDateTime timeStamp;
+    protected LocalDate timeStamp;
 
     public Transaction(String name, double amount, String category){
         this.name = name;
         this.amount = amount;
         this.category = category;
-        this.timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDate.now();
     }
 
     // Getters & Setters
@@ -28,7 +29,7 @@ public abstract class Transaction implements Serializable, Comparable<Transactio
     public String getCategory() {return category;}
     public void setCategory(String category) {this.category = category;}
 
-    public LocalDateTime getTimeStamp(){return timeStamp;}
+    public LocalDate getTimeStamp(){return timeStamp;}
 
     public void displayTransation(int i){}
 

@@ -15,7 +15,7 @@ public class RemoveTransactionsPage extends JFrame {
     private DefaultTableModel tableModel;
     private JButton deleteButton;
 
-    public RemoveTransactionsPage(User user, JLabel netProfitLabel, JTable table) {
+    public RemoveTransactionsPage(User user, JLabel netProfitLabel) {
         setTitle("Remove Transactions");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 400);

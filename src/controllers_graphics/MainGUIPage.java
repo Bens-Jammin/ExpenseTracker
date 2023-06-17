@@ -1,13 +1,11 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
 import structures.*;
 
-import java.util.List;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainGUIPage {
 
@@ -31,7 +29,6 @@ public class MainGUIPage {
     JButton removeTransactionButton;
     JPanel contentPanel;
     JLabel netProfitLabel;
-    JTable table;
 
 
     public MainGUIPage(User user) {
@@ -90,12 +87,11 @@ public class MainGUIPage {
         toggleColourScheme = new JToggleButton();
         sidebarPanel.add(toggleColourScheme);
 
+
         // Create the content panel
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(mainBackroundColour);
 
-        table = createLatestTransactionsTable(user);
-        contentPanel.add(table, BorderLayout.CENTER);
 
 
         Font textFont = new Font("Roboto",0 ,24);
@@ -118,7 +114,7 @@ public class MainGUIPage {
         addTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTransactionPage(user, netProfitLabel, table);
+                new AddTransactionPage(user, netProfitLabel);
                 frame.repaint();
             }
         });
@@ -134,7 +130,7 @@ public class MainGUIPage {
         removeTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RemoveTransactionsPage(user, netProfitLabel, table);
+                new RemoveTransactionsPage(user, netProfitLabel);
                 frame.repaint();
             }
         });
@@ -152,81 +148,6 @@ public class MainGUIPage {
         frame.getContentPane().add(mainPanel);
         frame.setLocationRelativeTo(null); // Center the frame on the screen
         frame.setVisible(true);
-    }
-
-    /**
-     * Creates a JTable to display the 3 most recent transactions for the user.
-     *
-     * @param user The User object associated with the current user.
-     * @return The JTable with the latest transactions data.
-     */
-    public static JTable createLatestTransactionsTable(User user){
-
-        List<Expenses> expenses = user.getExpenses();
-        int size = expenses.size();
-
-        Transaction t1 = null;
-        Transaction t2 = null;
-        Transaction t3 = null;
-
-        Object[][] data;
-        if (size >= 3) {
-            t1 = expenses.get(2);
-            t2 = expenses.get(1);
-            t3 = expenses.get(0);
-
-            data = new Object[][]{
-                {t1.getCategory(), t1.getName(), t1.getAmount()},
-                {t2.getCategory(), t2.getName(), t2.getAmount()},
-                {t3.getCategory(), t3.getName(), t3.getAmount()}
-            };
-
-            // Use t1, t2, t3 as needed
-        } else if (size == 2) {
-            t1 = expenses.get(1);
-            t2 = expenses.get(0);
-
-            data = new Object[][]{
-                {t1.getCategory(), t1.getName(), t1.getAmount()},
-                {t2.getCategory(), t2.getName(), t2.getAmount()},
-                {null, null, null}
-            };
-        } else if (size == 1) {
-            t1 = expenses.get(0);
-            
-            data = new Object[][]{
-                {t1.getCategory(), t1.getName(), t1.getAmount()},
-                {null, null, null},
-                {null, null, null}
-            };
-        } else{
-            data = new Object[][]{{null, null, null},{null, null, null},{null, null, null}};
-        }
-        
-        // Create column names
-        String[] columnNames = {"Name", "Age", "Country"};
-
-        // Create a DefaultTableModel to hold the data and column names
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-
-
-        // make it pretty
-
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JTable table = new JTable(model);
-        // Apply the default cell renderer to all columns
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
-        table.setBorder(BorderFactory.createEmptyBorder(100, 0, 100, 0));  //FIXME: 
-        table.setBackground(Color.decode("#232323"));
-        table.setForeground(Color.WHITE);
-        table.setEnabled(false);
-        table.setBorder(BorderFactory.createEmptyBorder(100, 0, 100, 0)); // Adjust the padding as needed        
-        // Create and return a JTable with the model
-        return table;
     }
 
 
@@ -275,7 +196,6 @@ public class MainGUIPage {
         }
         // update everything
         contentPanel.setBackground(mainBackroundColour);
-        table.setBackground(mainBackroundColour);
         sidebarPanel.setBackground(sidePanelColour);
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
@@ -293,4 +213,5 @@ public class MainGUIPage {
         removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
     }
+
 }
