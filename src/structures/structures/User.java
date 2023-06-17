@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.time.LocalDateTime;
 
 public class User implements Serializable{
     
@@ -160,6 +161,34 @@ public class User implements Serializable{
         }
 
         return uniqueIncome;
+    }
+
+    /**
+     * Retrieves all the transactions (both expenses and income) for the user.
+     * The transactions are sorted based on their timestamp in descending order,
+     * so the most recent transactions appear first in the list.
+     *
+     * @return a list of all transactions, sorted by timestamp in descending order.
+     */
+    public List<Transaction> getAllTransactions() {
+        List<Transaction> allTransactions = new ArrayList<>();
+
+        // Adding expenses to the transaction list
+        for (Expenses expense : expenses) {
+            allTransactions.add(expense);
+        }
+
+        // Adding income to the transaction list
+        for (Income income : allIncome) {
+            allTransactions.add(income);
+        }
+
+        // Sorting the transactions based on timestamp in descending order
+        Collections.sort(allTransactions, Collections.reverseOrder());
+
+        System.out.println(allTransactions.toString());
+
+        return allTransactions;
     }
 
 

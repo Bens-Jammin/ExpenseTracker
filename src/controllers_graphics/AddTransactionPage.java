@@ -121,7 +121,7 @@ public class AddTransactionPage extends JFrame {
         }
 
         // Create the transaction using the collected information
-        if ("Income".equals("type") ){
+        if ("Income".equals(type) ){
             user.addIncome(name, amount, category);
         } else {
             user.addExpense(name, amount, category);

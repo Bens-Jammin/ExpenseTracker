@@ -61,6 +61,8 @@ public class ViewAllTransactionsPage extends JFrame {
             addTransaction(type, category, name, amount);
         }
 
+        user.getAllTransactions();
+
         setVisible(true);
     }
 
