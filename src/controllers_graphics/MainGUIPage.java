@@ -18,7 +18,7 @@ public class MainGUIPage {
     // default colours 
     Color mainBackroundColour = Color.decode("#232323");
     Color sidePanelColour = Color.decode("#3f3f3f");
-    Color buttonColour = Color.decode("#777B7E");
+    Color buttonTextColour = Color.decode("#141414");
     ImageIcon buttonImage = new ImageIcon("button_grey.png");
     Color textColour = Color.decode("#FFFFFF");
 
@@ -36,7 +36,10 @@ public class MainGUIPage {
 
     public MainGUIPage(User user) {
 
-        String title = user.getUserName() + " Transaction Account     [ ALPHA BUILD ] ";
+        String publicBuildStage = "ALPHA";
+        String publicVersionNumber = "0.1.0";
+
+        String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
@@ -68,9 +71,9 @@ public class MainGUIPage {
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
-        addTransactionButton.setBackground(buttonColour);
-        viewTransactionButton.setBackground(buttonColour);
-        removeTransactionButton.setBackground(buttonColour);
+        addTransactionButton.setBackground(buttonTextColour);
+        viewTransactionButton.setBackground(buttonTextColour);
+        removeTransactionButton.setBackground(buttonTextColour);
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -253,7 +256,7 @@ public class MainGUIPage {
             // Change colours
             mainBackroundColour = Color.decode("#232323");
             sidePanelColour = Color.decode("#3f3f3f");
-            buttonColour = Color.decode("#FFFFFF");
+            buttonTextColour = Color.decode("#141414");
             buttonImage = new ImageIcon("button_grey.png");
             textColour = Color.decode("#FFFFFF");
 
@@ -265,7 +268,7 @@ public class MainGUIPage {
             // Change colours
             mainBackroundColour = Color.decode("#E11299");
             sidePanelColour = Color.decode("#F5C6EC");
-            buttonColour = Color.decode("#9A208C");
+            buttonTextColour = Color.decode("#9A208C");
             buttonImage = new ImageIcon("button_pink.png");
             textColour = Color.decode("#FFEAEA");
 
@@ -277,9 +280,9 @@ public class MainGUIPage {
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
-        addTransactionButton.setForeground(buttonColour);
-        viewTransactionButton.setForeground(buttonColour);
-        removeTransactionButton.setForeground(buttonColour);
+        addTransactionButton.setForeground(buttonTextColour);
+        viewTransactionButton.setForeground(buttonTextColour);
+        removeTransactionButton.setForeground(buttonTextColour);
         netProfitLabel.setForeground(textColour);
 
         // chatGPT says i have to do this for the text to appear on the buttons :(
