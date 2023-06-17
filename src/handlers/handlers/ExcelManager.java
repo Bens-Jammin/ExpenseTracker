@@ -13,6 +13,11 @@ public class ExcelManager {
 
     // FIXME: excel file causes an error, something about incorrect file path or extension
 
+    /**
+     * Updates the CSV and Excel files with the user's expenses.
+     *
+     * @param user The User object containing the user's expenses.
+     */
     public static void UpdateAllFiles(User user) {
         checkAndCreateCSV();
         updateCSV(user);
@@ -20,6 +25,9 @@ public class ExcelManager {
         updateExcel();
     }
 
+    /**
+     * Checks if the CSV file exists and creates it if necessary.
+     */
     public static void checkAndCreateCSV() {
         File csvFile = new File(CSV_FILE_PATH);
         
@@ -46,6 +54,12 @@ public class ExcelManager {
         }
     }
 
+
+    /**
+     * Updates the CSV file with the user's expenses.
+     *
+     * @param user The User object containing the user's expenses.
+     */
     public static void updateCSV(User user) {
         try {
             FileWriter csvWriter = new FileWriter(CSV_FILE_PATH, true);

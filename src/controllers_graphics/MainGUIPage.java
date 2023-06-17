@@ -151,7 +151,12 @@ public class MainGUIPage {
         frame.setVisible(true);
     }
 
-
+    /**
+     * Creates a JTable to display the 3 most recent transactions for the user.
+     *
+     * @param user The User object associated with the current user.
+     * @return The JTable with the latest transactions data.
+     */
     private JTable createLatestTransactionsTable(User user){
 
         List<Expenses> expenses = user.getExpenses();
@@ -234,7 +239,9 @@ public class MainGUIPage {
         return bigLabel;
     }
     
-
+    /**
+     * Toggles the theme of the screen.
+     */
     private void toggleMode() {
         isDarkMode = !isDarkMode;
         

@@ -33,7 +33,6 @@ class TerminalDisplay extends Display{
 
     }
 
-    // tbh idk what to call this method, its gonna allow showing/editing expenses, etc
     public static void MainUserPage(User user){
         Scanner scan = new Scanner(System.in);
 

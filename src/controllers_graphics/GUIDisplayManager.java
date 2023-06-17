@@ -14,6 +14,10 @@ public class GUIDisplayManager extends JFrame {
 
     private static final String NERD_EMOJI = "\uD83E\uDD13";
 
+    /**
+     * Constructs a new GUIDisplayManager object.
+     * Sets up the window and components for login and signup.
+     */
     public GUIDisplayManager() {
         setTitle("Login or Signup");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,6 +57,11 @@ public class GUIDisplayManager extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Handles the login process when the login button is clicked.
+     * Retrieves the username and password from the input fields,
+     * performs the login operation, and opens the main page if successful.
+     */
     private void handleLogin() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
@@ -75,6 +84,11 @@ public class GUIDisplayManager extends JFrame {
         
     }
 
+    /**
+     * Handles the signup process when the signup button is clicked.
+     * Retrieves the username and password from the input fields,
+     * performs the signup operation, and opens the main page if successful.
+     */
     private void handleSignup() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());

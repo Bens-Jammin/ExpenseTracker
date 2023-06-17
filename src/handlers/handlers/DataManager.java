@@ -30,6 +30,13 @@ public class DataManager {
         return true;
     }
 
+
+    /**
+     * Saves the expenses data for a specific user.
+     *
+     * @param username The username associated with the expenses.
+     * @param expenses The list of Expenses objects to save.
+     */
     public static boolean saveUser(User user) {
         try {
             FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + user.getUserName() + FILE_EXTENSION);
