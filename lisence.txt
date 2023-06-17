@@ -1,0 +1,28 @@
+Ben Miller Code License
+
+Copyright (c) 2023, Benjamin Miller
+
+Easygoing Code License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Code"),
+to deal in the Code without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Code, and to permit persons to whom the Code is furnished to do so, subject to the following conditions:
+
+1. credit me (BM), preferrably with my github page or other pages on my github page (https://github.com/Bens-Jammin)
+
+2. Don't do anything illegal / dangerous / stupid with the code please
+
+3. You may not claim ownership of the entire codebase.
+
+3,5. You may not directly plagiarize the Code, presenting it as your original work.
+
+4. Don't hold the authour(s) (it's just Ben so far) liable for any damage(s) caused by the code
+
+5. You may not sell, sublicense, or otherwise distribute the Code for monetary gain without explicit permission from the original author(s).
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Code.
+
+THE CODE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
