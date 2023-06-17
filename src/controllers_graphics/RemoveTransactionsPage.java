@@ -15,7 +15,7 @@ public class RemoveTransactionsPage extends JFrame {
     private DefaultTableModel tableModel;
     private JButton deleteButton;
 
-    public RemoveTransactionsPage(User user, JLabel netProfitLabel) {
+    public RemoveTransactionsPage(User user, JLabel netProfitLabel, JTable table) {
         setTitle("Remove Transactions");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 400);
@@ -50,6 +50,7 @@ public class RemoveTransactionsPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 deleteCheckedTransactions(user);
                 netProfitLabel.setText(MainGUIPage.updateProfit(user));
+
             }
         });
 
@@ -114,4 +115,6 @@ public class RemoveTransactionsPage extends JFrame {
 
         DataManager.saveUser(user);
     }
+
+    
 }

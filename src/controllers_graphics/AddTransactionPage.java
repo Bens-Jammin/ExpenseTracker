@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +20,7 @@ public class AddTransactionPage extends JFrame {
 
     private JPanel mainPanel;
 
-    public AddTransactionPage(User user, JLabel netProfitLabel) {
+    public AddTransactionPage(User user, JLabel netProfitLabel, JTable table) {
 
         // Set up the frame
         setTitle("Transaction Creation Page");
@@ -82,6 +84,9 @@ public class AddTransactionPage extends JFrame {
                 createTransaction(user);
 
                 netProfitLabel.setText(MainGUIPage.updateProfit(user));
+
+                JTable updatedTable = table;
+                table.setModel(updatedTable.getModel());
             }
         });
 
@@ -134,4 +139,5 @@ public class AddTransactionPage extends JFrame {
 
         dispose();
     }
+
 }

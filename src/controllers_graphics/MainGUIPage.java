@@ -115,7 +115,7 @@ public class MainGUIPage {
         addTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTransactionPage(user, netProfitLabel);
+                new AddTransactionPage(user, netProfitLabel, table);
                 frame.repaint();
             }
         });
@@ -131,7 +131,7 @@ public class MainGUIPage {
         removeTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RemoveTransactionsPage(user, netProfitLabel);
+                new RemoveTransactionsPage(user, netProfitLabel, table);
                 frame.repaint();
             }
         });
@@ -157,7 +157,7 @@ public class MainGUIPage {
      * @param user The User object associated with the current user.
      * @return The JTable with the latest transactions data.
      */
-    private JTable createLatestTransactionsTable(User user){
+    public static JTable createLatestTransactionsTable(User user){
 
         List<Expenses> expenses = user.getExpenses();
         int size = expenses.size();
@@ -240,7 +240,7 @@ public class MainGUIPage {
     }
     
     /**
-     * Toggles the theme of the screen.
+     * Toggles the theme of the window.
      */
     private void toggleMode() {
         isDarkMode = !isDarkMode;
