@@ -11,6 +11,76 @@ import structures.*;
 import handlers.DataManager;
 
 
+/* 
+ *  TODO:
+ * 
+ *  dropdown bar but a user can add to the dropdown bar
+ * 
+ * 
+ * import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class DropdownBarExample extends JFrame {
+
+    private JComboBox<String> dropdown;
+
+    private ArrayList<String> options;
+
+    public DropdownBarExample() {
+        options = new ArrayList<>();
+
+        // Create a default model with an empty list of options
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        dropdown = new JComboBox<>(model);
+
+        // Create a custom renderer to display the options in the dropdown
+        dropdown.setRenderer(new DefaultListCellRenderer() {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setText(value.toString());
+                return label;
+            }
+        });
+
+        // Create a button to add new options
+        JButton addButton = new JButton("Add Option");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String newOption = JOptionPane.showInputDialog(DropdownBarExample.this, "Enter a new option:");
+                if (newOption != null && !newOption.isEmpty()) {
+                    options.add(newOption);
+                    model.addElement(newOption);
+                }
+            }
+        });
+
+        // Add the components to the frame
+        setLayout(new FlowLayout());
+        add(dropdown);
+        add(addButton);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Dropdown Bar Example");
+        pack();
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new DropdownBarExample();
+            }
+        });
+    }
+}
+
+*/
+
+
 public class AddTransactionPage extends JFrame {
 
     private JComboBox<String> typeComboBox;
