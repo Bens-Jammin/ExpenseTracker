@@ -1,89 +1,19 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import javax.swing.text.NumberFormatter;
+import java.util.List;
 
 import structures.*;
 import handlers.DataManager;
 
-
-/* 
- *  TODO:
- * 
- *  dropdown bar but a user can add to the dropdown bar
- * 
- * 
- * import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-public class DropdownBarExample extends JFrame {
-
-    private JComboBox<String> dropdown;
-
-    private ArrayList<String> options;
-
-    public DropdownBarExample() {
-        options = new ArrayList<>();
-
-        // Create a default model with an empty list of options
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        dropdown = new JComboBox<>(model);
-
-        // Create a custom renderer to display the options in the dropdown
-        dropdown.setRenderer(new DefaultListCellRenderer() {
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                label.setText(value.toString());
-                return label;
-            }
-        });
-
-        // Create a button to add new options
-        JButton addButton = new JButton("Add Option");
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String newOption = JOptionPane.showInputDialog(DropdownBarExample.this, "Enter a new option:");
-                if (newOption != null && !newOption.isEmpty()) {
-                    options.add(newOption);
-                    model.addElement(newOption);
-                }
-            }
-        });
-
-        // Add the components to the frame
-        setLayout(new FlowLayout());
-        add(dropdown);
-        add(addButton);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Dropdown Bar Example");
-        pack();
-        setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new DropdownBarExample();
-            }
-        });
-    }
-}
-
-*/
-
-
 public class AddTransactionPage extends JFrame {
 
     private JComboBox<String> typeComboBox;
+    private JComboBox<String> categoryComboBox;
     private JTextField categoryField;       // TODO: eventually set up so you can select previously created categories
     private JTextField nameTextField;
     private JFormattedTextField amountField;
@@ -95,11 +25,11 @@ public class AddTransactionPage extends JFrame {
         // Set up the frame
         setTitle("Transaction Creation Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 200));
+        setPreferredSize(new Dimension(400, 250));
 
         // Create the main panel
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(5, 2, 10, 10));
+        mainPanel.setLayout(new GridLayout(6, 2, 10, 10));
 
         // Create and add components to the main panel
         JLabel typeLabel = new JLabel("Type:");
@@ -107,10 +37,22 @@ public class AddTransactionPage extends JFrame {
         mainPanel.add(typeLabel);
         mainPanel.add(typeComboBox);
 
+        JLabel newCategoryLabel = new JLabel("New Category:");
+        JTextField newCategoryTextField = new JTextField();
+        mainPanel.add(newCategoryLabel);
+        mainPanel.add(newCategoryTextField);
+
         JLabel categoryLabel = new JLabel("Category:");
-        categoryField = new JTextField();
+        categoryComboBox = new JComboBox<String>();
+        List<String> currentCategories = DataManager.loadTransactionCategories(user.getUserName());
+        if(currentCategories != null && currentCategories.size() != 0){
+            for(String s : currentCategories){
+                categoryComboBox.addItem(s);
+            }
+        }
+
         mainPanel.add(categoryLabel);
-        mainPanel.add(categoryField);
+        mainPanel.add(categoryComboBox);
 
         JLabel nameLabel = new JLabel("Name:");
         nameTextField = new JTextField();
@@ -128,6 +70,9 @@ public class AddTransactionPage extends JFrame {
         mainPanel.add(amountLabel);
         mainPanel.add(amountField);
 
+        JButton createCategoryButton = new JButton("Submit Category");
+        mainPanel.add(createCategoryButton);
+
         JButton createButton = new JButton("Create Transaction");
         mainPanel.add(createButton);
 
@@ -140,14 +85,39 @@ public class AddTransactionPage extends JFrame {
         categoryCreationDialog.setResizable(false);
         categoryCreationDialog.setLayout(new FlowLayout());
 
-        JLabel newCategoryLabel = new JLabel("New Category:");
-        JTextField newCategoryTextField = new JTextField(15);
-        JButton createCategoryButton = new JButton("Create");
-        categoryCreationDialog.add(newCategoryLabel);
-        categoryCreationDialog.add(newCategoryTextField);
-        categoryCreationDialog.add(createCategoryButton);
+        JLabel categoryCreationLabel = new JLabel("New Category:");
+        JTextField categoryCreationTextField = new JTextField(15);
+        JButton categoryCreationButton = new JButton("Create");
+        categoryCreationDialog.add(categoryCreationLabel);
+        categoryCreationDialog.add(categoryCreationTextField);
+        categoryCreationDialog.add(categoryCreationButton);
 
         // Button action listeners
+        createCategoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                categoryCreationDialog.pack();
+                categoryCreationDialog.setLocationRelativeTo(mainPanel);
+                categoryCreationDialog.setVisible(true);
+            }
+        });
+
+        categoryCreationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newCategory = categoryCreationTextField.getText().trim();
+                if (!newCategory.isEmpty()) {
+                    addNewCategoryToDropdown(newCategory);
+                    categoryField.setText(newCategory);
+
+                    DataManager.loadTransactionCategories(user.getUserName()).add(newCategory);
+                    List<String> updatedCategories = DataManager.loadTransactionCategories(user.getUserName());
+                    DataManager.saveTransactionCategories(user.getUserName(), updatedCategories);
+                }
+                categoryCreationDialog.dispose();
+            }
+        });
+
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -163,11 +133,15 @@ public class AddTransactionPage extends JFrame {
         setVisible(true);
     }
 
+    private void addNewCategoryToDropdown(String newCategory) {
+        categoryComboBox.addItem(newCategory);
+    }
+
     private void createTransaction(User user) {
         String type = typeComboBox.getSelectedItem().toString();
         String category = categoryField.getText().toString();
         String name = nameTextField.getText().trim();
-        String amountText = amountField.getText().trim().replaceAll(",", "");;
+        String amountText = amountField.getText().trim().replaceAll(",", "");
 
         // Validate the inputs
         if (name.isEmpty() || amountText.isEmpty()) {
@@ -198,7 +172,7 @@ public class AddTransactionPage extends JFrame {
         } else {
             user.addExpense(name, amount, category);
         }
-        DataManager.saveUser(user); // FIXME: saves twice, and also you start at -5 for some reason?
+        DataManager.saveUser(user);
 
         // Show a success message
         JOptionPane.showMessageDialog(this, "Transaction created successfully.",

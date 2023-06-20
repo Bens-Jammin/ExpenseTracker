@@ -82,6 +82,20 @@ public class DataManager {
         }
     }
 
+    public static void saveTransactionCategories(String username, List<String> categories) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(categories);
+            out.close();
+            fileOut.close();
+            System.out.println("Tranasaction Categories are saved in " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+
     public static User loadUser(String username) {
         User user = null;
         try {
@@ -137,5 +151,32 @@ public class DataManager {
             i.printStackTrace();
         }
         return income;
+    }
+
+    public static List<String> loadTransactionCategories(String username) {
+
+        File file = new File(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;   
+        }
+
+        List<String> categories = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            categories = (List<String>) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Income data is loaded from " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        return categories;
     }
 }
