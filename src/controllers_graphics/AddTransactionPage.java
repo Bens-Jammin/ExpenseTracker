@@ -79,42 +79,29 @@ public class AddTransactionPage extends JFrame {
         // Add the main panel to the frame
         add(mainPanel);
 
-        // Set up category creation dialog
-        final JDialog categoryCreationDialog = new JDialog(this, "Create New Category", true);
-        categoryCreationDialog.setPreferredSize(new Dimension(300, 150));
-        categoryCreationDialog.setResizable(false);
-        categoryCreationDialog.setLayout(new FlowLayout());
 
-        JLabel categoryCreationLabel = new JLabel("New Category:");
-        JTextField categoryCreationTextField = new JTextField(15);
-        JButton categoryCreationButton = new JButton("Create");
-        categoryCreationDialog.add(categoryCreationLabel);
-        categoryCreationDialog.add(categoryCreationTextField);
-        categoryCreationDialog.add(categoryCreationButton);
 
         // Button action listeners
         createCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                categoryCreationDialog.pack();
-                categoryCreationDialog.setLocationRelativeTo(mainPanel);
-                categoryCreationDialog.setVisible(true);
-            }
-        });
-
-        categoryCreationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newCategory = categoryCreationTextField.getText().trim();
+                String newCategory = newCategoryTextField.getText().trim();
                 if (!newCategory.isEmpty()) {
-                    addNewCategoryToDropdown(newCategory);
-                    categoryField.setText(newCategory);
-
-                    DataManager.loadTransactionCategories(user.getUserName()).add(newCategory);
+                    categoryComboBox.addItem(newCategory);
+                    newCategoryTextField.setText("");
+                    
                     List<String> updatedCategories = DataManager.loadTransactionCategories(user.getUserName());
-                    DataManager.saveTransactionCategories(user.getUserName(), updatedCategories);
+                    if(updatedCategories.contains(newCategory)){
+                        JOptionPane.showMessageDialog(mainPanel, "Category already exists",
+                        "Input Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }else{
+                        updatedCategories.add(newCategory);
+                        System.out.println(updatedCategories);
+                        DataManager.saveTransactionCategories(user.getUserName(), updatedCategories);
+                        System.out.println("saved!");
+                    }
                 }
-                categoryCreationDialog.dispose();
             }
         });
 
@@ -131,10 +118,6 @@ public class AddTransactionPage extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    private void addNewCategoryToDropdown(String newCategory) {
-        categoryComboBox.addItem(newCategory);
     }
 
     private void createTransaction(User user) {

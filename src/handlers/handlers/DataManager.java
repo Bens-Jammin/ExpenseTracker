@@ -1,6 +1,7 @@
 package handlers;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import structures.User;
@@ -18,6 +19,7 @@ public class DataManager {
             folder.mkdirs();
         }
     }
+
 
     public static boolean isUserNameAvailable(String username) {
         File dir = new File(FOLDER_NAME);
@@ -56,6 +58,7 @@ public class DataManager {
         }
     }
 
+
     public static void saveExpenses(String username, List<Expenses> expenses) {
         try {
             FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_expenses" + FILE_EXTENSION);
@@ -69,6 +72,7 @@ public class DataManager {
         }
     }
 
+
     public static void saveIncome(String username, List<Income> income) {
         try {
             FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_incomes" + FILE_EXTENSION);
@@ -81,6 +85,7 @@ public class DataManager {
             i.printStackTrace();
         }
     }
+
 
     public static void saveTransactionCategories(String username, List<String> categories) {
         try {
@@ -123,6 +128,7 @@ public class DataManager {
         return user;
     }
 
+
     public static List<Expenses> loadExpenses(String username) {
         List<Expenses> expenses = null;
         try {
@@ -137,6 +143,7 @@ public class DataManager {
         }
         return expenses;
     }
+
 
     public static List<Income> loadIncome(String username) {
         List<Income> income = null;
@@ -153,30 +160,24 @@ public class DataManager {
         return income;
     }
 
+
     public static List<String> loadTransactionCategories(String username) {
-
-        File file = new File(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;   
-        }
-
         List<String> categories = null;
         try {
             FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            categories = (List<String>) in.readObject();
-            in.close();
-            fileIn.close();
-            System.out.println("Income data is loaded from " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+            if (fileIn.available() > 0) { // Check if the file is not empty
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                categories = (List<String>) in.readObject();
+                in.close();
+                fileIn.close();
+                System.out.println("transaction category data is loaded from " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
+            } else {
+                categories = new ArrayList<String>(); // Initialize an empty list
+            }
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
         }
         return categories;
     }
+
 }
