@@ -1,6 +1,9 @@
 import structures.*;
 
 import javax.swing.*;
+
+import handlers.DataManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +29,7 @@ public class MainGUIPage {
     JButton addTransactionButton;
     JButton viewTransactionButton;
     JButton removeTransactionButton;
+    JButton deleteAccountButton;
     JPanel contentPanel;
     JLabel netProfitLabel;
 
@@ -33,7 +37,7 @@ public class MainGUIPage {
     public MainGUIPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.1.1";
+        String publicVersionNumber = "0.1.2";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);
@@ -57,19 +61,23 @@ public class MainGUIPage {
         addTransactionButton= new JButton("Add Transaction");
         viewTransactionButton = new JButton("View All Transactions");
         removeTransactionButton = new JButton("Remove Transactions");
+        deleteAccountButton = new JButton("Delete Account");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         viewTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        deleteAccountButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
         //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
+        deleteAccountButton.setIcon(buttonImage);
         addTransactionButton.setBackground(buttonTextColour);
         viewTransactionButton.setBackground(buttonTextColour);
         removeTransactionButton.setBackground(buttonTextColour);
+        deleteAccountButton.setBackground(buttonTextColour);
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -81,6 +89,7 @@ public class MainGUIPage {
         sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
         sidebarPanel.add(viewTransactionButton);
         sidebarPanel.add(removeTransactionButton);
+        sidebarPanel.add(deleteAccountButton);
 
         // Toggle between pink/dark mode
         toggleColourScheme = new JToggleButton();
@@ -131,6 +140,21 @@ public class MainGUIPage {
             public void actionPerformed(ActionEvent e) {
                 new RemoveTransactionsPage(user, netProfitLabel);
                 frame.repaint();
+            }
+        });
+
+        deleteAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String deleteMessage = DataManager.deleteAccount(user.getUserName());
+                if(deleteMessage == null){
+                    JOptionPane.showMessageDialog(mainPanel, "Account deleted successfully.",
+                    "ACCOUNT DELETED", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(mainPanel, "ERROR: ACCOUNT DELETION FAILED /n"+deleteMessage,
+                    "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);
+                }
+                frame.dispose();
             }
         });
 
@@ -199,9 +223,11 @@ public class MainGUIPage {
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
+        deleteAccountButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonTextColour);
         viewTransactionButton.setForeground(buttonTextColour);
         removeTransactionButton.setForeground(buttonTextColour);
+        deleteAccountButton.setForeground(buttonTextColour);
         netProfitLabel.setForeground(textColour);
 
         // chatGPT says i have to do this for the text to appear on the buttons :(

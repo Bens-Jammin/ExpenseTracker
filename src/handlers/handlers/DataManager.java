@@ -180,4 +180,47 @@ public class DataManager {
         return categories;
     }
 
+
+    public static String deleteAccount(String username) {
+        try {
+            File directory = new File("UserData");
+            File[] files = directory.listFiles();
+
+            String[] targetedFileNames = new String[]{
+                    username + "_expenses.ser",
+                    username + "_incomes.ser",
+                    username + "_Transaction_Categories.ser",
+                    username + ".ser"
+            };
+            int deleteCounter = 0;
+
+            if (files != null) {
+                for (File file : files) {
+                    for (String targetedFileName : targetedFileNames) {
+                        if (file.isFile() && file.getName().equals(targetedFileName)) {
+                            if (file.delete()) {
+                                System.out.println("Deleted file: " + file.getAbsolutePath());
+                                deleteCounter++;
+                            } else {
+                                System.out.println("Failed to delete file: " + file.getAbsolutePath());
+                                throw new Exception();
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ( deleteCounter != targetedFileNames.length ) {
+                int totalFilesNotDeleted = targetedFileNames.length - deleteCounter;
+                System.out.println("ERROR: failed to delete "+ totalFilesNotDeleted + "files.");
+                throw new Exception("Failed to delete "+ totalFilesNotDeleted + "files");
+            }
+
+            return null;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+
 }
