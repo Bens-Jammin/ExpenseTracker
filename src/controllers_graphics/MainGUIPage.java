@@ -61,7 +61,7 @@ public class MainGUIPage {
         addTransactionButton= new JButton("Add Transaction");
         viewTransactionButton = new JButton("View All Transactions");
         removeTransactionButton = new JButton("Remove Transactions");
-        deleteAccountButton = new JButton("Delete Account");
+        deleteAccountButton = new JButton("DELETE ACCOUNT");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
