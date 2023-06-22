@@ -44,10 +44,14 @@ public class AddTransactionPage extends JFrame {
 
         JLabel categoryLabel = new JLabel("Category:");
         categoryComboBox = new JComboBox<String>();
-        List<String> currentCategories = DataManager.loadTransactionCategories(user.getUserName());
-        if(currentCategories != null && currentCategories.size() != 0){
-            for(String s : currentCategories){
-                categoryComboBox.addItem(s);
+        
+        // fills combobox of previously saved categories
+        if(DataManager.loadTransactionCategories(user.getUserName()) != null ){
+            List<String> currentCategories = DataManager.loadTransactionCategories(user.getUserName());
+            if(currentCategories != null && currentCategories.size() != 0){
+                for(String s : currentCategories){
+                    categoryComboBox.addItem(s);
+                }
             }
         }
 
@@ -91,7 +95,7 @@ public class AddTransactionPage extends JFrame {
                     newCategoryTextField.setText("");
                     
                     List<String> updatedCategories = DataManager.loadTransactionCategories(user.getUserName());
-                    if(updatedCategories.contains(newCategory)){
+                    if(updatedCategories.size() != 0 && updatedCategories.contains(newCategory)){
                         JOptionPane.showMessageDialog(mainPanel, "Category already exists",
                         "Input Error", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -122,7 +126,7 @@ public class AddTransactionPage extends JFrame {
 
     private void createTransaction(User user) {
         String type = typeComboBox.getSelectedItem().toString();
-        String category = categoryField.getText().toString();
+        String category = categoryComboBox.getSelectedItem().toString();
         String name = nameTextField.getText().trim();
         String amountText = amountField.getText().trim().replaceAll(",", "");
 

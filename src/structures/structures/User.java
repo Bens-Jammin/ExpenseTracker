@@ -198,7 +198,7 @@ public class User implements Serializable{
 
 
     public String toString(){
-        String toString = username+" has "+expenses.size()+" expense(s),";
+        String toString = username+" has "+expenses.size()+" expense(s) and "+allIncome.size()+" income(s) recorded.";
         return toString;
     }
 }

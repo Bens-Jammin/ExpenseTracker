@@ -3,6 +3,7 @@ import structures.*;
 import javax.swing.*;
 
 import handlers.DataManager;
+import handlers.YTDSummaryManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,7 @@ public class MainGUIPage {
     JButton viewTransactionButton;
     JButton removeTransactionButton;
     JButton deleteAccountButton;
+    JButton YTDSummaryButton;
     JPanel contentPanel;
     JLabel netProfitLabel;
 
@@ -37,7 +39,7 @@ public class MainGUIPage {
     public MainGUIPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.1.2";
+        String publicVersionNumber = "0.1.3";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);
@@ -62,22 +64,26 @@ public class MainGUIPage {
         viewTransactionButton = new JButton("View All Transactions");
         removeTransactionButton = new JButton("Remove Transactions");
         deleteAccountButton = new JButton("DELETE ACCOUNT");
+        YTDSummaryButton = new JButton("VIEW YTD SUMMARY");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         viewTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         deleteAccountButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        YTDSummaryButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
         //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
         deleteAccountButton.setIcon(buttonImage);
-        addTransactionButton.setBackground(buttonTextColour);
-        viewTransactionButton.setBackground(buttonTextColour);
-        removeTransactionButton.setBackground(buttonTextColour);
-        deleteAccountButton.setBackground(buttonTextColour);
+        YTDSummaryButton.setIcon(buttonImage);
+        addTransactionButton.setForeground(buttonTextColour);
+        viewTransactionButton.setForeground(buttonTextColour);
+        removeTransactionButton.setForeground(buttonTextColour);
+        deleteAccountButton.setForeground(buttonTextColour);
+        YTDSummaryButton.setForeground(buttonTextColour);
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -85,11 +91,18 @@ public class MainGUIPage {
         viewTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
         removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        deleteAccountButton.setVerticalTextPosition(SwingConstants.CENTER);
+        deleteAccountButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        YTDSummaryButton.setVerticalAlignment(SwingConstants.CENTER);
+        YTDSummaryButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        deleteAccountButton.setVerticalAlignment(SwingConstants.BOTTOM);
 
         sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
         sidebarPanel.add(viewTransactionButton);
         sidebarPanel.add(removeTransactionButton);
         sidebarPanel.add(deleteAccountButton);
+        sidebarPanel.add(YTDSummaryButton);
 
         // Toggle between pink/dark mode
         toggleColourScheme = new JToggleButton();
@@ -155,6 +168,14 @@ public class MainGUIPage {
                     "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);
                 }
                 frame.dispose();
+            }
+        });
+
+        YTDSummaryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                YTDSummaryManager ytdTable = new YTDSummaryManager(user);
+                ytdTable.printSummaryTable();
             }
         });
 
@@ -224,11 +245,13 @@ public class MainGUIPage {
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
         deleteAccountButton.setIcon(buttonImage);
+        YTDSummaryButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonTextColour);
         viewTransactionButton.setForeground(buttonTextColour);
         removeTransactionButton.setForeground(buttonTextColour);
         deleteAccountButton.setForeground(buttonTextColour);
         netProfitLabel.setForeground(textColour);
+        YTDSummaryButton.setForeground(buttonTextColour);
 
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);

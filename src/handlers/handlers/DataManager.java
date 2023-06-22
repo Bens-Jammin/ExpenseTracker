@@ -171,9 +171,7 @@ public class DataManager {
                 in.close();
                 fileIn.close();
                 System.out.println("transaction category data is loaded from " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-            } else {
-                categories = new ArrayList<String>(); // Initialize an empty list
-            }
+            } 
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
         }

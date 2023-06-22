@@ -112,11 +112,12 @@ public class GUIDisplayManager extends JFrame {
     }
 
     private void openMainPage(User user) {
+        // Close the current GUI window
+        dispose();
+        
         // Open the main page
         new MainGUIPage(user);
         
-        // Close the current GUI window
-        dispose();
     }
 
     public static void main(String[] args) {
