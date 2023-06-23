@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.time.LocalDateTime;
 
 public class User implements Serializable{
     
@@ -81,8 +80,8 @@ public class User implements Serializable{
     // ********** ALL INCOME ALTERING METHODS ***********
 
     public void addExpense(String name, double amount, String category) {
-        this.expenses.add(new Expenses(name, amount, category));
-        this.totalExpenses += amount;
+        expenses.add(new Expenses(name, amount, category));
+        totalExpenses += amount;
     }
 
 
@@ -108,15 +107,12 @@ public class User implements Serializable{
 
     public Set<String> getExpenseCategories(){
         Set<String> uniqueExpenses = new HashSet<String> ();
-
         for(int i=0; i< expenses.size(); i++){
             String currentCategory = expenses.get(i).getCategory();
-
             if ( !uniqueExpenses.contains(currentCategory) ){
                 uniqueExpenses.add(currentCategory);
             }
         }
-
         return uniqueExpenses;
     }
 
@@ -152,7 +148,7 @@ public class User implements Serializable{
     public Set<String> getIncomeCategories(){
         Set<String> uniqueIncome = new HashSet<String> ();
 
-        for(int i=0; i< expenses.size(); i++){
+        for(int i=0; i< allIncome.size(); i++){
             String currentCategory = allIncome.get(i).getCategory();
 
             if ( !uniqueIncome.contains(currentCategory) ){
@@ -189,6 +185,15 @@ public class User implements Serializable{
         System.out.println(allTransactions.toString());
 
         return allTransactions;
+    }
+
+
+    public List<String> getAllTransactionCategories(){
+        List<String> categories = new ArrayList<String>();
+        categories.addAll(getExpenseCategories());
+        categories.addAll(getIncomeCategories());
+        System.out.println(categories.toString());
+        return categories;
     }
 
 

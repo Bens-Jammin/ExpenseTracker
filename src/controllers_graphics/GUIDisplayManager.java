@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-import handlers.Display;
+import handlers.DataManager;
 import structures.User;
 
 public class GUIDisplayManager extends JFrame {
@@ -73,7 +73,7 @@ public class GUIDisplayManager extends JFrame {
 
         System.out.println(username + " " +  password);
 
-        user = handlers.Display.login(username, password);
+        user = Display.login(username, password);
 
         if (user == null) {
             JOptionPane.showMessageDialog(this, "You entered your username or password wrong!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
@@ -98,9 +98,12 @@ public class GUIDisplayManager extends JFrame {
             return;
         }
 
-        System.out.println(username + " " +  password);
+        if(!DataManager.isUserNameAvailable(username)){
+            JOptionPane.showMessageDialog(this, "Username is already in use!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        user = handlers.Display.createAccount(username, password);
+        user = Display.createAccount(username, password);
 
         if (user == null) {
             JOptionPane.showMessageDialog(this, "You entered your username or password wrong!!\n" + NERD_EMOJI, "Error", JOptionPane.ERROR_MESSAGE);

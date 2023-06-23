@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import javax.swing.text.NumberFormatter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import structures.*;
@@ -14,7 +16,6 @@ public class AddTransactionPage extends JFrame {
 
     private JComboBox<String> typeComboBox;
     private JComboBox<String> categoryComboBox;
-    private JTextField categoryField;       // TODO: eventually set up so you can select previously created categories
     private JTextField nameTextField;
     private JFormattedTextField amountField;
 
@@ -46,10 +47,12 @@ public class AddTransactionPage extends JFrame {
         categoryComboBox = new JComboBox<String>();
         
         // fills combobox of previously saved categories
-        if(DataManager.loadTransactionCategories(user.getUserName()) != null ){
-            List<String> currentCategories = DataManager.loadTransactionCategories(user.getUserName());
-            if(currentCategories != null && currentCategories.size() != 0){
-                for(String s : currentCategories){
+        List<String> categories = user.getAllTransactionCategories();
+        System.out.println(categories);
+        if(categories != null ){
+            if(categories != null && categories.size() != 0){
+                for(String s : categories){
+                    System.out.println("Category: "+s);
                     categoryComboBox.addItem(s);
                 }
             }
@@ -94,17 +97,22 @@ public class AddTransactionPage extends JFrame {
                     categoryComboBox.addItem(newCategory);
                     newCategoryTextField.setText("");
                     
-                    List<String> updatedCategories = DataManager.loadTransactionCategories(user.getUserName());
+                    List<String> updatedCategories = user.getAllTransactionCategories();
+                    
+                    if (updatedCategories == null) {
+                        // If the transaction categories file doesn't exist, create a new list
+                        updatedCategories = new ArrayList<>();
+                    }
+
                     if(updatedCategories.size() != 0 && updatedCategories.contains(newCategory)){
                         JOptionPane.showMessageDialog(mainPanel, "Category already exists",
                         "Input Error", JOptionPane.ERROR_MESSAGE);
                         return;
-                    }else{
-                        updatedCategories.add(newCategory);
-                        System.out.println(updatedCategories);
-                        DataManager.saveTransactionCategories(user.getUserName(), updatedCategories);
-                        System.out.println("saved!");
                     }
+                    updatedCategories.add(newCategory);
+                    System.out.println(updatedCategories);
+                    DataManager.saveUser(user);
+                    System.out.println("saved!");
                 }
             }
         });
@@ -130,6 +138,7 @@ public class AddTransactionPage extends JFrame {
         String name = nameTextField.getText().trim();
         String amountText = amountField.getText().trim().replaceAll(",", "");
 
+        System.out.println(type+category+name+amountText);
         // Validate the inputs
         if (name.isEmpty() || amountText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter a name and an amount for the transaction.",

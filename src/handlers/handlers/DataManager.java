@@ -1,7 +1,6 @@
 package handlers;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import structures.User;
@@ -87,20 +86,6 @@ public class DataManager {
     }
 
 
-    public static void saveTransactionCategories(String username, List<String> categories) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(categories);
-            out.close();
-            fileOut.close();
-            System.out.println("Tranasaction Categories are saved in " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
-
-
     public static User loadUser(String username) {
         User user = null;
         try {
@@ -161,24 +146,6 @@ public class DataManager {
     }
 
 
-    public static List<String> loadTransactionCategories(String username) {
-        List<String> categories = null;
-        try {
-            FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-            if (fileIn.available() > 0) { // Check if the file is not empty
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                categories = (List<String>) in.readObject();
-                in.close();
-                fileIn.close();
-                System.out.println("transaction category data is loaded from " + FOLDER_NAME + username + "_Transaction_Categories" + FILE_EXTENSION);
-            } 
-        } catch (IOException | ClassNotFoundException i) {
-            i.printStackTrace();
-        }
-        return categories;
-    }
-
-
     public static String deleteAccount(String username) {
         try {
             File directory = new File("UserData");
@@ -187,7 +154,6 @@ public class DataManager {
             String[] targetedFileNames = new String[]{
                     username + "_expenses.ser",
                     username + "_incomes.ser",
-                    username + "_Transaction_Categories.ser",
                     username + ".ser"
             };
             int deleteCounter = 0;
@@ -210,8 +176,8 @@ public class DataManager {
 
             if ( deleteCounter != targetedFileNames.length ) {
                 int totalFilesNotDeleted = targetedFileNames.length - deleteCounter;
-                System.out.println("ERROR: failed to delete "+ totalFilesNotDeleted + "files.");
-                throw new Exception("Failed to delete "+ totalFilesNotDeleted + "files");
+                System.out.println("ERROR: failed to delete "+ totalFilesNotDeleted + "file(s).");
+                throw new Exception("Failed to delete "+ totalFilesNotDeleted + "file(s)");
             }
 
             return null;
