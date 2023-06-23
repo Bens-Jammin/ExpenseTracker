@@ -60,7 +60,7 @@ public class YTDSummaryManager {
 
     public void printSummaryTable() {
         // Print the summary table
-        System.out.printf("%-20s", ""); // Empty space for the top-left cell
+        System.out.printf("%-20s", "CATEGORY"); // Category header
 
         // Print the month headers
         for (int month = 1; month <= 12; month++) {
@@ -90,4 +90,5 @@ public class YTDSummaryManager {
             System.out.println(); // New line
         }
     }
+
 }

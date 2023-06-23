@@ -34,7 +34,7 @@ public class AddTransactionPage extends JFrame {
 
         // Create and add components to the main panel
         JLabel typeLabel = new JLabel("Type:");
-        typeComboBox = new JComboBox<>(new String[]{"Income", "Expense"});
+        typeComboBox = new JComboBox<>(new String[]{"Expense", "Income"});
         mainPanel.add(typeLabel);
         mainPanel.add(typeComboBox);
 
