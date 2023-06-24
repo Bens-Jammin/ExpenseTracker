@@ -32,6 +32,7 @@ public class MainGUIPage {
     JButton removeTransactionButton;
     JButton deleteAccountButton;
     JButton YTDSummaryButton;
+    JButton createCSVButton;
     JPanel contentPanel;
     JLabel netProfitLabel;
 
@@ -65,6 +66,7 @@ public class MainGUIPage {
         removeTransactionButton = new JButton("Remove Transactions");
         deleteAccountButton = new JButton("DELETE ACCOUNT");
         YTDSummaryButton = new JButton("VIEW YTD SUMMARY");
+        createCSVButton = new JButton("Export to CSV");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -72,6 +74,7 @@ public class MainGUIPage {
         removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         deleteAccountButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         YTDSummaryButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        createCSVButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
         //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
         addTransactionButton.setIcon(buttonImage);
@@ -79,11 +82,13 @@ public class MainGUIPage {
         removeTransactionButton.setIcon(buttonImage);
         deleteAccountButton.setIcon(buttonImage);
         YTDSummaryButton.setIcon(buttonImage);
+        createCSVButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonTextColour);
         viewTransactionButton.setForeground(buttonTextColour);
         removeTransactionButton.setForeground(buttonTextColour);
         deleteAccountButton.setForeground(buttonTextColour);
         YTDSummaryButton.setForeground(buttonTextColour);
+        createCSVButton.setForeground(buttonTextColour);
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -95,6 +100,8 @@ public class MainGUIPage {
         deleteAccountButton.setHorizontalTextPosition(SwingConstants.CENTER);
         YTDSummaryButton.setVerticalAlignment(SwingConstants.CENTER);
         YTDSummaryButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        createCSVButton.setVerticalAlignment(SwingConstants.CENTER);
+        createCSVButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
         deleteAccountButton.setVerticalAlignment(SwingConstants.BOTTOM);
 
@@ -103,9 +110,10 @@ public class MainGUIPage {
         sidebarPanel.add(removeTransactionButton);
         sidebarPanel.add(deleteAccountButton);
         sidebarPanel.add(YTDSummaryButton);
+        sidebarPanel.add(createCSVButton);
 
         // Toggle between pink/dark mode
-        toggleColourScheme = new JToggleButton();
+        toggleColourScheme = new JToggleButton("Dark Mode");
         sidebarPanel.add(toggleColourScheme);
 
 
@@ -179,6 +187,15 @@ public class MainGUIPage {
             }
         });
 
+        createCSVButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DataManager.convertUserToCSV(user);
+                JOptionPane.showMessageDialog(mainPanel, "CSV saved at UserData/"+user.getUserName()+"_transaction_data.csv",
+                    "Export Complete", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
         toggleColourScheme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -246,12 +263,14 @@ public class MainGUIPage {
         removeTransactionButton.setIcon(buttonImage);
         deleteAccountButton.setIcon(buttonImage);
         YTDSummaryButton.setIcon(buttonImage);
+        createCSVButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonTextColour);
         viewTransactionButton.setForeground(buttonTextColour);
         removeTransactionButton.setForeground(buttonTextColour);
         deleteAccountButton.setForeground(buttonTextColour);
         netProfitLabel.setForeground(textColour);
         YTDSummaryButton.setForeground(buttonTextColour);
+        createCSVButton.setForeground(buttonTextColour);
 
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);

@@ -92,7 +92,7 @@ public class DataManager {
         try {
             FileInputStream fileIn = new FileInputStream(FOLDER_NAME + username + FILE_EXTENSION);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            user = (structures.User) in.readObject();  // I dont think i need the structures.User, I think i can just use User, im too scared to tho
+            user = (User) in.readObject();  // I dont think i need the structures.User, I think i can just use User, im too scared to tho
 
             in.close();
             fileIn.close();
