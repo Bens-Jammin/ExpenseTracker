@@ -12,12 +12,22 @@ public abstract class Transaction implements Serializable, Comparable<Transactio
     protected String category;
     protected LocalDate timeStamp;
 
-    public Transaction(String name, double amount, String category){
+    
+    public Transaction(String category, String name, double amount){
         this.name = name;
         this.amount = amount;
         this.category = category;
         this.timeStamp = LocalDate.now();
     }
+
+
+    public Transaction(String category, String name, double amount, LocalDate dateStamp){
+        this.name = name;
+        this.amount = amount;
+        this.category = category;
+        this.timeStamp = dateStamp;
+    }
+
 
     // Getters & Setters
     public String getName() {return name;}

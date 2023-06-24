@@ -1,6 +1,7 @@
 package handlers;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import structures.User;
@@ -186,5 +187,100 @@ public class DataManager {
         }
     }
 
+
+    /**
+     * Converts a user's transaction data into a CSV file.
+     *
+     * @param user User object containing the transaction data.
+     */
+    public static void convertUserToCSV(User user) {
+        String fileName = "UserData/"+user.getUserName()+"_transaction_data.csv";
+
+        try (FileWriter writer = new FileWriter(fileName)) {
+            // Write the CSV file headers
+            writer.write("Username,Password,Transaction Type,Category Name,Transaction Name,Amount,Date\n");
+
+            // Write the user's information
+            writer.write(user.getUserName() + ",");
+            writer.write(user.getPassword() + ",\n");
+
+            // Write the user's transaction data to the CSV file
+            List<Expenses> expenses = user.getExpenses();
+            if (expenses != null) {
+                for (Expenses expense : expenses) {
+                    writer.write("Expense,");
+                    writer.write(expense.getCategory() + ",");
+                    writer.write(expense.getName() + ",");
+                    writer.write(expense.getAmount() + ",");
+                    writer.write(expense.getTimeStamp() + "\n");
+                }
+            }
+
+            List<Income> income = user.getAllIncome();
+            if (income != null) {
+                for (Income inc : income) {
+                    writer.write("Income,");
+                    writer.write(inc.getCategory() + ",");
+                    writer.write(inc.getName() + ",");
+                    writer.write(inc.getAmount() + ",");
+                    writer.write(inc.getTimeStamp() + "\n");
+                }
+            }
+
+            System.out.println("User transaction data has been converted to CSV: " + fileName);
+        } catch (IOException e) {
+            System.out.println("An error occurred while converting user transaction data to CSV: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Converts a CSV file to a User object containing transaction data.
+     *
+     * @param filename The name of the CSV file to be converted.
+     * @return User object containing the transaction data.
+     */
+    public static User convertCSVToUser(String filename) {
+        User user = null;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean isFirstLine = true; // Flag to skip the CSV header line
+
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    String[] userInfo = line.split(",");
+                    user = new User(userInfo[0], userInfo[1]);
+                    continue; // Skip the user info line
+                }
+
+                String[] data = line.split(",");
+
+                // Extract transaction data from each line of the CSV
+                String transactionType = data[0];
+                String category = data[1];
+                String transactionName = data[2];
+                double amount = Double.parseDouble(data[3]);
+                LocalDate date = LocalDate.parse(data[4]);
+
+                // Create Expenses or Income objects based on the transaction type
+                if (transactionType.equalsIgnoreCase("Expense")) {
+                    if (user != null) {
+                        user.addExpense(category, transactionName, amount, date);
+                    }
+                } else if (transactionType.equalsIgnoreCase("Income")) {
+                    if (user != null) {
+                        user.addIncome(category, transactionName, amount, date);
+                    }
+                }
+            }
+
+            System.out.println("CSV file has been converted to User object.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while converting CSV file to User object: " + e.getMessage());
+        }
+
+        return user;
+    }
 
 }

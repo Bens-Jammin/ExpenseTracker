@@ -11,6 +11,7 @@ package structures;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,7 +40,7 @@ public class User implements Serializable{
 
     // getters
     public String getUserName(){return username;}
-    public String getPasword(){return password;}
+    public String getPassword(){return password;}
     
     public List<Expenses> getExpenses(){return (expenses != null) ? expenses : Collections.emptyList();}
     public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
@@ -80,8 +81,14 @@ public class User implements Serializable{
     // ********** ALL INCOME ALTERING METHODS ***********
 
     public void addExpense(String name, double amount, String category) {
-        expenses.add(new Expenses(name, amount, category));
+        expenses.add(new Expenses(category, name, amount));
         totalExpenses += amount;
+    }
+
+
+    public void addExpense(String category, String name, double amount, LocalDate date){
+        this.allIncome.add(new Income(category, name, amount, date));
+        this.totalIncome += amount;
     }
 
 
@@ -120,7 +127,13 @@ public class User implements Serializable{
     // ********** ALL INCOME ALTERING METHODS ***********
 
     public void addIncome(String name, double amount, String category) {
-        this.allIncome.add(new Income(name, amount, category));
+        this.allIncome.add(new Income(category, name, amount));
+        this.totalIncome += amount;
+    }
+
+
+    public void addIncome(String category, String name, double amount, LocalDate date){
+        this.allIncome.add(new Income(category, name, amount, date));
         this.totalIncome += amount;
     }
 

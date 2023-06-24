@@ -1,9 +1,15 @@
 package structures;
 
+import java.time.LocalDate;
+
 public class Expenses extends Transaction{
 
-    public Expenses(String name, double amount, String category) {
-        super(name, amount, category);
+    public Expenses(String category, String name, double amount) {
+        super(category, name, amount);
+    }
+
+    public Expenses(String category, String name, double amount, LocalDate date) {
+        super(category, name, amount, date);
     }
 
     public void displayTransation(int i){
