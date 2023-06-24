@@ -1,8 +1,8 @@
+package handlers;
 
 import java.util.Scanner;
 import java.util.Set;
 
-import handlers.DataManager;
 import structures.User;
 
 public class Display{
@@ -128,6 +128,8 @@ public class Display{
                 System.out.println("username is already in use!");
             }
         }
+
+        DataManager.saveUser(user);
 
         return user;
 

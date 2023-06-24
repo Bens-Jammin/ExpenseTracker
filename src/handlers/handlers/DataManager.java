@@ -4,6 +4,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import structures.User;
 import structures.Expenses;
 import structures.Income;
@@ -194,42 +197,63 @@ public class DataManager {
      * @param user User object containing the transaction data.
      */
     public static void convertUserToCSV(User user) {
-        String fileName = "UserData/"+user.getUserName()+"_transaction_data.csv";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save CSV File");
 
-        try (FileWriter writer = new FileWriter(fileName)) {
-            // Write the CSV file headers
-            writer.write("Username,Password,Transaction Type,Category Name,Transaction Name,Amount,Date\n");
+        // Set file extension filter to only show CSV files
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
+        fileChooser.setFileFilter(filter);
 
-            // Write the user's information
-            writer.write(user.getUserName() + ",");
-            writer.write(user.getPassword() + ",\n");
+        int userSelection = fileChooser.showSaveDialog(null);
 
-            // Write the user's transaction data to the CSV file
-            List<Expenses> expenses = user.getExpenses();
-            if (expenses != null) {
-                for (Expenses expense : expenses) {
-                    writer.write("Expense,");
-                    writer.write(expense.getCategory() + ",");
-                    writer.write(expense.getName() + ",");
-                    writer.write(expense.getAmount() + ",");
-                    writer.write(expense.getTimeStamp() + "\n");
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try {
+                String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!filePath.endsWith(".csv")) {
+                    // Append the .csv extension if not already present
+                    filePath += ".csv";
                 }
-            }
 
-            List<Income> income = user.getAllIncome();
-            if (income != null) {
-                for (Income inc : income) {
-                    writer.write("Income,");
-                    writer.write(inc.getCategory() + ",");
-                    writer.write(inc.getName() + ",");
-                    writer.write(inc.getAmount() + ",");
-                    writer.write(inc.getTimeStamp() + "\n");
+                FileWriter writer = new FileWriter(filePath);
+                // Write the CSV file headers
+                writer.write("Username,Password,Transaction Type,Category Name,Transaction Name,Amount,Date\n");
+
+                // Write the user's information
+                writer.write(user.getUserName() + ",");
+                writer.write(user.getPassword() + ",\n");
+
+                // Write the user's transaction data to the CSV file
+                List<Expenses> expenses = user.getExpenses();
+                if (expenses != null) {
+                    for (Expenses expense : expenses) {
+                        writer.write(",");  // these account for the username/pwd columns
+                        writer.write(",");
+                        writer.write("Expense,");
+                        writer.write(expense.getCategory() + ",");
+                        writer.write(expense.getName() + ",");
+                        writer.write(expense.getAmount() + ",");
+                        writer.write(expense.getTimeStamp() + "\n");
+                    }
                 }
-            }
 
-            System.out.println("User transaction data has been converted to CSV: " + fileName);
-        } catch (IOException e) {
-            System.out.println("An error occurred while converting user transaction data to CSV: " + e.getMessage());
+                List<Income> income = user.getAllIncome();
+                if (income != null) {
+                    for (Income inc : income) {
+                        writer.write(",");  // these account for the username/pwd columns
+                        writer.write(",");
+                        writer.write("Income,");
+                        writer.write(inc.getCategory() + ",");
+                        writer.write(inc.getName() + ",");
+                        writer.write(inc.getAmount() + ",");
+                        writer.write(inc.getTimeStamp() + "\n");
+                    }
+                }
+
+                writer.close();
+                System.out.println("User transaction data has been converted to CSV and saved successfully.");
+            } catch (IOException e) {
+                System.out.println("An error occurred while converting user transaction data to CSV: " + e.getMessage());
+            }
         }
     }
 

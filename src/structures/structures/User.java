@@ -42,11 +42,11 @@ public class User implements Serializable{
     public String getUserName(){return username;}
     public String getPassword(){return password;}
     
-    public List<Expenses> getExpenses(){return (expenses != null) ? expenses : Collections.emptyList();}
+    public List<Expenses> getExpenses(){return expenses;}
     public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
     public double getTotalExpenses(){return totalExpenses;}
 
-    public List<Income> getAllIncome(){return (allIncome != null) ? allIncome : Collections.emptyList();}
+    public List<Income> getAllIncome(){return allIncome;}
     public Income getOneIncome(int i){return allIncome.get(i);} // maybe testing ? idk i have this just in case 
     public double getTotalIncome(){return totalIncome;}
 

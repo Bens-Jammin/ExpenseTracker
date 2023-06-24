@@ -40,7 +40,7 @@ public class MainGUIPage {
     public MainGUIPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.4.0";
+        String publicVersionNumber = "0.4.1";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);

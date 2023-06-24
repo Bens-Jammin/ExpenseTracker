@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 import handlers.DataManager;
+import handlers.Display;
 import structures.User;
 
 public class GUIDisplayManager extends JFrame {
