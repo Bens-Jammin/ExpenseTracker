@@ -49,10 +49,6 @@ class TerminalDisplay extends Display{
 
             int choice = scan.nextInt();
 
-            /* TODO:
-             * 
-             * 1. clear screen before breaking in switch
-             */
 
             switch (choice) {
                 case 1: 

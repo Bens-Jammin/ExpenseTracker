@@ -220,7 +220,7 @@ public class DataManager {
 
                 // Write the user's information
                 writer.write(user.getUserName() + ",");
-                writer.write(user.getPassword() + ",\n");
+                writer.write(user.getPassword() + "\n");
 
                 // Write the user's transaction data to the CSV file
                 List<Expenses> expenses = user.getExpenses();
@@ -265,8 +265,10 @@ public class DataManager {
      */
     public static User convertCSVToUser(String filename) {
         User user = null;
+        BufferedReader reader = null;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try {
+            reader = new BufferedReader(new FileReader(filename));
             String line;
             boolean isFirstLine = true; // Flag to skip the CSV header line
 
@@ -274,37 +276,54 @@ public class DataManager {
                 if (isFirstLine) {
                     isFirstLine = false;
                     String[] userInfo = line.split(",");
-                    user = new User(userInfo[0], userInfo[1]);
-                    continue; // Skip the user info line
-                }
-
-                String[] data = line.split(",");
-
-                // Extract transaction data from each line of the CSV
-                String transactionType = data[0];
-                String category = data[1];
-                String transactionName = data[2];
-                double amount = Double.parseDouble(data[3]);
-                LocalDate date = LocalDate.parse(data[4]);
-
-                // Create Expenses or Income objects based on the transaction type
-                if (transactionType.equalsIgnoreCase("Expense")) {
-                    if (user != null) {
-                        user.addExpense(category, transactionName, amount, date);
+                    if (userInfo.length >= 2) {
+                        user = new User(userInfo[0], userInfo[1]);
+                    } else {
+                        System.out.println("Invalid format for user info in CSV file.");
+                        break; // Exit the loop if the user info is invalid
                     }
-                } else if (transactionType.equalsIgnoreCase("Income")) {
-                    if (user != null) {
-                        user.addIncome(category, transactionName, amount, date);
+                } else {
+                    String[] data = line.split(",");
+                    if (data.length >= 7) {
+                        // Extract transaction data from each line of the CSV
+                        String transactionType = data[2];
+                        String category = data[3];
+                        String transactionName = data[4];
+                        double amount = Double.parseDouble(data[5]);
+                        LocalDate date = LocalDate.parse(data[6]);
+
+                        // Create Expenses or Income objects based on the transaction type
+                        if (transactionType.equalsIgnoreCase("Expense")) {
+                            if (user != null) {
+                                user.addExpense(category, transactionName, amount, date);
+                            }
+                        } else if (transactionType.equalsIgnoreCase("Income")) {
+                            if (user != null) {
+                                user.addIncome(category, transactionName, amount, date);
+                            }
+                        }
+                    } else {
+                        System.out.println("Invalid format for transaction data in CSV file: " + line);
                     }
                 }
             }
 
             System.out.println("CSV file has been converted to User object.");
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("An error occurred while converting CSV file to User object: " + e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.out.println("An error occurred while closing the file reader: " + e.getMessage());
+                }
+            }
         }
 
         return user;
     }
+
+
 
 }

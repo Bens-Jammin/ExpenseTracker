@@ -1,4 +1,9 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import handlers.DataManager;
 import handlers.Display;
@@ -10,6 +15,7 @@ public class GUIDisplayManager extends JFrame {
 
     private JButton loginButton;
     private JButton signupButton;
+    private JButton loadUserWithCSVButton;
     private JTextField usernameField;
     private JPasswordField passwordField;
 
@@ -46,9 +52,35 @@ public class GUIDisplayManager extends JFrame {
         signupButton = new JButton("Signup");
         signupButton.addActionListener(e -> handleSignup());
 
+        loadUserWithCSVButton = new JButton("Load account with csv");
+        loadUserWithCSVButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Select CSV File");
+                fileChooser.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv"));
+
+                int userSelection = fileChooser.showOpenDialog(null);
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String filePath = selectedFile.getAbsolutePath();
+
+                    if (filePath.toLowerCase().endsWith(".csv")) {
+                        User user = DataManager.convertCSVToUser(filePath);
+                        openMainPage(user);
+                    } else {
+                        // Display an error dialog if a non-CSV file is selected
+                        JOptionPane.showMessageDialog(panel, "Please select a CSV file.", "Invalid File", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(loginButton);
         buttonPanel.add(signupButton);
+        buttonPanel.add(loadUserWithCSVButton);
 
         panel.add(usernamePanel);
         panel.add(passwordPanel);
