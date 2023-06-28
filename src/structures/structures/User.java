@@ -26,14 +26,20 @@ public class User implements Serializable{
     List<Income> allIncome;
     String username;
     String password;
+    int colourScheme;
     double totalExpenses;
     double totalIncome;
+
+
+    public static final int DARK_MODE = 0;
+    public static final int BABYGIRL_MODE = 1;
 
     public User(String username, String password) {
         this.expenses = new ArrayList<Expenses>();
         this.allIncome = new ArrayList<Income>();
         this.username = username;
         this.password = password;
+        this.colourScheme = 0;
         this.totalExpenses = 0;
         this.totalIncome = 0;
     }
@@ -41,6 +47,31 @@ public class User implements Serializable{
     // getters
     public String getUserName(){return username;}
     public String getPassword(){return password;}
+    public int getColourScheme(){return colourScheme;}
+    
+
+    /**
+     * Determines if the given numerical representation for the GUI color scheme is valid.
+     *
+     * @param c The numerical representation for the GUI color scheme. The default value is 0.
+     * Valid color scheme options (as of 06-27-2023):
+     * - black
+     * -  babygirl
+     * 
+     * @return {@code true} if {@code c} is a valid number.
+     *
+     */
+    public boolean setColourScheme(int c){
+        int[] options = new int[]{0, 1};
+
+        for(int i = 0; i<options.length; i++){
+            if(c == i){
+                colourScheme = c;
+                return true;
+            }
+        }
+        return false;
+    }
     
     public List<Expenses> getExpenses(){return expenses;}
     public Expenses getOneExpense(int i){return expenses.get(i);} // testing purposes only
