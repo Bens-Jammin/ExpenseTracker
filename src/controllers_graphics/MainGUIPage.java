@@ -2,6 +2,7 @@ import structures.*;
 
 import javax.swing.*;
 
+import handlers.ColourSchemeManager;
 import handlers.DataManager;
 import handlers.YTDSummaryManager;
 
@@ -12,16 +13,6 @@ import java.awt.event.ActionListener;
 
 public class MainGUIPage {
 
-    // colour scheme variables
-    private boolean isDarkMode = true;
-    JToggleButton toggleColourScheme;
-
-    // default colours 
-    Color mainBackroundColour = Color.decode("#232323");
-    Color sidePanelColour = Color.decode("#3f3f3f");
-    Color buttonTextColour = Color.decode("#141414");
-    ImageIcon buttonImage = new ImageIcon("button_grey.png");
-    Color textColour = Color.decode("#FFFFFF");
 
     // buttons, pages, frames, etc
     JFrame frame;
@@ -43,12 +34,13 @@ public class MainGUIPage {
     public MainGUIPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.4.6";
+        String publicVersionNumber = "0.4.7";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
+
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -58,6 +50,16 @@ public class MainGUIPage {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+
+        // set theme
+        int mode = user.getColourScheme();
+        String colourScheme = (mode == 0) ? "darkMode" : "babyGirlMode";
+        ImageIcon buttonImage = ColourSchemeManager.getButtonImage(colourScheme);
+        Color buttonTextColour = ColourSchemeManager.getColor(colourScheme, "buttonText");
+        Color mainBackroundColour = ColourSchemeManager.getColor(colourScheme, "mainBackground");
+        Color sidePanelColour = ColourSchemeManager.getColor(colourScheme, "sideBar");
+        Color textColour = ColourSchemeManager.getColor(colourScheme, "textColour");
+
 
         // Create sidebar panel
         sidebarPanel = new JPanel();
@@ -71,7 +73,6 @@ public class MainGUIPage {
         YTDSummaryButton = new JButton("VIEW YTD SUMMARY");
         createCSVButton = new JButton("Export to CSV");
         AccountPageButton = new JButton("Account");
-        toggleColourScheme = new JToggleButton("Dark Mode");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -83,6 +84,8 @@ public class MainGUIPage {
         AccountPageButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
         //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
+
+
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
@@ -106,14 +109,14 @@ public class MainGUIPage {
         removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
         deleteAccountButton.setVerticalTextPosition(SwingConstants.CENTER);
         deleteAccountButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        YTDSummaryButton.setVerticalAlignment(SwingConstants.CENTER);
+        YTDSummaryButton.setVerticalTextPosition(SwingConstants.CENTER);
         YTDSummaryButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        createCSVButton.setVerticalAlignment(SwingConstants.CENTER);
+        createCSVButton.setVerticalTextPosition(SwingConstants.CENTER);
         createCSVButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        AccountPageButton.setVerticalAlignment(SwingConstants.CENTER);
-        AccountPageButton.setHorizontalAlignment(SwingConstants.CENTER);
+        AccountPageButton.setVerticalTextPosition(SwingConstants.CENTER);        
+        AccountPageButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        deleteAccountButton.setVerticalAlignment(SwingConstants.CENTER);
+        deleteAccountButton.setVerticalTextPosition(SwingConstants.CENTER);
 
         sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
         sidebarPanel.add(viewTransactionButton);
@@ -121,7 +124,6 @@ public class MainGUIPage {
         sidebarPanel.add(YTDSummaryButton);
         sidebarPanel.add(createCSVButton);
         sidebarPanel.add(AccountPageButton);
-        sidebarPanel.add(toggleColourScheme);
 
         // should always be at the bottom
         sidebarPanel.add(deleteAccountButton);
@@ -212,14 +214,6 @@ public class MainGUIPage {
             }
         });
 
-        toggleColourScheme.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                toggleMode();
-                frame.repaint();
-            }
-        });
-
 
         // loading the app
         frame.getContentPane().add(mainPanel);
@@ -238,65 +232,6 @@ public class MainGUIPage {
         }
 
         return bigLabel;
-    }
-    
-    /**
-     * Toggles the theme of the window.
-     */
-    private void toggleMode() {
-        isDarkMode = !isDarkMode;
-        
-        if (isDarkMode) {
-            // Apply dark mode styles
-            toggleColourScheme.setText("Dark Mode");
-            toggleColourScheme.setSelected(false);
-
-            // Change colours
-            mainBackroundColour = Color.decode("#232323");
-            sidePanelColour = Color.decode("#3f3f3f");
-            buttonTextColour = Color.decode("#141414");
-            buttonImage = new ImageIcon("button_grey.png");
-            textColour = Color.decode("#FFFFFF");
-
-        } else {
-            // Apply light mode styles
-            toggleColourScheme.setText("Babygirl Mode");
-            toggleColourScheme.setSelected(true);
-
-            // Change colours
-            mainBackroundColour = Color.decode("#E11299");
-            sidePanelColour = Color.decode("#F5C6EC");
-            buttonTextColour = Color.decode("#9A208C");
-            buttonImage = new ImageIcon("button_pink.png");
-            textColour = Color.decode("#FFEAEA");
-
-        }
-        // update everything
-        contentPanel.setBackground(mainBackroundColour);
-        sidebarPanel.setBackground(sidePanelColour);
-        addTransactionButton.setIcon(buttonImage);
-        viewTransactionButton.setIcon(buttonImage);
-        removeTransactionButton.setIcon(buttonImage);
-        deleteAccountButton.setIcon(buttonImage);
-        YTDSummaryButton.setIcon(buttonImage);
-        createCSVButton.setIcon(buttonImage);
-        AccountPageButton.setIcon(buttonImage);
-        addTransactionButton.setForeground(buttonTextColour);
-        viewTransactionButton.setForeground(buttonTextColour);
-        removeTransactionButton.setForeground(buttonTextColour);
-        deleteAccountButton.setForeground(buttonTextColour);
-        netProfitLabel.setForeground(textColour);
-        YTDSummaryButton.setForeground(buttonTextColour);
-        createCSVButton.setForeground(buttonTextColour);
-        createCSVButton.setForeground(buttonTextColour);
-
-        // chatGPT says i have to do this for the text to appear on the buttons :(
-        addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
-        addTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        viewTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
-        viewTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
-        removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
 }

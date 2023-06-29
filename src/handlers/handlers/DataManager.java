@@ -50,6 +50,8 @@ public class DataManager {
             out.close();
             fileOut.close();
 
+            System.out.println(user.getColourScheme());
+
             saveExpenses(user.getUserName(), user.getExpenses());
             saveIncome(user.getUserName(), user.getAllIncome());
 
@@ -216,17 +218,19 @@ public class DataManager {
 
                 FileWriter writer = new FileWriter(filePath);
                 // Write the CSV file headers
-                writer.write("Username,Password,Transaction Type,Category Name,Transaction Name,Amount,Date\n");
+                writer.write("Username,Password,ColourScheme,Transaction Type,Category Name,Transaction Name,Amount,Date\n");
 
                 // Write the user's information
                 writer.write(user.getUserName() + ",");
-                writer.write(user.getPassword() + "\n");
+                writer.write(user.getPassword() + ",");
+                writer.write(user.getColourScheme() + "\n");
 
                 // Write the user's transaction data to the CSV file
                 List<Expenses> expenses = user.getExpenses();
                 if (expenses != null) {
                     for (Expenses expense : expenses) {
                         writer.write(",");  // these account for the username/pwd columns
+                        writer.write(",");
                         writer.write(",");
                         writer.write("Expense,");
                         writer.write(expense.getCategory() + ",");
@@ -239,6 +243,7 @@ public class DataManager {
                 List<Income> income = user.getAllIncome();
                 if (income != null) {
                     for (Income inc : income) {
+                        writer.write(",");
                         writer.write(",");  // these account for the username/pwd columns
                         writer.write(",");
                         writer.write("Income,");
@@ -278,6 +283,7 @@ public class DataManager {
                     String[] userInfo = line.split(",");
                     if (userInfo.length >= 2) {
                         user = new User(userInfo[0], userInfo[1]);
+                        user.setColourScheme(Integer.parseInt(userInfo[2]));
                     } else {
                         System.out.println("Invalid format for user info in CSV file.");
                         break; // Exit the loop if the user info is invalid
@@ -286,11 +292,11 @@ public class DataManager {
                     String[] data = line.split(",");
                     if (data.length >= 7) {
                         // Extract transaction data from each line of the CSV
-                        String transactionType = data[2];
-                        String category = data[3];
-                        String transactionName = data[4];
-                        double amount = Double.parseDouble(data[5]);
-                        LocalDate date = LocalDate.parse(data[6]);
+                        String transactionType = data[3];
+                        String category = data[4];
+                        String transactionName = data[5];
+                        double amount = Double.parseDouble(data[6]);
+                        LocalDate date = LocalDate.parse(data[7]);
 
                         // Create Expenses or Income objects based on the transaction type
                         if (transactionType.equalsIgnoreCase("Expense")) {

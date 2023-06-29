@@ -48,15 +48,16 @@ public class AccountPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 switch (colourScheme.getText()) {
                     case "Dark Mode":
-                        user.setColourScheme(User.DARK_MODE);
+                        user.setColourScheme(User.BABYGIRL_MODE);
                         colourScheme.setText("BabyGirl Mode");
                         break;
                         
                     case "BabyGirl Mode":
-                        user.setColourScheme(User.BABYGIRL_MODE);
+                        user.setColourScheme(User.DARK_MODE);
                         colourScheme.setText("Dark Mode");
                         break;
                 }
+                DataManager.saveUser(user);
             }
         });
 
