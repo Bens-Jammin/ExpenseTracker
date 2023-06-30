@@ -38,21 +38,23 @@ public class AccountPage extends JFrame {
         // Username Label and Field
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setForeground(textColour);
+        usernameLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         JTextField usernameField = new JTextField(username);
         usernameField.setForeground(textColour);
         usernameField.setBackground(mainBackroundColour);
         usernameField.setBorder(BorderFactory.createEmptyBorder()); // Remove the border
-        usernameField.setHorizontalAlignment(SwingConstants.CENTER);
+        usernameField.setHorizontalAlignment(JTextField.LEFT);
         usernameField.setEditable(false);
 
         // Password Label and Field
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setForeground(textColour);
+        passwordLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         JTextField passwordField = new JTextField(password);
         passwordField.setForeground(textColour);
         passwordField.setBackground(mainBackroundColour);
         passwordField.setBorder(BorderFactory.createEmptyBorder());
-        passwordField.setHorizontalAlignment(SwingConstants.CENTER);
+        passwordField.setHorizontalAlignment(JTextField.LEFT);
         passwordField.setEditable(false);
 
         final int BUTTON_WIDTH = 120;
