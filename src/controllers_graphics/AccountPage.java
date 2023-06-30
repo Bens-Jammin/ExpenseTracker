@@ -3,6 +3,7 @@ import structures.*;
 import javax.swing.*;
 
 import handlers.DataManager;
+import handlers.ColourSchemeManager;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,20 +23,48 @@ public class AccountPage extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(4, 2));
 
+        
+        // set theme
+        int mode = user.getColourScheme();
+        String theme = (mode == 0) ? "darkMode" : "babyGirlMode";
+        ImageIcon buttonImage = ColourSchemeManager.getButtonImage(theme);
+        Color buttonTextColour = ColourSchemeManager.getColor(theme, "buttonText");
+        Color mainBackroundColour = ColourSchemeManager.getColor(theme, "mainBackground");
+        Color textColour = ColourSchemeManager.getColor(theme, "textColour");
+
+        getContentPane().setBackground(mainBackroundColour);
+
+
         // Username Label and Field
         JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setForeground(textColour);
         JTextField usernameField = new JTextField(username);
+        usernameField.setForeground(textColour);
+        usernameField.setBackground(mainBackroundColour);
+        usernameField.setBorder(BorderFactory.createEmptyBorder()); // Remove the border
         usernameField.setHorizontalAlignment(SwingConstants.CENTER);
         usernameField.setEditable(false);
 
         // Password Label and Field
         JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setForeground(textColour);
         JTextField passwordField = new JTextField(password);
+        passwordField.setForeground(textColour);
+        passwordField.setBackground(mainBackroundColour);
+        passwordField.setBorder(BorderFactory.createEmptyBorder());
         passwordField.setHorizontalAlignment(SwingConstants.CENTER);
         passwordField.setEditable(false);
 
+        final int BUTTON_WIDTH = 120;
+        final int BUTTON_HEIGHT = 30;
+
         // Export Button
         JButton exportButton = new JButton("Export to CSV");
+        exportButton.setIcon(buttonImage);
+        exportButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        exportButton.setForeground(buttonTextColour);
+        exportButton.setVerticalTextPosition(SwingConstants.CENTER);
+        exportButton.setHorizontalTextPosition(SwingConstants.CENTER);
         exportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DataManager.convertUserToCSV(user);
@@ -43,6 +72,11 @@ public class AccountPage extends JFrame {
         });
 
         JButton colourScheme = new JButton("Dark Mode");
+        colourScheme.setIcon(buttonImage);
+        colourScheme.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        colourScheme.setForeground(buttonTextColour);
+        colourScheme.setVerticalTextPosition(SwingConstants.CENTER);
+        colourScheme.setHorizontalTextPosition(SwingConstants.CENTER);
         colourScheme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
