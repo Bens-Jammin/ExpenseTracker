@@ -32,6 +32,7 @@ public class AccountPage extends JFrame {
         Color mainBackroundColour = ColourSchemeManager.getColor(theme, "mainBackground");
         Color textColour = ColourSchemeManager.getColor(theme, "textColour");
 
+        
         getContentPane().setBackground(mainBackroundColour);
 
 

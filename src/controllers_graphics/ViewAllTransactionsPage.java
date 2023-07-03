@@ -69,5 +69,6 @@ public class ViewAllTransactionsPage extends JFrame {
     public void addTransaction(String type, String category, String name, double amount) {
         Object[] rowData = {type, category, name, amount};
         tableModel.addRow(rowData);
+
     }
 }

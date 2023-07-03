@@ -34,7 +34,7 @@ public class MainGUIPage {
     public MainGUIPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.4.7";
+        String publicVersionNumber = "0.4.7.3";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         frame = new JFrame(title);
@@ -44,6 +44,7 @@ public class MainGUIPage {
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -182,19 +183,19 @@ public class MainGUIPage {
                 if(deleteMessage == null){
                     JOptionPane.showMessageDialog(mainPanel, "Account deleted successfully.",
                     "ACCOUNT DELETED", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(mainPanel, "ERROR: ACCOUNT DELETION FAILED /n"+deleteMessage,
+                    JOptionPane.showMessageDialog(mainPanel, "ERROR: ACCOUNT DELETION FAILED \n"+deleteMessage,
                     "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);
                 }
-                frame.dispose();
             }
         });
 
         YTDSummaryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                YTDSummaryManager ytdTable = new YTDSummaryManager(user);
-                ytdTable.printSummaryTable();
+                YTDSummaryManager ytd = new YTDSummaryManager(user);
+                new SummaryTablePage(ytd);
             }
         });
 

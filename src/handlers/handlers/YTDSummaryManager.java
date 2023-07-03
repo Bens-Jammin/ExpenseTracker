@@ -58,6 +58,13 @@ public class YTDSummaryManager {
         }
     }
 
+
+    public Map<String, Map<Integer, Double>> getSummaryTable() {
+        return summaryTable;
+    }
+        
+
+
     public void printSummaryTable() {
         // Print the summary table
         System.out.printf("%-20s", "CATEGORY"); // Category header
