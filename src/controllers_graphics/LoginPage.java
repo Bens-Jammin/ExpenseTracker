@@ -9,7 +9,7 @@ import handlers.DataManager;
 import handlers.Display;
 import structures.User;
 
-public class GUIDisplayManager extends JFrame {
+public class LoginPage extends JFrame {
 
     private User user = null;
 
@@ -25,7 +25,7 @@ public class GUIDisplayManager extends JFrame {
      * Constructs a new GUIDisplayManager object.
      * Sets up the window and components for login and signup.
      */
-    public GUIDisplayManager() {
+    public LoginPage() {
         setTitle("Login or Signup");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 200);
@@ -157,6 +157,6 @@ public class GUIDisplayManager extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GUIDisplayManager();
+        new LoginPage();
     }
 }
