@@ -84,7 +84,7 @@ public class AddTransactionPage extends JFrame {
         JLabel nameLabel = new JLabel("Name:");
         nameTextField = new JTextField();
         nameLabel.setForeground(textColour);
-        nameTextField.setForeground(sidePanelColour);
+        nameTextField.setForeground(textColour);
         nameTextField.setBackground(sidePanelColour);
         mainPanel.add(nameLabel);
         mainPanel.add(nameTextField);
