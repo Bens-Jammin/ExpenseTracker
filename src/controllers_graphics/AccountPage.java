@@ -17,24 +17,19 @@ public class AccountPage extends JFrame {
         this.username = user.getUserName();
         this.password = user.getPassword();
 
-        // Set up the JFrame
         setTitle("Account Page");
-        setSize(450, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(4, 2));
+        setLayout(new GridLayout(3, 4));
 
-        
         // set theme
         int mode = user.getColourScheme();
         String theme = (mode == 0) ? "darkMode" : "babyGirlMode";
         ImageIcon buttonImage = ColourSchemeManager.getButtonImage(theme);
         Color buttonTextColour = ColourSchemeManager.getColor(theme, "buttonText");
-        Color mainBackroundColour = ColourSchemeManager.getColor(theme, "mainBackground");
+        Color mainBackgroundColour = ColourSchemeManager.getColor(theme, "mainBackground");
         Color textColour = ColourSchemeManager.getColor(theme, "textColour");
 
-        
-        getContentPane().setBackground(mainBackroundColour);
-
+        getContentPane().setBackground(mainBackgroundColour);
 
         // Username Label and Field
         JLabel usernameLabel = new JLabel("Username:");
@@ -42,7 +37,7 @@ public class AccountPage extends JFrame {
         usernameLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         JTextField usernameField = new JTextField(username);
         usernameField.setForeground(textColour);
-        usernameField.setBackground(mainBackroundColour);
+        usernameField.setBackground(mainBackgroundColour);
         usernameField.setBorder(BorderFactory.createEmptyBorder()); // Remove the border
         usernameField.setHorizontalAlignment(JTextField.LEFT);
         usernameField.setEditable(false);
@@ -53,7 +48,7 @@ public class AccountPage extends JFrame {
         passwordLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         JTextField passwordField = new JTextField(password);
         passwordField.setForeground(textColour);
-        passwordField.setBackground(mainBackroundColour);
+        passwordField.setBackground(mainBackgroundColour);
         passwordField.setBorder(BorderFactory.createEmptyBorder());
         passwordField.setHorizontalAlignment(JTextField.LEFT);
         passwordField.setEditable(false);
@@ -88,7 +83,7 @@ public class AccountPage extends JFrame {
                         user.setColourScheme(User.BABYGIRL_MODE);
                         colourScheme.setText("BabyGirl Mode");
                         break;
-                        
+
                     case "BabyGirl Mode":
                         user.setColourScheme(User.DARK_MODE);
                         colourScheme.setText("Dark Mode");
@@ -98,17 +93,54 @@ public class AccountPage extends JFrame {
             }
         });
 
+        JButton deleteAccount = new JButton("Delete Account");
+        deleteAccount.setIcon(buttonImage);
+        deleteAccount.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        deleteAccount.setForeground(buttonTextColour);
+        deleteAccount.setVerticalTextPosition(SwingConstants.CENTER);
+        deleteAccount.setHorizontalTextPosition(SwingConstants.CENTER);
+        deleteAccount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String message = "Please confirm you want to delete your account";
+                String title = "Confirm Account Deletion";
+
+                int confirmDeleteAccount = JOptionPane.showConfirmDialog(AccountPage.this, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+                if (confirmDeleteAccount == JOptionPane.NO_OPTION) {
+                    return;
+                }
+
+                String deleteMessage = DataManager.deleteAccount(user.getUserName());
+                if (deleteMessage == null) {
+                    JOptionPane.showMessageDialog(AccountPage.this, "Account deleted successfully.",
+                            "ACCOUNT DELETED", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(AccountPage.this, "ERROR: ACCOUNT DELETION FAILED \n" + deleteMessage,
+                            "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        JTextArea blankArea = new JTextArea();
+        blankArea.setBackground(mainBackgroundColour);
+        blankArea.setEditable(false);
+
+        JTextArea blankArea1 = new JTextArea();         // library combines identical objects when rendering
+        blankArea1.setBackground(mainBackgroundColour);
+        blankArea1.setEditable(false);
+
+        
 
         // Add components to the JFrame
-        
-        add(usernameLabel); add(usernameField);
-        add(passwordLabel); add(passwordField); 
-        add(exportButton);  add(colourScheme); 
-        
-        
+        add(usernameLabel); add(usernameField); add(blankArea); add(colourScheme);  
+        add(passwordLabel); add(passwordField); add(blankArea); add(exportButton);
+        add(blankArea);     add(blankArea1);     add(blankArea); add(deleteAccount);
 
         setLocationRelativeTo(null);
-        // Display the JFrame
+        pack(); // Adjusts the size of the frame to fit the components
         setVisible(true);
     }
 }

@@ -3,7 +3,6 @@ import structures.*;
 import javax.swing.*;
 
 import handlers.ColourSchemeManager;
-import handlers.DataManager;
 import handlers.YTDSummaryManager;
 
 import java.awt.*;
@@ -22,9 +21,7 @@ public class MainGUIPage {
     JButton addTransactionButton;
     JButton viewTransactionButton;
     JButton removeTransactionButton;
-    JButton deleteAccountButton;
     JButton YTDSummaryButton;
-    JButton createCSVButton;
     JButton AccountPageButton;
 
     JPanel contentPanel;
@@ -70,18 +67,14 @@ public class MainGUIPage {
         addTransactionButton= new JButton("Add Transaction");
         viewTransactionButton = new JButton("View All Transactions");
         removeTransactionButton = new JButton("Remove Transactions");
-        deleteAccountButton = new JButton("DELETE ACCOUNT");
         YTDSummaryButton = new JButton("VIEW YTD SUMMARY");
-        createCSVButton = new JButton("Export to CSV");
         AccountPageButton = new JButton("Account");
         final int BUTTON_WIDTH = 120;
         final int BUTTON_HEIGHT =  30;
         addTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         viewTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         removeTransactionButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        deleteAccountButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         YTDSummaryButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        createCSVButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         AccountPageButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         // addTransactionButton.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // FIXME: why does this do nothing ??
         //buttonImage = resizeIcon(buttonImage,viewTransactionButton.getWidth(),viewTransactionButton.getHeight());
@@ -90,16 +83,12 @@ public class MainGUIPage {
         addTransactionButton.setIcon(buttonImage);
         viewTransactionButton.setIcon(buttonImage);
         removeTransactionButton.setIcon(buttonImage);
-        deleteAccountButton.setIcon(buttonImage);
         YTDSummaryButton.setIcon(buttonImage);
-        createCSVButton.setIcon(buttonImage);
         AccountPageButton.setIcon(buttonImage);
         addTransactionButton.setForeground(buttonTextColour);
         viewTransactionButton.setForeground(buttonTextColour);
         removeTransactionButton.setForeground(buttonTextColour);
-        deleteAccountButton.setForeground(buttonTextColour);
         YTDSummaryButton.setForeground(buttonTextColour);
-        createCSVButton.setForeground(buttonTextColour);
         AccountPageButton.setForeground(buttonTextColour);
         // chatGPT says i have to do this for the text to appear on the buttons :(
         addTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
@@ -108,28 +97,20 @@ public class MainGUIPage {
         viewTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
         removeTransactionButton.setVerticalTextPosition(SwingConstants.CENTER);
         removeTransactionButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        deleteAccountButton.setVerticalTextPosition(SwingConstants.CENTER);
-        deleteAccountButton.setHorizontalTextPosition(SwingConstants.CENTER);
         YTDSummaryButton.setVerticalTextPosition(SwingConstants.CENTER);
         YTDSummaryButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        createCSVButton.setVerticalTextPosition(SwingConstants.CENTER);
-        createCSVButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        
         AccountPageButton.setVerticalTextPosition(SwingConstants.CENTER);        
         AccountPageButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        deleteAccountButton.setVerticalTextPosition(SwingConstants.CENTER);
 
-        sidebarPanel.add(addTransactionButton, BorderLayout.CENTER);
+        sidebarPanel.add(AccountPageButton);
+        sidebarPanel.add(addTransactionButton);
         sidebarPanel.add(viewTransactionButton);
         sidebarPanel.add(removeTransactionButton);
         sidebarPanel.add(YTDSummaryButton);
-        sidebarPanel.add(createCSVButton);
-        sidebarPanel.add(AccountPageButton);
 
-        // should always be at the bottom
-        sidebarPanel.add(deleteAccountButton);
 
-        // Create the content panel
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(mainBackroundColour);
 
@@ -176,35 +157,11 @@ public class MainGUIPage {
             }
         });
 
-        deleteAccountButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String deleteMessage = DataManager.deleteAccount(user.getUserName());
-                if(deleteMessage == null){
-                    JOptionPane.showMessageDialog(mainPanel, "Account deleted successfully.",
-                    "ACCOUNT DELETED", JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(mainPanel, "ERROR: ACCOUNT DELETION FAILED \n"+deleteMessage,
-                    "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
         YTDSummaryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 YTDSummaryManager ytd = new YTDSummaryManager(user);
                 new SummaryTablePage(ytd);
-            }
-        });
-
-        createCSVButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DataManager.convertUserToCSV(user);
-                JOptionPane.showMessageDialog(mainPanel, "CSV saved at UserData/"+user.getUserName()+"_transaction_data.csv",
-                    "Export Complete", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
