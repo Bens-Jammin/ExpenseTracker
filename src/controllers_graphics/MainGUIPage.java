@@ -115,18 +115,18 @@ public class MainGUIPage {
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(mainBackroundColour);
 
-        JPanel statsPanel = new JPanel(new GridLayout(2,0));
+        JPanel statsPanel = new JPanel(new GridLayout(1,2));
         contentPanel.add(statsPanel, BorderLayout.CENTER);
 
         String[] userStats = calculateUsersStatistics(user);
-        JLabel expenseStatLabel1 = new JLabel(userStats[0]); 
-        JLabel expenseStatLabel2 = new JLabel(userStats[1]); 
-        JLabel expenseStatLabel3 = new JLabel(userStats[2]); 
-        JLabel expenseStatLabel4 = new JLabel(userStats[3]); 
-        JLabel incomeStatLabel1 = new JLabel(userStats[4]); 
-        JLabel incomeStatLabel2 = new JLabel(userStats[5]); 
-        JLabel incomeStatLabel3 = new JLabel(userStats[6]); 
-        JLabel incomeStatLabel4 = new JLabel(userStats[7]); 
+        JLabel expenseStatLabel1 = new JLabel("Most expensive single expense: "+userStats[0]); 
+        JLabel expenseStatLabel2 = new JLabel("Most expensive expense category: "+userStats[1]); 
+        JLabel expenseStatLabel3 = new JLabel("Total number of expenses: "+userStats[2]); 
+        JLabel expenseStatLabel4 = new JLabel("Total expense costs: "+userStats[3]); 
+        JLabel incomeStatLabel1 = new JLabel("Most valuable single income: "+userStats[4]); 
+        JLabel incomeStatLabel2 = new JLabel("Most valuable income category: "+userStats[5]); 
+        JLabel incomeStatLabel3 = new JLabel("Total incomes recorded: "+userStats[6]); 
+        JLabel incomeStatLabel4 = new JLabel("Total income generated: "+userStats[7]); 
 
         expenseStatLabel1.setForeground(textColour);
         expenseStatLabel2.setForeground(textColour);
@@ -158,8 +158,8 @@ public class MainGUIPage {
         incomeStatsPanel.add(incomeStatLabel4);
 
         // Add the expenseStatsPanel to the left side and incomeStatsPanel to the right side of contentPanel
-        statsPanel.add(expenseStatsPanel);
-        statsPanel.add(incomeStatsPanel);
+        statsPanel.add(expenseStatsPanel, BorderLayout.LINE_START);
+        statsPanel.add(incomeStatsPanel, BorderLayout.LINE_END);
 
 
 
