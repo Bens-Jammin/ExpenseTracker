@@ -15,7 +15,7 @@ public class MainGUIPage {
 
 
     // buttons, pages, frames, etc
-    JFrame frame;
+    static JFrame frame;
     JPanel mainPanel;
     JPanel sidebarPanel;
 
@@ -35,7 +35,7 @@ public class MainGUIPage {
         String publicVersionNumber = "0.4.7.3";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
-        frame = new JFrame(title);
+        final JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
 
@@ -333,6 +333,9 @@ public class MainGUIPage {
 
         return stats;
     }
+
+
+    public static JFrame getFrame(){return frame;}
 
 
 }

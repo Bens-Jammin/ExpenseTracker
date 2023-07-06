@@ -116,7 +116,7 @@ public class AccountPage extends JFrame {
                 if (deleteMessage == null) {
                     JOptionPane.showMessageDialog(AccountPage.this, "Account deleted successfully.",
                             "ACCOUNT DELETED", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+
                 } else {
                     JOptionPane.showMessageDialog(AccountPage.this, "ERROR: ACCOUNT DELETION FAILED \n" + deleteMessage,
                             "ACCOUNT DELETION FAILED", JOptionPane.ERROR_MESSAGE);

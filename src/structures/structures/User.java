@@ -88,22 +88,24 @@ public class User implements Serializable{
 
     // setters
     public void setExpenses(List<Expenses> e){
-        this.expenses = e;
-                
-        totalIncome = 0;
-        if(e.size() == 0){return;}
+        expenses.clear(); // Clear existing expenses list
+        expenses.addAll(e); // Set new expenses list
 
-        for (Expenses expense : e) {
+        totalExpenses = 0;
+        for (Expenses expense : expenses) {
             totalExpenses += expense.getAmount();
         }
     }
-    public void setIncome(List<Income> i){
-        this.allIncome = i;
-        
-        totalIncome = 0;
-        if(i.size() == 0){return;}
 
-        for (Income income : i) {
+
+    public void setIncome(List<Income> i){
+        // I don't know why, but you need to clear then all all expenses/income in order for the net value method to work properly,
+        // otherwise transactions are double counted?
+        allIncome.clear(); 
+        allIncome.addAll(i); // Set new income list
+
+        totalIncome = 0;
+        for (Income income : allIncome) {
             totalIncome += income.getAmount();
         }
     }
