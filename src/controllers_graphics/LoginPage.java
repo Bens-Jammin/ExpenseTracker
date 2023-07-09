@@ -26,6 +26,16 @@ public class LoginPage extends JFrame {
      * Sets up the window and components for login and signup.
      */
     public LoginPage() {
+
+
+        String username = DataManager.loadLastSignedUser();
+        if(username != null){
+            user = DataManager.loadUser(username);
+            new MainGUIPage(user);
+            return;
+        }
+
+
         setTitle("Login or Signup");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 200);

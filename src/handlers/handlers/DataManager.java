@@ -332,4 +332,53 @@ public class DataManager {
 
 
 
+    public static boolean saveNewLastUser(String username) {
+        File file = new File("UserData/LastUserinformation.txt");
+
+        // Check if the file exists and is empty
+        if (file.exists() && file.length() > 0) {
+            return false;
+        }
+
+        // empty the file
+        if (username == null) {
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                // Write the username and password to the file
+                fileWriter.write("");
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            // user is actually trying to be saved
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                // Write the username and password to the file
+                fileWriter.write(username);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    public static String loadLastSignedUser() {
+        File file = new File("UserData/LastUserinformation.txt");
+
+        // Check if the file exists and is not empty
+        if (!file.exists() || file.length() == 0) {
+            return null;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            return line;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

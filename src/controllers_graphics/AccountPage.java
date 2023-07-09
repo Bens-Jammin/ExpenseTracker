@@ -1,6 +1,7 @@
 import structures.*;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 
 import handlers.DataManager;
 import handlers.ColourSchemeManager;
@@ -19,7 +20,7 @@ public class AccountPage extends JFrame {
 
         setTitle("Account Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(3, 4));
+        setLayout(new GridLayout(4, 4)); // Increased rows to accommodate the checkbox
 
         // set theme
         int mode = user.getColourScheme();
@@ -128,16 +129,59 @@ public class AccountPage extends JFrame {
         blankArea.setBackground(mainBackgroundColour);
         blankArea.setEditable(false);
 
-        JTextArea blankArea1 = new JTextArea();         // library combines identical objects when rendering
-        blankArea1.setBackground(mainBackgroundColour);
-        blankArea1.setEditable(false);
-
+        JCheckBox staySignedInCheckbox = new JCheckBox("Stay Signed In"); // Checkbox for "Stay Signed In"
+        staySignedInCheckbox.setBackground(mainBackgroundColour);
+        staySignedInCheckbox.setForeground(textColour);
         
+        String lastUsername = DataManager.loadLastSignedUser();
+        if(user.getUserName().equals(lastUsername)){
+            staySignedInCheckbox.setSelected(true);
+        }
+
+        staySignedInCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean staySignedIn = staySignedInCheckbox.isSelected();
+                if (!staySignedIn) {
+                    DataManager.saveNewLastUser(null);
+                    return;
+                }
+
+                String lastUser = DataManager.loadLastSignedUser();
+                if(lastUser == null){
+                    DataManager.saveNewLastUser(user.getUserName());
+                    return;
+                }
+
+                String message = "Another user is already saved to be signed in, do you want to override?";
+                String title = "Confirm override sign in";
+
+                int confirm = JOptionPane.showConfirmDialog(AccountPage.this, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+                if (confirm == JOptionPane.NO_OPTION) {
+                    return;
+                }
+
+                DataManager.saveNewLastUser(user.getUserName());
+
+            }
+        });
 
         // Add components to the JFrame
-        add(usernameLabel); add(usernameField); add(blankArea); add(colourScheme);  
-        add(passwordLabel); add(passwordField); add(blankArea); add(exportButton);
-        add(blankArea);     add(blankArea1);     add(blankArea); add(deleteAccount);
+        add(usernameLabel);
+        add(usernameField);
+        add(blankArea);
+        add(colourScheme);
+
+        add(passwordLabel);
+        add(passwordField);
+        add(blankArea);
+        add(exportButton);
+
+        add(blankArea);
+        add(staySignedInCheckbox); // Add the "Stay Signed In" checkbox
+        add(blankArea);
+        add(deleteAccount);
 
         setLocationRelativeTo(null);
         pack(); // Adjusts the size of the frame to fit the components
