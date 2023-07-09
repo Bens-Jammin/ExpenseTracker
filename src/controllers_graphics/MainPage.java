@@ -26,7 +26,7 @@ public class MainPage {
     JButton AccountPageButton;
 
     JPanel contentPanel;
-    JLabel netProfitLabel;
+    static JLabel netProfitLabel;
 
 
     public MainPage(User user) {
@@ -34,7 +34,7 @@ public class MainPage {
         String publicBuildStage = "ALPHA";
         String publicVersionNumber = "0.6.1";
 
-        String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
+        String title = user.getUserName() + " Transaction Account          [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         final JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 500);
@@ -128,6 +128,8 @@ public class MainPage {
         JLabel incomeStatLabel3 = new JLabel("Total incomes recorded: "+userStats[6]); 
         JLabel incomeStatLabel4 = new JLabel("Total income generated: "+userStats[7]); 
 
+        Font statFont = new Font("Tahoma", Font.PLAIN, 15); 
+
         expenseStatLabel1.setForeground(textColour);
         expenseStatLabel2.setForeground(textColour);
         expenseStatLabel3.setForeground(textColour);
@@ -136,6 +138,15 @@ public class MainPage {
         incomeStatLabel2.setForeground(textColour);
         incomeStatLabel3.setForeground(textColour);
         incomeStatLabel4.setForeground(textColour);
+
+        expenseStatLabel1.setFont(statFont);
+        expenseStatLabel2.setFont(statFont);
+        expenseStatLabel3.setFont(statFont);
+        expenseStatLabel4.setFont(statFont);
+        incomeStatLabel1.setFont(statFont);
+        incomeStatLabel2.setFont(statFont);
+        incomeStatLabel3.setFont(statFont);
+        incomeStatLabel4.setFont(statFont);
 
        // Create panels for expense and income stats
         JPanel expenseStatsPanel = new JPanel(new GridLayout(0, 1));  // 0 rows to automatically adjust based on labels
@@ -163,10 +174,9 @@ public class MainPage {
 
 
 
-        Font textFont = new Font("Roboto",0 ,24);
-        netProfitLabel = new JLabel(updateProfit(user));
+        Font textFont = new Font("Roboto",Font.BOLD ,24);
+        netProfitLabel = updateProfit(user);
         netProfitLabel.setFont(textFont);
-        netProfitLabel.setForeground(textColour);
         netProfitLabel.setHorizontalAlignment(SwingConstants.CENTER);
         netProfitLabel.setBorder(BorderFactory.createEmptyBorder(48, 0, 0, 0));
         contentPanel.add(netProfitLabel, BorderLayout.NORTH);
@@ -226,16 +236,16 @@ public class MainPage {
         frame.setVisible(true);
     }
 
-
-    public static String updateProfit(User user){
-
-        String bigLabel;
-        if(user.getNetValue() < 0){
-            bigLabel = "Net Profit : -$"+Math.abs(user.getNetValue());
-        }else{
-            bigLabel = "Net Profit : $"+user.getNetValue();
+    public static JLabel updateProfit(User user) {
+        JLabel bigLabel = new JLabel();
+        if (user.getNetValue() < 0) {
+            bigLabel.setText("NET PROFIT : -$" + Math.abs(user.getNetValue()));
+            bigLabel.setForeground(Color.RED); // Set the text color to red
+        } else {
+            bigLabel.setText("NET PROFIT : $" + user.getNetValue());
+            bigLabel.setForeground(Color.GREEN); // Set the text color to green
         }
-
+    
         return bigLabel;
     }
 
