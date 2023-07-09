@@ -49,7 +49,7 @@ public class RemoveTransactionsPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteCheckedTransactions(user);
-                netProfitLabel.setText(MainGUIPage.updateProfit(user));
+                netProfitLabel.setText(MainPage.updateProfit(user));
 
             }
         });

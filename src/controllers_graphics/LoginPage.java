@@ -31,7 +31,7 @@ public class LoginPage extends JFrame {
         String username = DataManager.loadLastSignedUser();
         if(username != null){
             user = DataManager.loadUser(username);
-            new MainGUIPage(user);
+            new MainPage(user);
             return;
         }
 
@@ -162,7 +162,7 @@ public class LoginPage extends JFrame {
         dispose();
         
         // Open the main page
-        new MainGUIPage(user);
+        new MainPage(user);
         
     }
 

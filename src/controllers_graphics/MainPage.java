@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 
 
-public class MainGUIPage {
+public class MainPage {
 
 
     // buttons, pages, frames, etc
@@ -29,10 +29,10 @@ public class MainGUIPage {
     JLabel netProfitLabel;
 
 
-    public MainGUIPage(User user) {
+    public MainPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.4.7.3";
+        String publicVersionNumber = "0.6.1";
 
         String title = user.getUserName() + " Transaction Account     [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         final JFrame frame = new JFrame(title);

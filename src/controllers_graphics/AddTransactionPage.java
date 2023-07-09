@@ -156,7 +156,7 @@ public class AddTransactionPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 createTransaction(user);
 
-                netProfitLabel.setText(MainGUIPage.updateProfit(user));
+                netProfitLabel.setText(MainPage.updateProfit(user));
             }
         });
 

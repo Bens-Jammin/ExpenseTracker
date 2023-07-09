@@ -331,7 +331,18 @@ public class DataManager {
     }
 
 
-
+    /**
+     * Saves the new last signed-in user to a file.
+     * If the file already exists and is not empty, the method returns false.
+     * If the username is null, the method empties the file and returns true.
+     * Otherwise, the username is written to the file and the method returns true.
+     * If there is an error while performing the file operations, null is returned.
+     *
+     * @param username the username of the new last signed-in user
+     * @return true if the new last signed-in user is successfully saved or the file is emptied,
+     *         false if the file already has content,
+     *         null if there is an error while performing file operations
+     */
     public static boolean saveNewLastUser(String username) {
         File file = new File("UserData/LastUserinformation.txt");
 
@@ -363,6 +374,16 @@ public class DataManager {
         return false;
     }
 
+
+    /**
+     * Loads the username of the last signed-in user from a file.
+     * If the file does not exist or is empty, null is returned.
+     * Otherwise, the username stored in the file is returned.
+     * If there is an error while performing the file operations, null is returned.
+     *
+     * @return the username of the last signed-in user,
+     *         null if the file does not exist, is empty, or there is an error while performing file operations
+     */
     public static String loadLastSignedUser() {
         File file = new File("UserData/LastUserinformation.txt");
 
