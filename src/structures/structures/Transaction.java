@@ -2,7 +2,6 @@ package structures;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public abstract class Transaction implements Serializable, Comparable<Transaction> {
     protected static final long serialVersionUID = 8606117422906450152L;
