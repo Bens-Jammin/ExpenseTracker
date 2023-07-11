@@ -1,7 +1,6 @@
 import structures.*;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 
 import handlers.DataManager;
 import handlers.ColourSchemeManager;
@@ -70,7 +69,8 @@ public class AccountPage extends JFrame {
             }
         });
 
-        JButton colourScheme = new JButton("Dark Mode");
+        String colourSchemeButtonLabel = (user.getColourScheme() == 0) ? "Dark Mode" : "BabyGirl Mode";
+        JButton colourScheme = new JButton(colourSchemeButtonLabel);
         colourScheme.setIcon(buttonImage);
         colourScheme.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         colourScheme.setForeground(buttonTextColour);

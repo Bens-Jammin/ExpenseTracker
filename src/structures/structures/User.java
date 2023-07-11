@@ -47,6 +47,11 @@ public class User implements Serializable{
     // getters
     public String getUserName(){return username;}
     public String getPassword(){return password;}
+
+    /**
+     * 
+     * @return an integer, where 0 represents Dark mode, 1 represents Babygirl mode
+     */
     public int getColourScheme(){return colourScheme;}
     
 
