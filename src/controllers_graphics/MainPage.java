@@ -118,7 +118,8 @@ public class MainPage {
         contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPanel.setBackground(mainBackroundColour);
 
-        JPanel statsPanel = new JPanel(new GridBagLayout());
+        JPanel statsPanel = new JPanel(new GridLayout(1,2));
+
 
         String[] userStats = calculateUsersStatistics(user);
         JLabel[] allStats = new JLabel[]{
@@ -134,30 +135,27 @@ public class MainPage {
         
         Font statFont = new Font("Tahoma", Font.PLAIN, 13);
         
-        GridBagConstraints gbcStats = new GridBagConstraints();
-        gbcStats.gridx = 0;
-        gbcStats.gridy = 0;
-        gbcStats.anchor = GridBagConstraints.NORTHWEST;
-        gbcStats.insets = new Insets(50, 0,25, 0);
-        
-        JPanel expenseStatsPanel = new JPanel(new GridBagLayout());
+        JPanel expenseStatsPanel = new JPanel(new GridLayout(0,1));
         expenseStatsPanel.setBackground(mainBackroundColour);
         
-        JPanel incomeStatsPanel = new JPanel(new GridBagLayout());
+        JPanel incomeStatsPanel = new JPanel(new GridLayout(0,1));
         incomeStatsPanel.setBackground(mainBackroundColour);
         
+        EmptyBorder textBorder = new EmptyBorder(40, 0, 50, 0);
+
         for (int i = 0; i < 8; i++) {
             allStats[i].setForeground(textColour);
             allStats[i].setFont(statFont);
+            allStats[i].setBorder(textBorder);
         
             if (i < 4) {
                 allStats[i].setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-                gbcStats.gridy = i;
-                expenseStatsPanel.add(allStats[i], gbcStats);
+
+                expenseStatsPanel.add(allStats[i]);
             } else {
                 allStats[i].setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-                gbcStats.gridy = i - 4;
-                incomeStatsPanel.add(allStats[i], gbcStats);
+
+                incomeStatsPanel.add(allStats[i]);
             }
         }
 
@@ -181,13 +179,15 @@ public class MainPage {
         
         Font textFont = new Font("Roboto", Font.BOLD, 24);
         
-        JLabel profitDescriptionLabel = new JLabel(" NET PROFIT : ");
+        double vSpace = 0.5;
+
+        JLabel profitDescriptionLabel = new JLabel("NET PROFIT : ");
         profitDescriptionLabel.setForeground(textColour);
         profitDescriptionLabel.setFont(textFont);
         profitDescriptionLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         profitDescriptionLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         gbcContent.gridx = 0;
-        gbcContent.weightx = 0.5;
+        gbcContent.weightx = vSpace;
         gbcContent.fill = GridBagConstraints.HORIZONTAL;
         profitPanel.add(profitDescriptionLabel, gbcContent);
         
@@ -196,7 +196,7 @@ public class MainPage {
         netProfitLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
         netProfitLabel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         gbcContent.gridx = 1;
-        gbcContent.weightx = 0.5;
+        gbcContent.weightx = vSpace;
         profitPanel.add(netProfitLabel, gbcContent);
         
         gbcContent.gridy = 0;
