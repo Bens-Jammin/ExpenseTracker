@@ -9,6 +9,7 @@ import handlers.YTDSummaryManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
 import java.util.Set;
 
 
@@ -117,76 +118,98 @@ public class MainPage {
         contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPanel.setBackground(mainBackroundColour);
 
-        JPanel statsPanel = new JPanel(new GridLayout(1,2));
-        contentPanel.add(statsPanel, BorderLayout.CENTER);
+        JPanel statsPanel = new JPanel(new GridBagLayout());
 
         String[] userStats = calculateUsersStatistics(user);
-        JLabel expenseStatLabel1 = new JLabel("Most expensive single expense: "+userStats[0]); 
-        JLabel expenseStatLabel2 = new JLabel("Most expensive expense category: "+userStats[1]); 
-        JLabel expenseStatLabel3 = new JLabel("Total number of expenses: "+userStats[2]); 
-        JLabel expenseStatLabel4 = new JLabel("Total expense costs: "+userStats[3]); 
-        JLabel incomeStatLabel1 = new JLabel("Most valuable single income: "+userStats[4]); 
-        JLabel incomeStatLabel2 = new JLabel("Most valuable income category: "+userStats[5]); 
-        JLabel incomeStatLabel3 = new JLabel("Total incomes recorded: "+userStats[6]); 
-        JLabel incomeStatLabel4 = new JLabel("Total income generated: "+userStats[7]); 
-
-        Font statFont = new Font("Tahoma", Font.PLAIN, 15); 
-
-        expenseStatLabel1.setForeground(textColour);
-        expenseStatLabel2.setForeground(textColour);
-        expenseStatLabel3.setForeground(textColour);
-        expenseStatLabel4.setForeground(textColour);
-        incomeStatLabel1.setForeground(textColour);
-        incomeStatLabel2.setForeground(textColour);
-        incomeStatLabel3.setForeground(textColour);
-        incomeStatLabel4.setForeground(textColour);
-
-        expenseStatLabel1.setFont(statFont);
-        expenseStatLabel2.setFont(statFont);
-        expenseStatLabel3.setFont(statFont);
-        expenseStatLabel4.setFont(statFont);
-        incomeStatLabel1.setFont(statFont);
-        incomeStatLabel2.setFont(statFont);
-        incomeStatLabel3.setFont(statFont);
-        incomeStatLabel4.setFont(statFont);
-
-       // Create panels for expense and income stats
-        JPanel expenseStatsPanel = new JPanel(new GridLayout(0, 1));  // 0 rows to automatically adjust based on labels
-        JPanel incomeStatsPanel = new JPanel(new GridLayout(0, 1));   // 0 rows to automatically adjust based on labels
-
+        JLabel[] allStats = new JLabel[]{
+            new JLabel("Most expensive single expense: " + userStats[0]),
+            new JLabel("Most expensive expense category: " + userStats[1]),
+            new JLabel("Total number of expenses: " + userStats[2]),
+            new JLabel("Total expense costs: " + userStats[3]),
+            new JLabel("Most valuable single income: " + userStats[4]),
+            new JLabel("Most valuable income category: " + userStats[5]),
+            new JLabel("Total incomes recorded: " + userStats[6]),
+            new JLabel("Total income generated: " + userStats[7]),
+        };
+        
+        Font statFont = new Font("Tahoma", Font.PLAIN, 13);
+        
+        GridBagConstraints gbcStats = new GridBagConstraints();
+        gbcStats.gridx = 0;
+        gbcStats.gridy = 0;
+        gbcStats.anchor = GridBagConstraints.NORTHWEST;
+        gbcStats.insets = new Insets(50, 0,25, 0);
+        
+        JPanel expenseStatsPanel = new JPanel(new GridBagLayout());
         expenseStatsPanel.setBackground(mainBackroundColour);
+        
+        JPanel incomeStatsPanel = new JPanel(new GridBagLayout());
         incomeStatsPanel.setBackground(mainBackroundColour);
+        
+        for (int i = 0; i < 8; i++) {
+            allStats[i].setForeground(textColour);
+            allStats[i].setFont(statFont);
+        
+            if (i < 4) {
+                allStats[i].setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+                gbcStats.gridy = i;
+                expenseStatsPanel.add(allStats[i], gbcStats);
+            } else {
+                allStats[i].setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                gbcStats.gridy = i - 4;
+                incomeStatsPanel.add(allStats[i], gbcStats);
+            }
+        }
 
-
-        // Add expense stat labels to the expenseStatsPanel
-        expenseStatsPanel.add(expenseStatLabel1);
-        expenseStatsPanel.add(expenseStatLabel2);
-        expenseStatsPanel.add(expenseStatLabel3);
-        expenseStatsPanel.add(expenseStatLabel4);
-
-        // Add income stat labels to the incomeStatsPanel
-        incomeStatsPanel.add(incomeStatLabel1);
-        incomeStatsPanel.add(incomeStatLabel2);
-        incomeStatsPanel.add(incomeStatLabel3);
-        incomeStatsPanel.add(incomeStatLabel4);
-
-        // Add the expenseStatsPanel to the left side and incomeStatsPanel to the right side of contentPanel
-        statsPanel.add(expenseStatsPanel, BorderLayout.LINE_START);
-        statsPanel.add(incomeStatsPanel, BorderLayout.LINE_END);
-
-
-
-        Font textFont = new Font("Roboto",Font.BOLD ,24);
+        
+        statsPanel.add(expenseStatsPanel);
+        statsPanel.add(incomeStatsPanel);
+        
+        GridBagConstraints gbcContent = new GridBagConstraints();
+        gbcContent.gridx = 0;
+        gbcContent.gridy = 0;
+        gbcContent.anchor = GridBagConstraints.NORTHWEST;
+        gbcContent.weightx = 1.0;
+        gbcContent.weighty = 0.0;
+        
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPanel.setBackground(mainBackroundColour);
+        
+        JPanel profitPanel = new JPanel(new GridBagLayout());
+        profitPanel.setBackground(mainBackroundColour);
+        
+        Font textFont = new Font("Roboto", Font.BOLD, 24);
+        
+        JLabel profitDescriptionLabel = new JLabel(" NET PROFIT : ");
+        profitDescriptionLabel.setForeground(textColour);
+        profitDescriptionLabel.setFont(textFont);
+        profitDescriptionLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        profitDescriptionLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        gbcContent.gridx = 0;
+        gbcContent.weightx = 0.5;
+        gbcContent.fill = GridBagConstraints.HORIZONTAL;
+        profitPanel.add(profitDescriptionLabel, gbcContent);
+        
         netProfitLabel = updateProfit(user);
         netProfitLabel.setFont(textFont);
-        netProfitLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        netProfitLabel.setBorder(BorderFactory.createEmptyBorder(48, 0, 0, 0));
-        contentPanel.add(netProfitLabel, BorderLayout.NORTH);
-
+        netProfitLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
+        netProfitLabel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        gbcContent.gridx = 1;
+        gbcContent.weightx = 0.5;
+        profitPanel.add(netProfitLabel, gbcContent);
+        
+        gbcContent.gridy = 0;
+        contentPanel.add(profitPanel, gbcContent);
+        
+        gbcContent.gridy = 1;
+        gbcContent.weighty = 1.0;
+        contentPanel.add(statsPanel, gbcContent);
+        
         // Set the preferred sizes
         sidebarPanel.setPreferredSize(new Dimension(frame.getWidth() / 5, frame.getHeight()));
         contentPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-
+        
         // Add the panels to the main panel
         mainPanel.add(contentPanel, BorderLayout.CENTER);
         mainPanel.add(sidebarPanel, BorderLayout.WEST);
@@ -234,17 +257,20 @@ public class MainPage {
 
         // loading the app
         frame.getContentPane().add(mainPanel);
+        
         frame.setLocationRelativeTo(null); // Center the frame on the screen
         frame.setVisible(true);
+        System.out.println("Profit Panel Size: " + profitPanel.getSize());
+        System.out.println("Content Panel Size: " + contentPanel.getSize());
     }
 
     public static JLabel updateProfit(User user) {
         JLabel bigLabel = new JLabel();
         if (user.getNetValue() < 0) {
-            bigLabel.setText("NET PROFIT : -$" + Math.abs(user.getNetValue()));
+            bigLabel.setText("-$" + Math.abs(user.getNetValue()));
             bigLabel.setForeground(Color.RED); // Set the text color to red
         } else {
-            bigLabel.setText("NET PROFIT : $" + user.getNetValue());
+            bigLabel.setText("$" + user.getNetValue());
             bigLabel.setForeground(Color.GREEN); // Set the text color to green
         }
     
