@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DatePickerPage",
+            "request": "launch",
+            "mainClass": "DatePickerPage",
+            "projectName": "ExpenseTracker_224b1689"
+        },
+        {
+            "type": "java",
             "name": "LoginPage",
             "request": "launch",
             "mainClass": "LoginPage",

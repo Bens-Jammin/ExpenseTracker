@@ -1,10 +1,15 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.text.NumberFormatter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,8 @@ public class AddTransactionPage extends JFrame {
     private JFormattedTextField amountField;
 
     private JPanel mainPanel;
+
+    LocalDate selectedDate = LocalDate.now();
 
     public AddTransactionPage(User user, JLabel netProfitLabel) {
 
@@ -41,7 +48,7 @@ public class AddTransactionPage extends JFrame {
 
         // Create the main panel
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(6, 2, 10, 10));
+        mainPanel.setLayout(new GridLayout(7, 2, 10, 10));
         mainPanel.setBackground(mainBackroundColour);
 
 
@@ -102,6 +109,23 @@ public class AddTransactionPage extends JFrame {
         amountField.setBackground(sidePanelColour);
         mainPanel.add(amountLabel);
         mainPanel.add(amountField);
+
+
+        JSpinner datePicker = new JSpinner(new SpinnerDateModel());
+        datePicker.setEditor(new JSpinner.DateEditor(datePicker, "dd/MM/yyyy"));
+        datePicker.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                selectedDate = ((SpinnerDateModel) datePicker.getModel()).getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+        });
+
+        JLabel currentDate = new JLabel("Date : ");
+        currentDate.setForeground(textColour);
+
+        mainPanel.add(currentDate);
+        mainPanel.add(datePicker);
+
+
 
         JButton createCategoryButton = new JButton("Submit Category");
         createCategoryButton.setIcon(buttonImage);
@@ -180,6 +204,12 @@ public class AddTransactionPage extends JFrame {
             return;
         }
 
+        if (selectedDate.isAfter(LocalDate.now())){
+                JOptionPane.showMessageDialog(this, selectedDate.toString()+" hasn't happened yet!",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         double amount;
         try {
             amount = Double.parseDouble(amountText);
@@ -198,9 +228,9 @@ public class AddTransactionPage extends JFrame {
 
         // Create the transaction using the collected information
         if ("Income".equals(type) ){
-            user.addIncome(name, amount, category);
+            user.addIncome(category, name, amount, selectedDate);
         } else {
-            user.addExpense(name, amount, category);
+            user.addExpense(category, name, amount, selectedDate);
         }
         DataManager.saveUser(user);
 

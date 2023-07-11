@@ -1,6 +1,7 @@
 import structures.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import handlers.ColourSchemeManager;
 import handlers.YTDSummaryManager;
@@ -32,7 +33,7 @@ public class MainPage {
     public MainPage(User user) {
 
         String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.6.1";
+        String publicVersionNumber = "0.6.3";
 
         String title = user.getUserName() + " Transaction Account          [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         final JFrame frame = new JFrame(title);
@@ -113,6 +114,7 @@ public class MainPage {
 
 
         contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPanel.setBackground(mainBackroundColour);
 
         JPanel statsPanel = new JPanel(new GridLayout(1,2));
