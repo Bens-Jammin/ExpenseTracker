@@ -346,16 +346,15 @@ public class DataManager {
     public static boolean saveNewLastUser(String username) {
         File file = new File("UserData/LastUserinformation.txt");
 
-        // Check if the file exists and is empty
-        if (file.exists() && file.length() > 0) {
-            return false;
-        }
 
         // empty the file
         if (username == null) {
             try (FileWriter fileWriter = new FileWriter(file)) {
-                // Write the username and password to the file
+                // clears the file
                 fileWriter.write("");
+
+                fileWriter.flush();
+
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -365,6 +364,8 @@ public class DataManager {
             try (FileWriter fileWriter = new FileWriter(file)) {
                 // Write the username and password to the file
                 fileWriter.write(username);
+                fileWriter.flush();
+
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

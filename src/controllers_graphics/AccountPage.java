@@ -12,8 +12,11 @@ public class AccountPage extends JFrame {
     private String username;
     private String password;
 
+    private static final Object lock = new Object();
+
 
     public AccountPage(User user) {
+    synchronized(lock){
         this.username = user.getUserName();
         this.password = user.getPassword();
 
@@ -143,14 +146,18 @@ public class AccountPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 boolean staySignedIn = staySignedInCheckbox.isSelected();
                 if (!staySignedIn) {
-                    DataManager.saveNewLastUser(null);
-                    return;
+                    if(DataManager.saveNewLastUser(null)){
+                        return;
+                    }
+                    JOptionPane.showMessageDialog(AccountPage.this, "There was an error saving your information.", "SAVING ERROR", JOptionPane.WARNING_MESSAGE);
                 }
 
                 String lastUser = DataManager.loadLastSignedUser();
                 if(lastUser == null){
-                    DataManager.saveNewLastUser(user.getUserName());
-                    return;
+                    if(DataManager.saveNewLastUser(username)){
+                        return;
+                    }
+                    JOptionPane.showMessageDialog(AccountPage.this, "There was an error saving your information.", "SAVING ERROR", JOptionPane.WARNING_MESSAGE);
                 }
 
                 String message = "Another user is already saved to be signed in, do you want to override?";
@@ -185,6 +192,7 @@ public class AccountPage extends JFrame {
 
         setLocationRelativeTo(null);
         pack(); // Adjusts the size of the frame to fit the components
-        setVisible(true);
+        setVisible(true);   
+    }
     }
 }

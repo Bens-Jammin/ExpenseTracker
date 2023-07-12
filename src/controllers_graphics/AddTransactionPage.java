@@ -29,8 +29,8 @@ public class AddTransactionPage extends JFrame {
 
     LocalDate selectedDate = LocalDate.now();
 
-    public AddTransactionPage(User user, JLabel netProfitLabel) {
 
+    public AddTransactionPage(User user, JLabel netProfitLabel) {
         // Set up the frame
         setTitle("Transaction Creation Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

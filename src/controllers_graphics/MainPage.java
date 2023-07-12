@@ -9,7 +9,6 @@ import handlers.YTDSummaryManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 import java.util.Set;
 
 
@@ -33,8 +32,8 @@ public class MainPage {
 
     public MainPage(User user) {
 
-        String publicBuildStage = "ALPHA";
-        String publicVersionNumber = "0.6.3";
+        String publicBuildStage = "BETA";
+        String publicVersionNumber = "0.7.0";
 
         String title = user.getUserName() + " Transaction Account          [ "+ publicBuildStage +" BUILD  " + publicVersionNumber + " ] ";
         final JFrame frame = new JFrame(title);
