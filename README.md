@@ -12,12 +12,12 @@ I think thats it for now
 
 ## Feedback
 
-If you have any feedback, reach out to me in person or via carrier pigeon.
+If you have any feedback, reach out to me in person or any social media listed on my [account readme](https://github.com/Bens-Jammin).
 
 
 ## Demo
 
-Project is currently in alpha ( ALPHA 0.1.0 ), if you'd like to be apart of the alpha demo, reach out to me by carrier pigeon or find me personally
+[release 0.7.0 - beta](https://github.com/Bens-Jammin/ExpenseTracker/releases/tag/v0.7.0-beta)
 
 
 ## Authors
